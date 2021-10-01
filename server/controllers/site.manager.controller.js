@@ -1,7 +1,9 @@
 const generator = require("generate-password");
 
 const SiteManager = require("../models/site.manager.model");
+
 const hashPassword = require("../helpers/hash.password");
+const emailConfig = require("../configs/email.config");
 
 /**
  * use to register the site manager
@@ -68,6 +70,12 @@ const saveSiteManager = async (req, res) => {
 				salary,
 			});
 			await newSiteManager.save();
+
+			await emailConfig.mailer(
+				email,
+				"Your Account Password",
+				"<b>Hello world?</b>"
+			);
 
 			return res
 				.status(201)
