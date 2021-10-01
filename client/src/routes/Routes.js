@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 // import { LoginAuth } from "../contexts/AuthContext";
 
@@ -18,6 +19,7 @@ const Routes = () => {
 	return (
 		<Switch>
 			<Route exact path="/" component={Login} />
+			<Route exact path="/register" component={Register} />
 		</Switch>
 	);
 };
