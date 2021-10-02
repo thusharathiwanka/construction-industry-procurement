@@ -6,11 +6,12 @@ const OrderSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "siteManagers",
 		},
-		isApprovedByOfficer: { type: String, default: "pending" },
-		isApprovedByManager: { type: String, default: "pending" },
-		status: { type: String, default: "pending" },
-		orderItems: { type: mongoose.Schema.Types.ObjectId, ref: "siteManagers"},
-		total: { type: Number },
+		isApprovedByOfficer: { type: String, default: "pending" , trim: true },
+		isApprovedByManager: { type: String, default: "pending", trim: true },
+		status: { type: String, default: "pending", trim: true },
+		orderItem: { type: mongoose.Schema.Types.ObjectId, ref: "materials"},
+		quantity: { type: Number, required: true },
+		total: { type: Number, trim: true,  default: 0 },
 	},
 	{ timestamps: true }
 );
