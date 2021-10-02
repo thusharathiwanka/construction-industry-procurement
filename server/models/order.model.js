@@ -9,11 +9,7 @@ const OrderSchema = new mongoose.Schema(
 		isApprovedByOfficer: { type: String, default: "pending" },
 		isApprovedByManager: { type: String, default: "pending" },
 		status: { type: String, default: "pending" },
-		orderItems: {
-			type: mongoose.Schema.Types.Mixed,
-			require: true,
-			trim: true,
-		},
+		orderItems: { type: mongoose.Schema.Types.ObjectId, ref: "siteManagers"},
 		total: { type: Number },
 	},
 	{ timestamps: true }
