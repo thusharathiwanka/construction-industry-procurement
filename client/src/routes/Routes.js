@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import Login from "../pages/Login";
 import ManagerDashboard from "../pages/ManagerDashboard";
+import SupplierDashboard from "../pages/SupplierDashboard";
 
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -18,6 +19,11 @@ const Routes = () => {
 				exact
 				path="/auth/manager/dashboard"
 				component={ManagerDashboard}
+			/>
+			<Route
+				exact
+				path="/auth/supplier/dashboard"
+				component={SupplierDashboard}
 			/>
 		</Switch>
 	);
