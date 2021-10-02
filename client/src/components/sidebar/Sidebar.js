@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 
 import "./Sidebar.css";
 
@@ -18,7 +19,8 @@ import {
 } from "../../helpers/sidebar.items";
 
 const Sidebar = (props) => {
-	const { loggedIn } = useContext(AuthContext);
+	const history = useHistory();
+	const { loggedIn, getLoggedIn } = useContext(AuthContext);
 	const [isCollapsed, setIsCollapsed] = useState(false);
 
 	let currentSidebar;
@@ -32,6 +34,15 @@ const Sidebar = (props) => {
 	} else if (loggedIn.role === "supplier") {
 		currentSidebar = sidebar_supplier;
 	}
+
+	const logout = async () => {
+		await axios.get("/users/logout");
+		await getLoggedIn();
+		history.push("/");
+
+		localStorage.clear();
+		setTimeout(() => window.location.reload(), 3);
+	};
 
 	const activeItem =
 		loggedIn.role &&
@@ -75,7 +86,7 @@ const Sidebar = (props) => {
 					</div>
 
 					{currentSidebar.map((item, index) => (
-						<Link to={item.route} key={index}>
+						<Link onClick={!item.route && logout} to={item.route} key={index}>
 							{isCollapsed === true ? (
 								<SidebarItem icon={item.icon} active={index === activeItem} />
 							) : (
