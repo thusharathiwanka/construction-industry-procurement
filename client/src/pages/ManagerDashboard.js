@@ -49,6 +49,20 @@ const AdminDashboard = () => {
 			providence: "Pool",
 			status: "Pending",
 		},
+		{
+			id: "4",
+			date: "2021.08.06",
+			houseOwner: "Gayath Chandula",
+			providence: "Pool",
+			status: "Pending",
+		},
+		{
+			id: "4",
+			date: "2021.08.06",
+			houseOwner: "Gayath Chandula",
+			providence: "Pool",
+			status: "Pending",
+		},
 	];
 
 	const permissionStatus = {
@@ -127,6 +141,12 @@ const AdminDashboard = () => {
 						</div>
 						<div className="col-4 full-width">
 							<div className="card">
+								<h2
+									className="request-title"
+									style={{ color: "transparent", marginBottom: "-.2rem" }}
+								>
+									Calender
+								</h2>
 								<Calendar
 									className="calender"
 									onChange={onChange}

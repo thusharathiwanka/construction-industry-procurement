@@ -2,13 +2,14 @@ import { useEffect } from "react";
 import axios from "axios";
 import AOS from "aos";
 
+import "boxicons/css/boxicons.min.css";
+import "aos/dist/aos.css";
+
 import "./App.css";
-import "./assets/boxicons-2.0.9/css/boxicons.min.css";
 import "./assets/css/grid.css";
 import "./assets/css/theme.css";
 import "./assets/css/index.css";
 import "./assets/css/Usercreate.css";
-import "aos/dist/aos.css";
 
 import AuthContextProvider from "./contexts/AuthContext";
 
