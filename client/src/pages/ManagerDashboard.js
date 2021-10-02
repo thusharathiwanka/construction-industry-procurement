@@ -12,14 +12,7 @@ import profilePicture from "../assets/images/admin-user-img.jpg";
 
 const AdminDashboard = () => {
 	const [value, onChange] = useState(new Date());
-	const fields = [
-		"ID",
-		"Date",
-		"House Owner",
-		"Providence",
-		"Status",
-		"Actions",
-	];
+	const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
 	const rows = [
 		{
 			id: "1",
@@ -159,7 +152,7 @@ const AdminDashboard = () => {
 						<div className="col-8">
 							<div className="card">
 								<div className="flex">
-									<h2 className="request-title">Booking Requests</h2>
+									<h2 className="request-title">New Orders</h2>
 									<Link>
 										<button className="view-btn">View All</button>
 									</Link>
