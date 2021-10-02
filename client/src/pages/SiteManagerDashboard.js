@@ -10,7 +10,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import profilePicture from "../assets/images/admin-user-img.jpg";
 
-const AdminDashboard = () => {
+const SiteManagerDashboard = () => {
 	const [value, onChange] = useState(new Date());
 	const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
 	const rows = [
@@ -152,7 +152,7 @@ const AdminDashboard = () => {
 						<div className="col-8">
 							<div className="card">
 								<div className="flex">
-									<h2 className="request-title">Registered Users</h2>
+									<h2 className="request-title">New Orders</h2>
 									<Link>
 										<button className="view-btn">View All</button>
 									</Link>
@@ -190,4 +190,4 @@ const AdminDashboard = () => {
 	);
 };
 
-export default AdminDashboard;
+export default SiteManagerDashboard;

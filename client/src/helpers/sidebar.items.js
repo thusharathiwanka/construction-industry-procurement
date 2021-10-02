@@ -1,22 +1,32 @@
 const sidebar_manager = [
 	{
 		display_name: "Dashboard",
-		route: "/auth/security/dashboard",
+		route: "/auth/manager/dashboard",
 		icon: "bx bx-category-alt",
 	},
 	{
-		display_name: "Surveillance",
-		route: "/auth/security/surveillance",
-		icon: "bx bx-cctv",
+		display_name: "Inventory",
+		route: "/auth/manager/inventory",
+		icon: "bx bx-store",
 	},
 	{
-		display_name: "Manage Delivery",
-		route: "/auth/security/deliveries",
-		icon: "bx bx-shopping-bag",
+		display_name: "Manage Users",
+		route: "/auth/manager/users",
+		icon: "bx bx-user",
 	},
 	{
-		display_name: "Manage Guests",
-		route: "/auth/security/guests",
+		display_name: "Manage Sites",
+		route: "/auth/manager/users",
+		icon: "bx bx-buildings",
+	},
+	{
+		display_name: "Manage Orders",
+		route: "/auth/manager/orders",
+		icon: "bx bx-bar-chart-square",
+	},
+	{
+		display_name: "Manage Suppliers",
+		route: "/auth/manager/users",
 		icon: "bx bx-group",
 	},
 	{
@@ -28,46 +38,70 @@ const sidebar_manager = [
 
 const sidebar_site_manager = [
 	{
-		display_name: "Home",
-		route: "/securityDashboard",
+		display_name: "Dashboard",
+		route: "/auth/sitemanager/dashboard",
 		icon: "bx bx-category-alt",
 	},
 	{
-		display_name: "Surveillance",
-		route: "/securitySurveillance",
-		icon: "bx bx-cctv",
+		display_name: "Requisitions",
+		route: "/auth/sitemanager/requisitions",
+		icon: "bx bx-transfer",
 	},
 	{
-		display_name: "Manage Delivery",
-		route: "/securityManageDelivery",
-		icon: "bx bxs-backpack",
+		display_name: "Inventory",
+		route: "/auth/sitemanager/inventory",
+		icon: "bx bx-store",
 	},
 	{
-		display_name: "Manage Guests",
-		route: "/securityManageGuests",
-		icon: "bx bxs-group",
+		display_name: "Sign Out",
+		route: "",
+		icon: "bx bx-log-out",
 	},
 ];
+
 const sidebar_officer = [
 	{
-		display_name: "Home",
-		route: "/securityDashboard",
+		display_name: "Dashboard",
+		route: "/auth/sitemanager/dashboard",
 		icon: "bx bx-category-alt",
 	},
 	{
-		display_name: "Surveillance",
-		route: "/securitySurveillance",
-		icon: "bx bx-cctv",
+		display_name: "Manage Orders",
+		route: "/auth/manager/orders",
+		icon: "bx bx-bar-chart-square",
 	},
 	{
-		display_name: "Manage Delivery",
-		route: "/securityManageDelivery",
-		icon: "bx bxs-backpack",
+		display_name: "Inventory",
+		route: "/auth/sitemanager/inventory",
+		icon: "bx bx-store",
 	},
 	{
-		display_name: "Manage Guests",
-		route: "/securityManageGuests",
-		icon: "bx bxs-group",
+		display_name: "Sign Out",
+		route: "",
+		icon: "bx bx-log-out",
 	},
 ];
-export { sidebar_manager, sidebar_site_manager, sidebar_officer };
+
+const sidebar_supplier = [
+	{
+		display_name: "Dashboard",
+		route: "/auth/supplier/dashboard",
+		icon: "bx bx-category-alt",
+	},
+	{
+		display_name: "Manage Orders",
+		route: "/auth/supplier/orders",
+		icon: "bx bx-bar-chart-square",
+	},
+	{
+		display_name: "Sign Out",
+		route: "",
+		icon: "bx bx-log-out",
+	},
+];
+export {
+	sidebar_manager,
+	sidebar_site_manager,
+	sidebar_officer,
+	sidebar_supplier,
+};
