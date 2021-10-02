@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
 import logo from "../../assets/images/logo.png";
-import tinyLogo from "../../assets/images/logo-only.png";
 import SidebarItem from "./SidebarItem";
 import {
-	sidebar_admin,
-	sidebar_security,
-	sidebar_house_owner,
-} from "../../helpers/sidebar";
+	sidebar_manager,
+	sidebar_site_manager,
+	sidebar_officer,
+} from "../../helpers/sidebar.items";
 
 const Sidebar = (props) => {
 	const [isCollapsed, setIsCollapsed] = useState(false);
-	const activeItem = sidebar_security.findIndex(
+	const activeItem = sidebar_manager.findIndex(
 		(item) => item.route === window.location.pathname
 	);
 
@@ -25,12 +24,10 @@ const Sidebar = (props) => {
 	function openNav() {
 		setIsCollapsed(false);
 		document.getElementById("mySidebar").style.width = "300px";
-		// document.getElementById("main").style.paddingLeft = "300px";
-		{
-			window.matchMedia("(max-width: 800px)").matches
-				? (document.getElementById("main").style.paddingLeft = "80px")
-				: (document.getElementById("main").style.paddingLeft = "300px");
-		}
+
+		window.matchMedia("(max-width: 800px)").matches
+			? (document.getElementById("main").style.paddingLeft = "80px")
+			: (document.getElementById("main").style.paddingLeft = "300px");
 	}
 
 	return (
@@ -51,10 +48,10 @@ const Sidebar = (props) => {
 				)}
 
 				<div className="sidebar__logo">
-					<img src={isCollapsed ? tinyLogo : logo} alt="company logo" />
+					<img src={logo} alt="company logo" />
 				</div>
 
-				{sidebar_security.map((item, index) => (
+				{sidebar_manager.map((item, index) => (
 					<Link to={item.route} key={index}>
 						{isCollapsed === true ? (
 							<SidebarItem icon={item.icon} active={index === activeItem} />

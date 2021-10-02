@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "./layout.css";
-import Routes from "../Routes";
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
+
+import "./layout.css";
+
+import Routes from "../../routes/Routes";
 
 const Layout = () => {
 	return (

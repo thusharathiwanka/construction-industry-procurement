@@ -59,7 +59,7 @@ tbody > tr:hover {
 
 .table__pagination-item.active,
 .table__pagination-item.active:hover {
-	background-color: var(--main-color);
+	background-color: var(--main-color-blue);
 	color: var(--txt-white);
 	font-weight: 600;
 }
