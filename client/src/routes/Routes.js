@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Login from "../pages/Login";
-import Register from "../pages/Register";
+import ManagerDashboard from "../pages/ManagerDashboard";
 
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -14,7 +14,11 @@ const Routes = () => {
 	return (
 		<Switch>
 			<Route exact path="/" component={Login} />
-			<Route exact path="/register" component={Register} />
+			<Route
+				exact
+				path="/auth/manager/dashboard"
+				component={ManagerDashboard}
+			/>
 		</Switch>
 	);
 };
