@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import Axios from "axios";
+import React, { useState, useContext } from "react";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
+
+import { AuthContext } from "../contexts/AuthContext";
 
 import LoginImage from "../assets/images/login-img.png";
 import logoImage from "../assets/images/logo.png";
@@ -8,13 +10,13 @@ import Error from "../components/toast/Error";
 
 const Login = () => {
 	const [user, setUser] = useState({ username: "", password: "" });
+	const { getLoggedIn } = useContext(AuthContext);
 	const [error, setError] = useState("");
 	const [btnState, setBtnState] = useState(false);
 	const history = useHistory();
 
-	const Login = async (e) => {
+	const loginUser = async (e) => {
 		e.preventDefault();
-		const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 		setBtnState(true);
 		setError(false);
 
@@ -23,28 +25,16 @@ const Login = () => {
 			return setError("Please fill all the inputs");
 		}
 
-		if (!user.username.match(pattern)) {
-			setBtnState(false);
-			return setError("Please use valid username address");
-		}
-
 		try {
-			const res = await Axios.post("users/login", user);
-			console.log(res);
-			if (res.data.data.token) {
-				localStorage.setItem("token", res.data.data.token);
-				localStorage.setItem(
-					"community",
-					res.data.data.user.gatedcommunity[0].id
-				);
-				history.push("/auth/user/dashboard");
-			}
-
+			const res = await axios.post("users/login", user);
+			setUser({ username: "", password: "" });
 			setBtnState(false);
-			setError("Sorry..! Something went wrong");
+			await getLoggedIn();
+			history.push(`/auth/${res.data.type}/dashboard`);
 		} catch (err) {
-			setBtnState(false);
+			console.log(err.response);
 			setError(err.response.data.message);
+			setBtnState(false);
 		}
 	};
 
@@ -125,7 +115,7 @@ const Login = () => {
 									<button
 										type="submit"
 										className="width-full"
-										onClick={Login}
+										onClick={loginUser}
 										disabled={btnState}
 									>
 										{btnState ? "SIGNING IN" : "SIGN IN"}

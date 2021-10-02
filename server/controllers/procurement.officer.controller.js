@@ -1,17 +1,17 @@
 const generator = require("generate-password");
 
-const SiteManager = require("../models/site.manager.model");
+const ProcurementOfficer = require("../models/procurement.officer.model");
 
 const hashPassword = require("../helpers/hash.password");
 const sendMail = require("../configs/email.config");
 
 /**
- * use to register the site manager
+ * use to register the procurement officer
  * @param {Object} req
  * @param {Object} res
  * @returns {Object} res
  */
-const saveSiteManager = async (req, res) => {
+const saveProcurementOfficer = async (req, res) => {
 	// * request body validation
 	if (req.body) {
 		const { name, email, username, phone, weeklyWorkHrs, salary } = req.body;
@@ -36,14 +36,15 @@ const saveSiteManager = async (req, res) => {
 
 		try {
 			// * checking for exiting user with the same email
-			const existingUserEmail = await SiteManager.findOne({ email: email });
+			const existingUserEmail = await ProcurementOfficer.findOne({
+				email: email,
+			});
 			if (existingUserEmail) {
 				return res.status(400).json({
 					message: "An account with this email is already registered",
 				});
 			}
-
-			const existingUserUsername = await SiteManager.findOne({
+			const existingUserUsername = await ProcurementOfficer.findOne({
 				username: username,
 			});
 			if (existingUserUsername) {
@@ -67,7 +68,7 @@ const saveSiteManager = async (req, res) => {
 			const hashedPassword = await hashPassword(password);
 
 			// * save user account
-			const newSiteManager = new SiteManager({
+			const newProcurementOfficer = new ProcurementOfficer({
 				name,
 				email,
 				username,
@@ -76,18 +77,18 @@ const saveSiteManager = async (req, res) => {
 				weeklyWorkHrs,
 				salary,
 			});
-			await newSiteManager.save();
+			await newProcurementOfficer.save();
 
 			await sendMail(
 				email,
 				"Your Account Credentials",
-				`<div><h2>Your account username ${newSiteManager.username}</h2><h2>Your account password ${password}</h2><p>Thank you.</p></div>`,
-				newSiteManager
+				`<div><h2>Your account username ${newProcurementOfficer.username}</h2><h2>Your account password ${password}</h2><p>Thank you.</p></div>`,
+				newProcurementOfficer
 			);
 
 			return res
 				.status(201)
-				.json({ id: newSiteManager._id, role: "sitemanager" });
+				.json({ id: newProcurementOfficer._id, role: "officer" });
 		} catch (err) {
 			console.error(err.message);
 			return res.status(500).send();
@@ -97,4 +98,4 @@ const saveSiteManager = async (req, res) => {
 	return res.status(400).send();
 };
 
-module.exports = { saveSiteManager };
+module.exports = { saveProcurementOfficer };
