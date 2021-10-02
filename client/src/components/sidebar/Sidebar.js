@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
 import logo from "../../assets/images/logo.png";
-import tinyLogo from "../../assets/images/logo-only.png";
 import SidebarItem from "./SidebarItem";
 import {
 	sidebar_manager,
@@ -49,7 +48,7 @@ const Sidebar = (props) => {
 				)}
 
 				<div className="sidebar__logo">
-					<img src={isCollapsed ? tinyLogo : logo} alt="company logo" />
+					<img src={logo} alt="company logo" />
 				</div>
 
 				{sidebar_manager.map((item, index) => (

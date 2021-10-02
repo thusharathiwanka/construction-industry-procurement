@@ -1,11 +1,11 @@
-const Report = required("../models/report.model.js");
+const Report = require("../models/report.model.js");
 
 const saveReport = async (req, res) => {
 	if (req.body) {
-		const { description } = req.body;
+		const { description, name } = req.body;
 
 		// * user inputs validation
-		if (!description) {
+		if (!description || !name) {
 			return res.status(400).json({ message: "Please fill all the fields" });
 		}
 
@@ -13,6 +13,7 @@ const saveReport = async (req, res) => {
 			// * save report
 			const newReport = new Report({
 				description,
+				name,
 			});
 
 			console.log(newReport);
