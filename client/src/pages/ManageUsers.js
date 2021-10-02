@@ -4,22 +4,28 @@ import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 
-import profilePicture from "../assets/images/admin-greeting.png";
-
 import "../assets/css/Usercreate.css";
+import axios from "axios";
 
 const ManageUsers = () => {
-	const [employeeDetails, setEmployeeDetails] = useState({});
+	const [employeeDetails, setEmployeeDetails] = useState({
+		name: "",
+		email: "",
+		username: "",
+		position: "sitemanager",
+		phone: "",
+		weeklyWorkHrs: "",
+		salary: "",
+	});
 	const fields = [
-		"ID",
-		"Worker Name",
-		"Emergency Mobile",
-		"Hired Company",
-		"weeklyWorkHours",
-		"Shift",
-		"phone",
-		"username",
-		"Date",
+		"",
+		"Employee Name",
+		"Email",
+		"Username",
+		"Phone",
+		"Weekly Work Hrs",
+		"Position",
+		"Salary",
 	];
 
 	const rows = [
@@ -29,7 +35,7 @@ const ManageUsers = () => {
 			email: "077777777",
 			salary: "Company 1",
 			username: "90000000000",
-			weeklyWorkHours: "Gardening",
+			weeklyWorkHrs: "Gardening",
 			shift: "Morning-Shift",
 			phone: "00038434343",
 			date: "2021.08.06",
@@ -40,7 +46,7 @@ const ManageUsers = () => {
 			email: "077777777",
 			salary: "Company 2",
 			username: "90000000000",
-			weeklyWorkHours: "Gardening",
+			weeklyWorkHrs: "Gardening",
 			shift: "Morning-Shift",
 			phone: "00038434343",
 			date: "2021.08.06",
@@ -51,7 +57,7 @@ const ManageUsers = () => {
 			email: "077777777",
 			salary: "Company 3",
 			username: "90000000000",
-			weeklyWorkHours: "Gardening",
+			weeklyWorkHrs: "Gardening",
 			shift: "Morning-Shift",
 			phone: "00038434343",
 			date: "2021.08.06",
@@ -62,30 +68,43 @@ const ManageUsers = () => {
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
-			<td>{item.id}</td>
+			<td>{index}</td>
 			<td>{item.name}</td>
 			<td>{item.email}</td>
-			<td>{item.salary}</td>
-			<td>{item.weeklyWorkHours}</td>
-			<td>{item.shift}</td>
-			<td>{item.phone}</td>
 			<td>{item.username}</td>
-			<td>{item.date}</td>
+			<td>{item.phone}</td>
+			<td>{item.weeklyWorkHrs}</td>
+			<td>{item.position}</td>
+			<td>{item.salary}</td>
 		</tr>
 	);
 
-	const saveEmployeeDetails = (e) => {
+	const saveEmployeeDetails = async (e) => {
 		e.preventDefault();
+		let endpoint;
+
+		if (employeeDetails.position === "sitemanager") {
+			endpoint = "sitemanagers";
+		} else if (employeeDetails.position === "officers") {
+			endpoint = "officers";
+		}
 		console.log(employeeDetails);
-		setEmployeeDetails({
-			name: "",
-			email: "",
-			username: "",
-			position: "",
-			phone: "",
-			weeklyWorkHours: "",
-			salary: "",
-		});
+
+		try {
+			const res = await axios.post(endpoint, employeeDetails);
+			console.log(res);
+			setEmployeeDetails({
+				name: "",
+				email: "",
+				username: "",
+				position: "",
+				phone: "",
+				weeklyWorkHrs: "",
+				salary: "",
+			});
+		} catch (err) {
+			console.log(err.response);
+		}
 	};
 
 	return (
@@ -97,7 +116,7 @@ const ManageUsers = () => {
 					<h1 className="page-header">Manage Users</h1>
 					<div className="row">
 						<div className="col-12">
-							<form className="card" onSubmit={saveEmployeeDetails}>
+							<form className="card">
 								<div className="row">
 									<div className="col-6">
 										<div className="rowuser">
@@ -144,6 +163,7 @@ const ManageUsers = () => {
 													})
 												}
 												required
+												maxLength="10"
 											/>
 										</div>
 									</div>
@@ -168,11 +188,11 @@ const ManageUsers = () => {
 											<input
 												type="text"
 												placeholder="Weekly Work Hours"
-												value={employeeDetails.weeklyWorkHours}
+												value={employeeDetails.weeklyWorkHrs}
 												onChange={(e) =>
 													setEmployeeDetails({
 														...employeeDetails,
-														weeklyWorkHours: e.target.value,
+														weeklyWorkHrs: e.target.value,
 													})
 												}
 												required
@@ -198,47 +218,27 @@ const ManageUsers = () => {
 									<div className="col-6">
 										<div className="rowuser">
 											<select
-												name="shift"
-												id="shift"
-												placeholder="Select employee type"
-												value={employeeDetails.shift}
+												name="position"
+												id="position"
+												value={employeeDetails.position}
 												onChange={(e) =>
 													setEmployeeDetails({
 														...employeeDetails,
-														shift: e.target.value,
+														position: e.target.value,
 													})
 												}
 												required
 											>
-												<option value="sitemanager" default disabled>
-													Select employee type
-												</option>
-												<option value="sitemanager" default>
-													Site Manager
-												</option>
+												<option value="sitemanager">Site Manager</option>
 												<option value="officer">Procurement Officer</option>
 											</select>
 										</div>
 									</div>
-									<div className="col-6">
-										<div className="rowuser">
-											<input
-												type="date"
-												placeholder=""
-												value={employeeDetails.date}
-												onChange={(e) =>
-													setEmployeeDetails({
-														...employeeDetails,
-														date: e.target.value,
-													})
-												}
-												required
-											/>
-										</div>
-									</div>
 								</div>
 								<div className="rowuser">
-									<button type="submit">Save</button>
+									<button type="submit" onClick={saveEmployeeDetails}>
+										Save
+									</button>
 								</div>
 							</form>
 						</div>

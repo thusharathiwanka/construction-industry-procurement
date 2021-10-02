@@ -71,7 +71,7 @@ const saveProcurementOfficer = async (req, res) => {
 			const newProcurementOfficer = new ProcurementOfficer({
 				name,
 				email,
-				username,
+				username: username + "@officer",
 				password: hashedPassword,
 				phone,
 				weeklyWorkHrs,

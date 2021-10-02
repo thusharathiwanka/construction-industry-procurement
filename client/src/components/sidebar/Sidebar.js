@@ -33,8 +33,6 @@ const Sidebar = (props) => {
 		currentSidebar = sidebar_supplier;
 	}
 
-	console.log(loggedIn.role, currentSidebar);
-
 	const activeItem =
 		loggedIn.role &&
 		currentSidebar.findIndex((item) => item.route === window.location.pathname);
