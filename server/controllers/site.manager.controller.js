@@ -87,7 +87,7 @@ const saveSiteManager = async (req, res) => {
 
 			return res
 				.status(201)
-				.json({ id: newSiteManager._id, role: "site-manager" });
+				.json({ id: newSiteManager._id, role: "sitemanager" });
 		} catch (err) {
 			console.error(err.message);
 			return res.status(500).send();

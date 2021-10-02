@@ -88,7 +88,7 @@ const saveProcurementOfficer = async (req, res) => {
 
 			return res
 				.status(201)
-				.json({ id: newProcurementOfficer._id, role: "procurement-officer" });
+				.json({ id: newProcurementOfficer._id, role: "officer" });
 		} catch (err) {
 			console.error(err.message);
 			return res.status(500).send();
