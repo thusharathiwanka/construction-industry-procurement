@@ -3,7 +3,7 @@ const generator = require("generate-password");
 const SiteManager = require("../models/site.manager.model");
 
 const hashPassword = require("../helpers/hash.password");
-const emailConfig = require("../configs/email.config");
+const sendMail = require("../configs/email.config");
 
 /**
  * use to register the site manager
@@ -71,10 +71,11 @@ const saveSiteManager = async (req, res) => {
 			});
 			await newSiteManager.save();
 
-			await emailConfig.mailer(
+			await sendMail(
 				email,
-				"Your Account Password",
-				"<b>Hello world?</b>"
+				"Your Account Credentials",
+				`<div><h2>Your account username ${newSiteManager.username}</h2><h2>Your account password ${password}</h2><p>Thank you.</p></div>`,
+				newSiteManager
 			);
 
 			return res
