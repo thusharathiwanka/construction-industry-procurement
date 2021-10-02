@@ -1,20 +1,15 @@
-import React, { useEffect, useContext } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import React, { useContext } from "react";
+import { Route, Switch } from "react-router-dom";
 
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 
-// import { LoginAuth } from "../contexts/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Routes = () => {
-	// const { setLoggedIn, loggedIn } = useContext(LoginAuth);
+	const { loggedIn } = useContext(AuthContext);
 
-	// useEffect(() => {
-	// 	setLoggedIn({
-	// 		token: localStorage.getItem("token"),
-	// 		community: localStorage.getItem("community"),
-	// 	});
-	// }, [setLoggedIn]);
+	console.log(loggedIn);
 
 	return (
 		<Switch>
