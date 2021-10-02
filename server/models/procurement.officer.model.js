@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ProcurementManagerSchema = new mongoose.Schema(
+const ProcurementOfficeSchema = new mongoose.Schema(
 	{
 		name: { type: String, require: true, trim: true },
 		username: { type: String, require: true, trim: true },
@@ -9,9 +9,9 @@ const ProcurementManagerSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-const ProcurementManager = mongoose.model(
-	"procurementManagers",
-	ProcurementManagerSchema
+const ProcurementOfficer = mongoose.model(
+	"procurementOfficers",
+	ProcurementOfficeSchema
 );
 
-module.exports = ProcurementManager;
+module.exports = ProcurementOfficer;

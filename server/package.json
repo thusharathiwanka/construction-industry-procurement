@@ -6,7 +6,7 @@
 	"scripts": {
 		"watch": "nodemon server.js",
 		"start": "node server.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "jest"
 	},
 	"keywords": [],
 	"author": "",
@@ -17,10 +17,15 @@
 		"cors": "^2.8.5",
 		"dotenv": "^10.0.0",
 		"express": "^4.17.1",
+		"generate-password": "^1.6.1",
 		"jsonwebtoken": "^8.5.1",
-		"mongoose": "^6.0.8"
+		"mongoose": "^6.0.8",
+		"nodemailer": "^6.6.5"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.13"
+		"axios": "^0.22.0",
+		"jest": "^27.2.4",
+		"nodemon": "^2.0.13",
+		"supertest": "^6.1.6"
 	}
 }
