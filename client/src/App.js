@@ -1,20 +1,23 @@
 import { useEffect } from "react";
+import axios from "axios";
 import AOS from "aos";
-import Axios from "axios";
+
+import "boxicons/css/boxicons.min.css";
+import "aos/dist/aos.css";
 
 import "./App.css";
-import "./assets/boxicons-2.0.9/css/boxicons.min.css";
 import "./assets/css/grid.css";
 import "./assets/css/theme.css";
 import "./assets/css/index.css";
 import "./assets/css/Usercreate.css";
-import "aos/dist/aos.css";
 
-import Routes from "./routes/Routes";
-import { BrowserRouter } from "react-router-dom";
+import AuthContextProvider from "./contexts/AuthContext";
+
+import Layout from "./components/layout/Layout";
 
 function App() {
-	Axios.defaults.baseURL = "http://localhost:5000/api/v1/";
+	axios.defaults.baseURL = "http://localhost:5000/api/v1/";
+	axios.defaults.withCredentials = true;
 
 	useEffect(() => {
 		AOS.init({
@@ -28,9 +31,9 @@ function App() {
 	});
 
 	return (
-		<BrowserRouter>
-			<Routes />
-		</BrowserRouter>
+		<AuthContextProvider>
+			<Layout />
+		</AuthContextProvider>
 	);
 }
 

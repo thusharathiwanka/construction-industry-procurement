@@ -27,6 +27,8 @@ mongoose
 		console.error(err.message);
 	});
 
+app.use("/api/v1", require("./routes/index.routes"));
+
 app.get("/", (req, res) => {
 	res.send("<h3>Procurement Construction Industry API</h3>");
 });
