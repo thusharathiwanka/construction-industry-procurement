@@ -1,7 +1,7 @@
 const Supplier = require("../models/supplier.model");
 
 /**
- * use to register the order
+ * use to save a  new supplier
  * @param {Object} req
  * @param {Object} res
  * @returns {Object} res
@@ -13,19 +13,24 @@ const saveSupplier = async (req, res) => {
 		await newSupplier.save();
 		res.status(201).json(newSupplier._id);
 	} catch (err) {
-		res.status(400);
-		console.log(err.message);
+		res.status(400).json({ message: err.message });
+		// console.log(err.message);
 	}
 };
 
-const getSupplier = async(req, res) => {
-	try{
-		const allSuppliers = await Supplier.find({materials:req.params.id}) 
-	}catch (err) {
-		res.status(400);
-		console.log(err.message);
+/**
+ * use to get all suppliers
+ * @param {*} req
+ * @param {*} res
+ */
+const getSupplier = async (req, res) => {
+	try {
+		const allSuppliers = await Supplier.find({ materials: req.params.id });
+		res.status(200).json(allSuppliers);
+	} catch (err) {
+		res.status(400).json({ message: err.message });
+		// console.log(err.message);
 	}
-}
+};
 
-
-module.exports = { saveSupplier };
+module.exports = { saveSupplier, getSupplier };
