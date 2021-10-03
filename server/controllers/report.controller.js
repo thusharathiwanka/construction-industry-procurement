@@ -1,25 +1,27 @@
-const Report = require("../models/report.model.js");
+const deliveryReport = require("../models/delivery.report.model");
 
 /**
  * saves the report
- * @param {*} req
- * @param {*} res
- * @returns  a new report
+ * @param {req} req
+ * @param {res} res
+ * @returns  res
  */
 const saveReport = async (req, res) => {
 	if (req.body) {
-		const { description, name } = req.body;
+		const { description, item, quantity, orderId } = req.body;
 		// console.log(req.body);
 		// * user inputs validation
-		if (!description || !name) {
+		if (!description || !item || !quantity) {
 			return res.status(400).json({ message: "Please fill all the fields" });
 		}
 
 		try {
 			// * save report
-			const newReport = new Report({
+			const newReport = new deliveryReport({
 				description,
-				name,
+				item,
+				quantity,
+				orderId,
 			});
 
 			// console.log(newReport);
