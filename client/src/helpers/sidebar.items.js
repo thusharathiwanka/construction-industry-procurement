@@ -16,7 +16,7 @@ const sidebar_manager = [
 	},
 	{
 		display_name: "Manage Sites",
-		route: "/auth/manager/users",
+		route: "/auth/manager/sites",
 		icon: "bx bx-buildings",
 	},
 	{
@@ -26,7 +26,7 @@ const sidebar_manager = [
 	},
 	{
 		display_name: "Manage Suppliers",
-		route: "/auth/manager/users",
+		route: "/auth/manager/suppliers",
 		icon: "bx bx-group",
 	},
 	{
