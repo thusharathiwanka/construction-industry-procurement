@@ -79,7 +79,7 @@ const loginUser = async (req, res) => {
 			//* sending token as a cookie
 			return res
 				.cookie("token", token, { httpOnly: true })
-				.send({ type: userRole });
+				.send({ type: userRole, site: existingUser.site });
 		} catch (err) {
 			console.error(err.message);
 			return res.status(500).send();
@@ -126,4 +126,22 @@ const checkLoggedIn = (req, res) => {
 	}
 };
 
-module.exports = { loginUser, logoutUser, checkLoggedIn };
+/**
+ * use to get all the employees
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const getAllEmployees = async (req, res) => {
+	try {
+		const officers = await ProcurementOfficer.find();
+		const siteManagers = await SiteManager.find();
+		officers;
+		return res.status(200).json({ employees: [...officers, ...siteManagers] });
+	} catch (err) {
+		console.error(err.message);
+		return res.status(500).send();
+	}
+};
+
+module.exports = { loginUser, logoutUser, checkLoggedIn, getAllEmployees };
