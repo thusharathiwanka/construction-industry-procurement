@@ -12,21 +12,14 @@ const ManageUsers = () => {
 	const [error, setError] = useState("");
 	const [btnState, setBtnState] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
-	const [employees, setEmployees] = useState(true);
+	const [siteManagers, setSiteManagers] = useState([]);
+	const [sites, setSites] = useState([]);
 	const [site, setSite] = useState({
 		name: "",
 		location: "",
 		siteManagerId: "",
 	});
-	const fields = [
-		"",
-		"Employee Name",
-		"Email",
-		"Username",
-		"Phone",
-		"Weekly Work Hrs",
-		"Salary",
-	];
+	const fields = ["", "Site Name", "Location", "Site Manager", "Email"];
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
@@ -34,22 +27,16 @@ const ManageUsers = () => {
 		<tr key={index}>
 			<td>{index + 1}</td>
 			<td>{item.name}</td>
-			<td>{item.email}</td>
-			<td>{item.username}</td>
-			<td>{item.phone}</td>
-			<td>{item.weeklyWorkHrs}</td>
-			<td>{item.salary}</td>
+			<td>{item.location}</td>
+			<td>{item.siteManagerId.name}</td>
+			<td>{item.siteManagerId.email}</td>
 		</tr>
 	);
 
 	const saveSite = async (e) => {
 		e.preventDefault();
-		let endpoint;
-
-		e.preventDefault();
-		const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 		setBtnState(true);
-
+		console.log(site);
 		for (let key of Object.keys(site)) {
 			if (!site[key]) {
 				setBtnState(false);
@@ -58,12 +45,14 @@ const ManageUsers = () => {
 		}
 
 		try {
-			const res = await axios.post(endpoint, site);
+			const res = await axios.post("sites", site);
 			console.log(res);
 			setSite({
 				name: "",
 				location: "",
+				siteManagerId: "",
 			});
+			getAllSiteManagers();
 			setError("");
 			window.alert("Site registered successfully");
 			setBtnState(false);
@@ -74,18 +63,28 @@ const ManageUsers = () => {
 		}
 	};
 
-	const getAllEmployees = async () => {
+	const getAllSites = async () => {
 		try {
-			const res = await axios.get(`users/`);
-			setEmployees(res.data.employees);
-			console.log(res.data.employees);
+			const res = await axios.get(`sites/`);
+			setSites(res.data.sites);
+			console.log(res);
 			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
 		}
 	};
 
-	useEffect(() => getAllEmployees(), []);
+	const getAllSiteManagers = async () => {
+		try {
+			const res = await axios.get(`sitemanagers`);
+			setSiteManagers(res.data.sitemanagers);
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
+	useEffect(() => getAllSiteManagers(), []);
+	useEffect(() => getAllSites(), []);
 
 	return (
 		<div>
@@ -135,6 +134,30 @@ const ManageUsers = () => {
 											/>
 										</div>
 									</div>
+									<div className="col-6">
+										<div className="rowuser">
+											<select
+												name="site"
+												id="site"
+												value={site.siteManagerId}
+												onChange={(e) =>
+													setSite({
+														...site,
+														siteManagerId: e.target.value,
+													})
+												}
+												required
+											>
+												<option default>SELECT SITE MANAGER</option>
+												{siteManagers.length !== 0 &&
+													siteManagers.map((siteManager) => (
+														<option value={siteManager._id}>
+															{siteManager.name}
+														</option>
+													))}
+											</select>
+										</div>
+									</div>
 								</div>
 								<div className="rowuser">
 									<button type="submit" onClick={saveSite}>
@@ -145,7 +168,7 @@ const ManageUsers = () => {
 						</div>
 					</div>
 					<div className="card">
-						<h2>Employee Details</h2>
+						<h2>Site Details</h2>
 						{isLoading ? (
 							<Spinner />
 						) : (
@@ -153,7 +176,7 @@ const ManageUsers = () => {
 								limit="5"
 								headData={fields}
 								renderHead={(item, index) => renderOrderHead(item, index)}
-								bodyData={employees}
+								bodyData={sites}
 								renderBody={(item, index) => renderOrderBody(item, index)}
 							/>
 						)}
