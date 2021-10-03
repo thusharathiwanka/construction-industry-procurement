@@ -6,7 +6,7 @@ const deliveryReport = require("../models/delivery.report.model");
  * @param {res} res
  * @returns  res
  */
-const saveReport = async (req, res) => {
+const saveDeliveryReport = async (req, res) => {
 	if (req.body) {
 		const { description, item, quantity, orderId } = req.body;
 		// console.log(req.body);
@@ -38,6 +38,17 @@ const saveReport = async (req, res) => {
 
 	return res.status(400).send();
 };
+
+const getDeliveryReport = async(req, res)=>{
+	try {
+		const reports = deliveryReport.find({ orderId: req.params.id});
+		res.status(200).json(reports);
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+
+}
 module.exports = {
-	saveReport,
+	saveDeliveryReport,
+	getDeliveryReport
 };
