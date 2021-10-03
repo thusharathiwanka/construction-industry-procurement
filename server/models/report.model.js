@@ -7,5 +7,5 @@ const ReportSchema = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
-const Report = mongoose.model("report", ReportSchema);
+const Report = mongoose.model("reports", ReportSchema);
 module.exports = Report;

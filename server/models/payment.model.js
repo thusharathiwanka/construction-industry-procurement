@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-const PaymentSchema = new mongoose.Schema({
-    amount:{ type: Number  },
-    supplierId:{type: mongoose.Schema.Types.ObjectId,
-			ref: "suppliers" },
-    orderId:{type: mongoose.Schema.Types.ObjectId,
-			ref: "orders"}
-    
-},{timestamps: true})
+const PaymentSchema = new mongoose.Schema(
+	{
+		amount: { type: Number },
+		supplierId: { type: mongoose.Schema.Types.ObjectId, ref: "suppliers" },
+		orderId: { type: mongoose.Schema.Types.ObjectId, ref: "orders" },
+	},
+	{ timestamps: true }
+);
 
-const Payment = mongoose.model("suppliers", PaymentSchema);
+const Payment = mongoose.model("payments", PaymentSchema);
 module.exports = Payment;
