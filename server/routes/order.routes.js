@@ -9,6 +9,7 @@ const {
 } = require("../auth/procurement.manager.auth");
 
 router.post("/", verifySiteManagerAuth, OrderController.saveOrder);
+
 router.get("/", OrderController.allOrders);
 router.get(
 	"/officer",
