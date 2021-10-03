@@ -18,14 +18,13 @@ const saveSupplier = async (req, res) => {
 	}
 };
 
-const getSupplier = async(req, res) => {
-	try{
-		const allSuppliers = await Supplier.find({materials:req.params.id}) 
-	}catch (err) {
+const getSupplier = async (req, res) => {
+	try {
+		const allSuppliers = await Supplier.find({ materials: req.params.id });
+	} catch (err) {
 		res.status(400);
 		console.log(err.message);
 	}
-}
+};
 
-
-module.exports = { saveSupplier };
+module.exports = { saveSupplier, getSupplier };
