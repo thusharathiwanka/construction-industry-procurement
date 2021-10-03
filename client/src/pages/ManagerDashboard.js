@@ -72,7 +72,7 @@ const AdminDashboard = () => {
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
-			<td>{item.id}</td>
+			<td>{index + 1}</td>
 			<td>{item.date}</td>
 			<td>{item.houseOwner}</td>
 			<td>{item.providence}</td>
@@ -177,8 +177,8 @@ const AdminDashboard = () => {
 										/>
 									</div>
 									<div className="col-8">
-										<h2>Mavindu Iddugoda</h2>
-										<h3 className="lighter">PRESIDENT</h3>
+										<h2>Thushara Thiwanka</h2>
+										<h3 className="lighter">MANAGER</h3>
 									</div>
 								</div>
 							</div>

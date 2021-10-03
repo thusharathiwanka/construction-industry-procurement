@@ -86,7 +86,7 @@ const Sidebar = (props) => {
 					</div>
 
 					{currentSidebar.map((item, index) => (
-						<Link onClick={!item.route && logout} to={item.route} key={index}>
+						<Link to={item.route} key={index}>
 							{isCollapsed === true ? (
 								<SidebarItem icon={item.icon} active={index === activeItem} />
 							) : (

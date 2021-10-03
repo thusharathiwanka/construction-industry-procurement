@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
+import Spinner from "../components/loading/Spinner";
 
 import "../assets/css/Usercreate.css";
 import axios from "axios";
 
 const ManageUsers = () => {
+	const [error, setError] = useState("");
+	const [btnState, setBtnState] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [employees, setEmployees] = useState(true);
 	const [employeeDetails, setEmployeeDetails] = useState({
 		name: "",
 		email: "",
@@ -16,6 +21,7 @@ const ManageUsers = () => {
 		phone: "",
 		weeklyWorkHrs: "",
 		salary: "",
+		site: "",
 	});
 	const fields = [
 		"",
@@ -24,57 +30,19 @@ const ManageUsers = () => {
 		"Username",
 		"Phone",
 		"Weekly Work Hrs",
-		"Position",
 		"Salary",
-	];
-
-	const rows = [
-		{
-			id: 1,
-			name: "Gayath",
-			email: "077777777",
-			salary: "Company 1",
-			username: "90000000000",
-			weeklyWorkHrs: "Gardening",
-			shift: "Morning-Shift",
-			phone: "00038434343",
-			date: "2021.08.06",
-		},
-		{
-			id: 2,
-			name: "Gayath",
-			email: "077777777",
-			salary: "Company 2",
-			username: "90000000000",
-			weeklyWorkHrs: "Gardening",
-			shift: "Morning-Shift",
-			phone: "00038434343",
-			date: "2021.08.06",
-		},
-		{
-			id: 3,
-			name: "Gayath",
-			email: "077777777",
-			salary: "Company 3",
-			username: "90000000000",
-			weeklyWorkHrs: "Gardening",
-			shift: "Morning-Shift",
-			phone: "00038434343",
-			date: "2021.08.06",
-		},
 	];
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
-			<td>{index}</td>
+			<td>{index + 1}</td>
 			<td>{item.name}</td>
 			<td>{item.email}</td>
 			<td>{item.username}</td>
 			<td>{item.phone}</td>
 			<td>{item.weeklyWorkHrs}</td>
-			<td>{item.position}</td>
 			<td>{item.salary}</td>
 		</tr>
 	);
@@ -83,9 +51,30 @@ const ManageUsers = () => {
 		e.preventDefault();
 		let endpoint;
 
-		if (employeeDetails.position === "sitemanager") {
+		e.preventDefault();
+		const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+		setBtnState(true);
+
+		for (let key of Object.keys(employeeDetails)) {
+			if (!employeeDetails[key]) {
+				setBtnState(false);
+				return setError("Please fill all the fields");
+			}
+		}
+
+		if (!employeeDetails.email.match(pattern)) {
+			setBtnState(false);
+			return setError("Please use valid email address");
+		}
+
+		if (employeeDetails.phone.length !== 10) {
+			setBtnState(false);
+			return setError("Please use valid phone number");
+		}
+
+		if (employeeDetails.site === "sitemanager") {
 			endpoint = "sitemanagers";
-		} else if (employeeDetails.position === "officers") {
+		} else if (employeeDetails.site === "officers") {
 			endpoint = "officers";
 		}
 		console.log(employeeDetails);
@@ -97,15 +86,33 @@ const ManageUsers = () => {
 				name: "",
 				email: "",
 				username: "",
-				position: "",
+				site: "",
 				phone: "",
 				weeklyWorkHrs: "",
 				salary: "",
 			});
+			setError("");
+			window.alert("House owner registered successfully");
+			setBtnState(false);
+			setIsLoading(true);
+		} catch (err) {
+			setBtnState(false);
+			console.log(err.response);
+		}
+	};
+
+	const getAllEmployees = async () => {
+		try {
+			const res = await axios.get(`users/`);
+			setEmployees(res.data.employees);
+			console.log(res.data.employees);
+			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
 		}
 	};
+
+	useEffect(() => getAllEmployees(), []);
 
 	return (
 		<div>
@@ -116,7 +123,12 @@ const ManageUsers = () => {
 					<h1 className="page-header">Manage Users</h1>
 					<div className="row">
 						<div className="col-12">
-							<form className="card">
+							<form className="card" style={{ position: "relative" }}>
+								{error && (
+									<div className="error-bg" style={{ left: "3%" }}>
+										<p>{error}</p>
+									</div>
+								)}
 								<div className="row">
 									<div className="col-6">
 										<div className="rowuser">
@@ -234,6 +246,29 @@ const ManageUsers = () => {
 											</select>
 										</div>
 									</div>
+									{employeeDetails.position === "sitemanager" ? (
+										<div className="col-6">
+											<div className="rowuser">
+												<select
+													name="site"
+													id="site"
+													value={employeeDetails.site}
+													onChange={(e) =>
+														setEmployeeDetails({
+															...employeeDetails,
+															site: e.target.value,
+														})
+													}
+													required
+												>
+													<option value="site">Site 1</option>
+													<option value="officer">Site 2</option>
+												</select>
+											</div>
+										</div>
+									) : (
+										""
+									)}
 								</div>
 								<div className="rowuser">
 									<button type="submit" onClick={saveEmployeeDetails}>
@@ -244,14 +279,18 @@ const ManageUsers = () => {
 						</div>
 					</div>
 					<div className="card">
-						<h2>Worker Details</h2>
-						<Table
-							limit="5"
-							headData={fields}
-							renderHead={(item, index) => renderOrderHead(item, index)}
-							bodyData={rows}
-							renderBody={(item, index) => renderOrderBody(item, index)}
-						/>
+						<h2>Employee Details</h2>
+						{isLoading ? (
+							<Spinner />
+						) : (
+							<Table
+								limit="5"
+								headData={fields}
+								renderHead={(item, index) => renderOrderHead(item, index)}
+								bodyData={employees}
+								renderBody={(item, index) => renderOrderBody(item, index)}
+							/>
+						)}
 					</div>
 				</div>
 			</div>
