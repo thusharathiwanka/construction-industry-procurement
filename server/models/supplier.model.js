@@ -4,7 +4,7 @@ const SupplierSchema = new mongoose.Schema(
 	{
 		name: { type: String, require: true, trim: true },
 		username: { type: String, require: true, trim: true },
-		password: { type: String, require: true, trim: true, select: false },
+		password: { type: String, require: true, trim: true },
 		phone: { type: String, require: true, trim: true },
 		materials: [{ type: mongoose.Schema.Types.ObjectId, ref: "materials" }],
 	},

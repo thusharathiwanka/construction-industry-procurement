@@ -3,12 +3,14 @@ import { Route, Switch } from "react-router-dom";
 
 import Login from "../pages/Login";
 import ManagerDashboard from "../pages/ManagerDashboard";
-import SupplierDashboard from "../pages/SupplierDashboard";
+import ManageOrdersSupplier from "../pages/ManageOrdersSupplier";
+import ManageUsers from "../pages/ManageUsers";
+import MyServices from "../pages/MyServices";
 import OfficerDashboard from "../pages/OfficerDashboard";
+import SupplierDashboard from "../pages/SupplierDashboard";
 import SiteManagerDashboard from "../pages/SiteManagerDashboard";
 
 import { AuthContext } from "../contexts/AuthContext";
-import ManageUsers from "../pages/ManageUsers";
 
 const Routes = () => {
 	const { loggedIn } = useContext(AuthContext);
@@ -29,6 +31,12 @@ const Routes = () => {
 				path="/auth/supplier/dashboard"
 				component={SupplierDashboard}
 			/>
+			<Route
+				exact
+				path="/auth/supplier/orders"
+				component={ManageOrdersSupplier}
+			/>
+			<Route exact path="/auth/supplier/my" component={MyServices} />
 			<Route
 				exact
 				path="/auth/officer/dashboard"
