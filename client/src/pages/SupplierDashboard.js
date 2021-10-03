@@ -10,7 +10,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import profilePicture from "../assets/images/admin-user-img.jpg";
 
-const AdminDashboard = () => {
+const SupplierDashboard = () => {
 	const [value, onChange] = useState(new Date());
 	const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
 	const rows = [
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
-			<td>{index + 1}</td>
+			<td>{item.id}</td>
 			<td>{item.date}</td>
 			<td>{item.houseOwner}</td>
 			<td>{item.providence}</td>
@@ -112,10 +112,7 @@ const AdminDashboard = () => {
 							<div className="card greeting-card">
 								<div className="row">
 									<div className="col-8 flex-column">
-										<h1 className="page-header">
-											Good Morning!{" "}
-											<span className="special">Mavindu Iddugoda</span>
-										</h1>
+										<h1 className="page-header">Good Morning! </h1>
 										<h3>Today you have 9 new notifications</h3>
 										<h3>Also new booking appointments for approval</h3>
 										<Link className="read-more">
@@ -152,7 +149,7 @@ const AdminDashboard = () => {
 						<div className="col-8">
 							<div className="card">
 								<div className="flex">
-									<h2 className="request-title">Registered Users</h2>
+									<h2 className="request-title">New Orders</h2>
 									<Link>
 										<button className="view-btn">View All</button>
 									</Link>
@@ -177,8 +174,8 @@ const AdminDashboard = () => {
 										/>
 									</div>
 									<div className="col-8">
-										<h2>Thushara Thiwanka</h2>
-										<h3 className="lighter">MANAGER</h3>
+										<h2>Mavindu Iddugoda</h2>
+										<h3 className="lighter">PRESIDENT</h3>
 									</div>
 								</div>
 							</div>
@@ -190,4 +187,4 @@ const AdminDashboard = () => {
 	);
 };
 
-export default AdminDashboard;
+export default SupplierDashboard;

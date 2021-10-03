@@ -8,6 +8,7 @@ const SiteManagerSchema = new mongoose.Schema(
 		password: { type: String, require: true, trim: true },
 		weeklyWorkHrs: { type: String, require: true, trim: true },
 		salary: { type: Number, require: true, trim: true },
+		siteId: { type: mongoose.Schema.Types.ObjectId, ref: "sites" },
 	},
 	{ timestamps: true }
 );

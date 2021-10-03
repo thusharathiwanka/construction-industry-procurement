@@ -12,6 +12,8 @@ const OrderSchema = new mongoose.Schema(
 		orderItem: { type: mongoose.Schema.Types.ObjectId, ref: "materials"},
 		quantity: { type: Number, required: true },
 		total: { type: Number, trim: true,  default: 0 },
+		supplierId:{type: mongoose.Schema.Types.ObjectId,
+			ref: "suppliers" }
 	},
 	{ timestamps: true }
 );
