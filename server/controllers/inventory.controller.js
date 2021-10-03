@@ -3,7 +3,7 @@ const Inventory = require("../models/inventory.model")
 const getInventoryItem = async(req, res)=>{
     try {
 		if (req.body) {
-			const inventory = await Inventory.findById()
+			const inventory = await Inventory.find({siteId:req.params.id})
 			res.status(200).json(inventory);
 		}
 	} catch (error) {
@@ -26,4 +26,9 @@ const updateInventory = async(req, res)=>{
 		res.status(400);
 		console.log(error);
 	}
+}
+
+module.exports = {
+	getInventoryItem,
+	updateInventory,
 }
