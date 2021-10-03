@@ -112,10 +112,7 @@ const SupplierDashboard = () => {
 							<div className="card greeting-card">
 								<div className="row">
 									<div className="col-8 flex-column">
-										<h1 className="page-header">
-											Good Morning!{" "}
-											<span className="special">Mavindu Iddugoda</span>
-										</h1>
+										<h1 className="page-header">Good Morning! </h1>
 										<h3>Today you have 9 new notifications</h3>
 										<h3>Also new booking appointments for approval</h3>
 										<Link className="read-more">

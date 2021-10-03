@@ -94,6 +94,11 @@ const sidebar_supplier = [
 		icon: "bx bx-bar-chart-square",
 	},
 	{
+		display_name: "My Services",
+		route: "/auth/supplier/my",
+		icon: "bx bx-store",
+	},
+	{
 		display_name: "Sign Out",
 		route: "",
 		icon: "bx bx-log-out",

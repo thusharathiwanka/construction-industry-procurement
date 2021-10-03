@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 
 import "./Sidebar.css";
 
@@ -18,7 +19,8 @@ import {
 } from "../../helpers/sidebar.items";
 
 const Sidebar = (props) => {
-	const { loggedIn } = useContext(AuthContext);
+	const history = useHistory();
+	const { loggedIn, getLoggedIn } = useContext(AuthContext);
 	const [isCollapsed, setIsCollapsed] = useState(false);
 
 	let currentSidebar;
@@ -33,7 +35,14 @@ const Sidebar = (props) => {
 		currentSidebar = sidebar_supplier;
 	}
 
-	console.log(loggedIn.role, currentSidebar);
+	const logout = async () => {
+		await axios.get("/users/logout");
+		await getLoggedIn();
+		history.push("/");
+
+		localStorage.clear();
+		setTimeout(() => window.location.reload(), 3);
+	};
 
 	const activeItem =
 		loggedIn.role &&

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Select from "react-select";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
@@ -6,10 +8,16 @@ import Table from "../components/table/Table";
 import Spinner from "../components/loading/Spinner";
 
 import "../assets/css/Usercreate.css";
-import axios from "axios";
 
-const ManageUsers = () => {
+const MyServices = () => {
 	const [error, setError] = useState("");
+	const [options, setOptions] = useState([
+		{ value: "chocolate", label: "Chocolate" },
+		{ value: "strawberry", label: "Strawberry" },
+		{ value: "vanilla", label: "Vanilla" },
+	]);
+	const [orderDetails, setOrderDetails] = useState({});
+	const [selectedFoods, setSelectedFoods] = useState([]);
 	const [btnState, setBtnState] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [employees, setEmployees] = useState(true);
@@ -120,7 +128,7 @@ const ManageUsers = () => {
 			<div id="main" className="layout__content">
 				<TopNav />
 				<div className="layout__content-main">
-					<h1 className="page-header">Manage Users</h1>
+					<h1 className="page-header">Manage Services</h1>
 					<div className="row">
 						<div className="col-12">
 							<form className="card" style={{ position: "relative" }}>
@@ -229,46 +237,17 @@ const ManageUsers = () => {
 									</div>
 									<div className="col-6">
 										<div className="rowuser">
-											<select
-												name="position"
-												id="position"
-												value={employeeDetails.position}
-												onChange={(e) =>
-													setEmployeeDetails({
-														...employeeDetails,
-														position: e.target.value,
-													})
-												}
-												required
-											>
-												<option value="sitemanager">Site Manager</option>
-												<option value="officer">Procurement Officer</option>
-											</select>
+											<Select
+												style={{ width: "100%" }}
+												isMulti
+												name="options"
+												options={options}
+												className="basic-multi-select"
+												classNamePrefix="select"
+												onChange={setSelectedFoods}
+											/>
 										</div>
 									</div>
-									{employeeDetails.position === "sitemanager" ? (
-										<div className="col-6">
-											<div className="rowuser">
-												<select
-													name="site"
-													id="site"
-													value={employeeDetails.site}
-													onChange={(e) =>
-														setEmployeeDetails({
-															...employeeDetails,
-															site: e.target.value,
-														})
-													}
-													required
-												>
-													<option value="site">Site 1</option>
-													<option value="officer">Site 2</option>
-												</select>
-											</div>
-										</div>
-									) : (
-										""
-									)}
 								</div>
 								<div className="rowuser">
 									<button type="submit" onClick={saveEmployeeDetails}>
@@ -298,4 +277,4 @@ const ManageUsers = () => {
 	);
 };
 
-export default ManageUsers;
+export default MyServices;

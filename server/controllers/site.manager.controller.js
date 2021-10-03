@@ -17,6 +17,8 @@ const saveSiteManager = async (req, res) => {
 		const { name, email, username, phone, weeklyWorkHrs, salary } = req.body;
 		const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 
+		console.log(req.body);
+
 		// * user inputs validation
 		if (!name || !email || !username || !phone || !weeklyWorkHrs || !salary) {
 			return res.status(400).json({ message: "Please fill all the fields" });
@@ -70,7 +72,7 @@ const saveSiteManager = async (req, res) => {
 			const newSiteManager = new SiteManager({
 				name,
 				email,
-				username,
+				username: username + "@sitemanager",
 				password: hashedPassword,
 				phone,
 				weeklyWorkHrs,
