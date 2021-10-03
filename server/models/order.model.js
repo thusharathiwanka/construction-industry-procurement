@@ -8,7 +8,7 @@ const OrderSchema = new mongoose.Schema(
 		},
 		isApprovedByOfficer: { type: String, default: "pending", trim: true },
 		isApprovedByManager: { type: String, default: "pending", trim: true },
-		status: { type: String, default: "pending", trim: true },
+		DeliveryStatus: { type: String, default: "pending", trim: true },
 		orderItem: { type: mongoose.Schema.Types.ObjectId, ref: "materials" },
 		quantity: { type: Number, required: true },
 		total: { type: Number, trim: true, default: 0 },

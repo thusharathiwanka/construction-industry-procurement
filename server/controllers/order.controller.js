@@ -10,9 +10,9 @@ const Order = require("../models/order.model");
 const saveOrder = async (req, res) => {
 	try {
 		if (req.body) {
-			const order = new order(req.body);
-			await Order.save();
-			res.status(200).json(order._id);
+			const saveOrder = new Order(req.body);
+			await saveOrder.save();
+			res.status(200).json(saveOrder._id);
 		}
 	} catch (error) {
 		res.status(400).json({ message: error.message });

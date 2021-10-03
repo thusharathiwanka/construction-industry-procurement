@@ -6,11 +6,11 @@ const DeliveryReport = mongoose.Schema(
 		item: { type: String, required: true },
 		quantity: { type: String, required: true },
 		description: { type: String, required: true },
-		supplierId: { type: mongoose.Schema.Types.ObjectId, ref: "suppliers" },
 	},
+	{ timestamp: true },
 	{ versionKey: false }
 );
 
-const deliveryReport = mongoose.model("deliveryreport", DeliveryReport);
+const deliveryReport = mongoose.model("deliveryReports", DeliveryReport);
 
 module.exports = deliveryReport;
