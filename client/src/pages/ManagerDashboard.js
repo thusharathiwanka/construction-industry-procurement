@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
@@ -10,8 +10,11 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import profilePicture from "../assets/images/admin-user-img.jpg";
 
+import { AuthContext } from "../contexts/AuthContext";
+
 const AdminDashboard = () => {
 	const [value, onChange] = useState(new Date());
+	const { loggedIn } = useContext(AuthContext);
 	const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
 	const rows = [
 		{
@@ -150,7 +153,7 @@ const AdminDashboard = () => {
 							<div className="card">
 								<div className="flex">
 									<h2 className="request-title">Registered Users</h2>
-									<Link>
+									<Link to={`/auth/manager/users`}>
 										<button className="view-btn">View All</button>
 									</Link>
 								</div>

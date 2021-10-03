@@ -150,7 +150,7 @@ const SiteManagerDashboard = () => {
 							<div className="card">
 								<div className="flex">
 									<h2 className="request-title">New Orders</h2>
-									<Link>
+									<Link to={`/auth/sitemanager/requisitions`}>
 										<button className="view-btn">View All</button>
 									</Link>
 								</div>
