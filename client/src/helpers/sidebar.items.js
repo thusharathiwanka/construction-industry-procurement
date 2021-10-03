@@ -62,17 +62,17 @@ const sidebar_site_manager = [
 const sidebar_officer = [
 	{
 		display_name: "Dashboard",
-		route: "/auth/sitemanager/dashboard",
+		route: "/auth/officer/dashboard",
 		icon: "bx bx-category-alt",
 	},
 	{
 		display_name: "Manage Orders",
-		route: "/auth/manager/orders",
+		route: "/auth/officer/orders",
 		icon: "bx bx-bar-chart-square",
 	},
 	{
 		display_name: "Inventory",
-		route: "/auth/sitemanager/inventory",
+		route: "/auth/officer/inventory",
 		icon: "bx bx-store",
 	},
 	{
