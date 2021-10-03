@@ -20,6 +20,11 @@ const sidebar_manager = [
 		icon: "bx bx-buildings",
 	},
 	{
+		display_name: "Manage Materials",
+		route: "/auth/manager/materials",
+		icon: "bx bx-cube",
+	},
+	{
 		display_name: "Manage Orders",
 		route: "/auth/manager/orders",
 		icon: "bx bx-bar-chart-square",
@@ -94,8 +99,8 @@ const sidebar_supplier = [
 		icon: "bx bx-bar-chart-square",
 	},
 	{
-		display_name: "My Services",
-		route: "/auth/supplier/my",
+		display_name: "Manage Services",
+		route: "/auth/supplier/services",
 		icon: "bx bx-store",
 	},
 	{

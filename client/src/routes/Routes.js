@@ -9,6 +9,7 @@ import MyServices from "../pages/MyServices";
 import OfficerDashboard from "../pages/OfficerDashboard";
 import SupplierDashboard from "../pages/SupplierDashboard";
 import SiteManagerDashboard from "../pages/SiteManagerDashboard";
+import ManageSites from "../pages/ManageSites";
 import SiteManagerForm from "../pages/siteManagerForm";
 import Inventory from "../pages/inventory";
 
@@ -28,6 +29,7 @@ const Routes = () => {
 				component={ManagerDashboard}
 			/>
 			<Route exact path="/auth/manager/users" component={ManageUsers} />
+			<Route exact path="/auth/manager/sites" component={ManageSites} />
 			<Route
 				exact
 				path="/auth/supplier/dashboard"
@@ -38,7 +40,7 @@ const Routes = () => {
 				path="/auth/supplier/orders"
 				component={ManageOrdersSupplier}
 			/>
-			<Route exact path="/auth/supplier/my" component={MyServices} />
+			<Route exact path="/auth/supplier/services" component={MyServices} />
 			<Route
 				exact
 				path="/auth/officer/dashboard"
@@ -59,8 +61,6 @@ const Routes = () => {
 				path="/auth/sitemanager/inventory"
 				component={Inventory}
 			/>
-
-			
 		</Switch>
 	);
 };

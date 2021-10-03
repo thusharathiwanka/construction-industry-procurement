@@ -99,4 +99,13 @@ const saveSiteManager = async (req, res) => {
 	return res.status(400).send();
 };
 
-module.exports = { saveSiteManager };
+const getUnassignedSiteManagers = async (req, res) => {
+	try {
+		const siteManagers = await SiteManager.find({ isAssigned: false });
+		res.status(200).json({ sitemanagers: siteManagers });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
+module.exports = { saveSiteManager, getUnassignedSiteManagers };

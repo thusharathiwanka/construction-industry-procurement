@@ -11,4 +11,10 @@ router.post(
 	SiteManagerController.saveSiteManager
 );
 
+router.get(
+	"/",
+	verifyProcurementManagerAuth,
+	SiteManagerController.getUnassignedSiteManagers
+);
+
 module.exports = router;
