@@ -150,7 +150,7 @@ const SupplierDashboard = () => {
 							<div className="card">
 								<div className="flex">
 									<h2 className="request-title">New Orders</h2>
-									<Link>
+									<Link to={`/auth/supplier/orders`}>
 										<button className="view-btn">View All</button>
 									</Link>
 								</div>

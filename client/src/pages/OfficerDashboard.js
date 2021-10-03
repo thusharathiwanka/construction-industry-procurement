@@ -154,7 +154,7 @@ const OfficerDashboard = () => {
 							<div className="card">
 								<div className="flex">
 									<h2 className="request-title">New Orders</h2>
-									<Link>
+									<Link to={`/auth/officer/orders`}>
 										<button className="view-btn">View All</button>
 									</Link>
 								</div>
