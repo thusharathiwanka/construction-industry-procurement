@@ -75,7 +75,7 @@ const ManageUsers = () => {
 			<div id="main" className="layout__content">
 				<TopNav />
 				<div className="layout__content-main">
-					<h1 className="page-header">Manage Material</h1>
+					<h1 className="page-header">Manage Materials</h1>
 					<div className="row">
 						<div className="col-12">
 							<form className="card" style={{ position: "relative" }}>

@@ -12,7 +12,8 @@ import SiteManagerDashboard from "../pages/SiteManagerDashboard";
 import ManageSites from "../pages/ManageSites";
 import SiteManagerForm from "../pages/siteManagerForm";
 import ManageMaterials from "../pages/ManageMaterials";
-import Inventory from "../pages/inventory";
+import Inventory from "../pages/Inventory";
+import Register from "../pages/Register";
 
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -24,6 +25,7 @@ const Routes = () => {
 	return (
 		<Switch>
 			<Route exact path="/" component={Login} />
+			<Route exact path="/register" component={Register} />
 			<Route
 				exact
 				path="/auth/manager/dashboard"
