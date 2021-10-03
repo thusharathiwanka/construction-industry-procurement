@@ -15,8 +15,8 @@ const saveOrder = async (req, res) => {
 			res.status(200).json(saveOrder._id);
 		}
 	} catch (error) {
-		res.status(400);
-		console.log(error);
+		res.status(400).json({ message: error.message });
+		// console.log(error);
 	}
 };
 
@@ -27,111 +27,129 @@ const saveOrder = async (req, res) => {
  * @returns {Object} res
  */
 
-const updateOrderQuantity = async(req, res) => {
-	try{
-        await Order.findByIdAndUpdate(req.params.id,{
-			quantity:req.body.quantity
-		})
-	}catch (error) {
-		res.status(400);
-		console.log(error);
+const updateOrderQuantity = async (req, res) => {
+	try {
+		await Order.findByIdAndUpdate(req.params.id, {
+			quantity: req.body.quantity,
+		});
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+		// console.log(error);
 	}
-}
+};
+
 /**
  * use to change Order Status By Officer
  * @param {Object} req
  * @param {Object} res
  * @returns {Object} res
  */
-const changeOrderStatusByOfficer = async(req, res) => {
-		try{
-			await Order.findByIdAndUpdate(req.params.id,{
-				isApprovedByOfficer:req.body.status
-			})
-		}
-		 catch (error) {
-		res.status(400);
-		console.log(error);
+const changeOrderStatusByOfficer = async (req, res) => {
+	try {
+		await Order.findByIdAndUpdate(req.params.id, {
+			isApprovedByOfficer: req.body.status,
+		});
+	} catch (error) {
+		res.status(400).json({ message: error.json });
+		// console.log(error);
 	}
-}; 
+};
+
 /**
  * use to change Order Status By Manager
  * @param {Object} req
  * @param {Object} res
  * @returns {Object} res
  */
-const changeOrderStatusByManager = async(req, res) => {
-		try{
-			await Order.findByIdAndUpdate(req.params.id,{
-				isApprovedByManager:req.body.status
-			})
-		}
-		 catch (error) {
-		res.status(400);
-		console.log(error);
+const changeOrderStatusByManager = async (req, res) => {
+	try {
+		await Order.findByIdAndUpdate(req.params.id, {
+			isApprovedByManager: req.body.status,
+		});
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+		// console.log(error);
 	}
-}; 
+};
+
 /**
  * use to add suppliers
  * @param {Object} req
  * @param {Object} res
  * @returns {Object} res
  */
-const addSupplier = async(res, req) => {
-	try{
-		await Order.findByIdAndUpdate(req.params.id,{
-				supplierId:req.body.supplierId
-			})
+const addSupplier = async (res, req) => {
+	try {
+		await Order.findByIdAndUpdate(req.params.id, {
+			supplierId: req.body.supplierId,
+		});
 	} catch (error) {
-		res.status(400);
-		console.log(error);
-	}
-}
-
-const deletePendingOrders = async(res, req)=>{
-	try{
-	 const deletedOrder  =	await Order.findByIdAndDelete(req.params.id);
-		res.status(200).json(deletedOrder);
-	} catch (error) {
-		res.status(400);
-		console.log(error);
-	}
-}
-
-const getItemDetailsOfficer = async (req, res) => {
-	try
-	{
-		
-		
-		const orderList = Order.find()
-			res.status(200).json(orderList);
-		}
-	 catch (error) {
-		res.status(400);
-		console.log(error);
+		res.status(400).json({ message: error.message });
+		// console.log(error);
 	}
 };
+
 /**
- * use to get items procurement details
+ * deletes a  order by Id
+ * @param {*} res
+ * @param {*} req
+ */
+const deletePendingOrders = async (res, req) => {
+	try {
+		const deletedOrder = await Order.findByIdAndDelete(req.params.id);
+		res.status(200).json(deletedOrder);
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+		// console.log(error);
+	}
+};
+
+/**
+ * retrive all orders where isApprovedByOfficer = "pending"
+ * @param {*} req
+ * @param {*} res
+ */
+const getItemDetailsOfficer = async (req, res) => {
+	try {
+		const orderListOff = Order.find({ isApprovedByOfficer: "pending" });
+		res.status(200).json(orderListOff);
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+		// console.log(error);
+	}
+};
+
+/**
+ * retrive all orders where isApprovedByManager = "pending"
  * @param {Object} req
  * @param {Object} res
  * @returns {Object} res
  */
 
-const getItemDetailsProcurement = async (req, res) =>
-{
-	try{
-		const orderListProc = Order.find()
+const getItemDetailsProcurement = async (req, res) => {
+	try {
+		const orderListProc = Order.find({ isApprovedByManager: "pending" });
 		res.status(200).json(orderListProc);
-		
-	} catch (error)
-	{
-		console.log(error);
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+		// console.log(error);
 	}
-}
+};
 
-
-
+/**
+ * retrives all orders in the orders table
+ * @param {*} req
+ * @param {*} res
+ */
+const allOrders = async (req, res) => {
+	try {
+		const allOrders = Order.find();
+		res.status(200).json(allOrders);
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+		// console.log(error);
+	}
+};
 
 module.exports = {
 	saveOrder,
@@ -141,5 +159,6 @@ module.exports = {
 	changeOrderStatusByOfficer,
 	changeOrderStatusByManager,
 	getItemDetailsOfficer,
-	getItemDetailsProcurement
+	getItemDetailsProcurement,
+	allOrders,
 };
