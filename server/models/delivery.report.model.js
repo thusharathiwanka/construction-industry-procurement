@@ -7,7 +7,8 @@ const DeliveryReport = mongoose.Schema(
 		quantity: { type: String, required: true },
 		description: { type: String, required: true },
 	},
-	{ timestamp: true }
+	{ timestamp: true },
+	{ versionKey: false }
 );
 
 const deliveryReport = mongoose.model("deliveryReports", DeliveryReport);
