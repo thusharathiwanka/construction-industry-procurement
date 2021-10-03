@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Calendar from "react-calendar";
+
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
+
+import "react-calendar/dist/Calendar.css";
+import "../components/badge/badge.css";
+
 import AdminGreeting from "../assets/images/admin-greeting.png";
 import Badge from "../components/badge/Badge";
-import "../components/badge/badge.css";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+
 import profilePicture from "../assets/images/admin-user-img.jpg";
 
-const AdminDashboard = () => {
+const OfficerDashboard = () => {
 	const [value, onChange] = useState(new Date());
 	const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
 	const rows = [
@@ -152,7 +156,7 @@ const AdminDashboard = () => {
 						<div className="col-8">
 							<div className="card">
 								<div className="flex">
-									<h2 className="request-title">Registered Users</h2>
+									<h2 className="request-title">New Orders</h2>
 									<Link>
 										<button className="view-btn">View All</button>
 									</Link>
@@ -190,4 +194,4 @@ const AdminDashboard = () => {
 	);
 };
 
-export default AdminDashboard;
+export default OfficerDashboard;
