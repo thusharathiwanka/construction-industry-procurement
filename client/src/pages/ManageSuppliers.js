@@ -1,17 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import Spinner from "../components/loading/Spinner";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
-import AdminGreeting from "../assets/images/admin-greeting.png";
 import Badge from "../components/badge/Badge";
 import "../components/badge/badge.css";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import profilePicture from "../assets/images/admin-user-img.jpg";
 
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -20,7 +16,7 @@ const ManageSuppliers = () => {
 	const { loggedIn } = useContext(AuthContext);
 	const [suppliers, setSuppliers] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const fields = ["", "Name", "email", "Username", "Status", "Actions"];
+	const fields = ["", "Name", "Email", "Username", "Status", "Actions"];
 
 	const permissionStatus = {
 		pending: "warning",
