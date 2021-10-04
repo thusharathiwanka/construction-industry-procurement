@@ -8,10 +8,9 @@ const Service = require("../models/service.model");
  */
 const saveService = async (req, res) => {
 	if (req.body) {
-		console.log(req.body);
-		const { material, units, user } = req.body;
+		const { material, units, pricePerUnit, user } = req.body;
 		// * user inputs validation
-		if (!material || !units) {
+		if (!material || !units || !pricePerUnit) {
 			return res.status(400).json({ message: "Please fill all the fields" });
 		}
 
@@ -20,6 +19,7 @@ const saveService = async (req, res) => {
 			const newService = new Service({
 				materialId: material,
 				units,
+				pricePerUnit,
 				supplierId: user,
 			});
 

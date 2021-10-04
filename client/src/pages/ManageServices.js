@@ -13,13 +13,13 @@ const ManageServices = () => {
 	const [btnState, setBtnState] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [employees, setEmployees] = useState(true);
-	const [services, setServices] = useState([]);
 	const [materials, setMaterials] = useState([]);
 	const [serviceDetails, setServiceDetails] = useState({
 		material: "",
 		units: "",
+		pricePerUnit: "",
 	});
-	const fields = ["", "Material ", "Unit"];
+	const fields = ["", "Material ", "Units", "Price per Unit"];
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
@@ -28,6 +28,7 @@ const ManageServices = () => {
 			<td>{index + 1}</td>
 			<td>{item.materialId.name}</td>
 			<td>{item.units}</td>
+			<td>{item.pricePerUnit}</td>
 		</tr>
 	);
 
@@ -44,11 +45,13 @@ const ManageServices = () => {
 
 		try {
 			const res = await axios.post("suppliers/services", serviceDetails);
-			console.log(res);
 			setServiceDetails({
 				material: "",
 				units: "",
+				pricePerUnit: "",
 			});
+
+			getAllData();
 			setError("");
 			window.alert("Service registered successfully");
 			setBtnState(false);
@@ -89,7 +92,7 @@ const ManageServices = () => {
 									</div>
 								)}
 								<div className="row">
-									<div className="col-6">
+									<div className="col-4">
 										<div className="rowuser">
 											<select
 												name="site"
@@ -115,7 +118,7 @@ const ManageServices = () => {
 											</select>
 										</div>
 									</div>
-									<div className="col-6">
+									<div className="col-4">
 										<div className="rowuser">
 											<input
 												type="text"
@@ -131,10 +134,26 @@ const ManageServices = () => {
 											/>
 										</div>
 									</div>
+									<div className="col-4">
+										<div className="rowuser">
+											<input
+												type="number"
+												placeholder="Price per unit"
+												value={serviceDetails.pricePerUnit}
+												onChange={(e) =>
+													setServiceDetails({
+														...serviceDetails,
+														pricePerUnit: e.target.value,
+													})
+												}
+												required
+											/>
+										</div>
+									</div>
 								</div>
 								<div className="rowuser">
 									<button type="submit" onClick={saveServiceDetails}>
-										Save
+										{btnState ? "Saving" : "Save"}
 									</button>
 								</div>
 							</form>

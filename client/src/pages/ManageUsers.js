@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+import "../assets/css/Usercreate.css";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Spinner from "../components/loading/Spinner";
-
-import "../assets/css/Usercreate.css";
-import axios from "axios";
 
 const ManageUsers = () => {
 	const [error, setError] = useState("");
@@ -289,7 +289,7 @@ const ManageUsers = () => {
 								</div>
 								<div className="rowuser">
 									<button type="submit" onClick={saveEmployeeDetails}>
-										Save
+										{btnState ? "Saving" : "Save"}
 									</button>
 								</div>
 							</form>
