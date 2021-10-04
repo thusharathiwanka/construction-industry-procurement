@@ -18,6 +18,7 @@ const verifySiteManagerAuth = (req, res, next) => {
 			if (!verified.type === "sitemanager")
 				return res.status(401).json({ message: "Unauthorized" });
 
+			req.body.user = verified.user;
 			next();
 		} catch (err) {
 			console.error(err.message);

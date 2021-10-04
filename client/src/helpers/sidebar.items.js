@@ -16,8 +16,13 @@ const sidebar_manager = [
 	},
 	{
 		display_name: "Manage Sites",
-		route: "/auth/manager/users",
+		route: "/auth/manager/sites",
 		icon: "bx bx-buildings",
+	},
+	{
+		display_name: "Manage Materials",
+		route: "/auth/manager/materials",
+		icon: "bx bx-cube",
 	},
 	{
 		display_name: "Manage Orders",
@@ -26,7 +31,7 @@ const sidebar_manager = [
 	},
 	{
 		display_name: "Manage Suppliers",
-		route: "/auth/manager/users",
+		route: "/auth/manager/suppliers",
 		icon: "bx bx-group",
 	},
 	{
@@ -94,8 +99,8 @@ const sidebar_supplier = [
 		icon: "bx bx-bar-chart-square",
 	},
 	{
-		display_name: "My Services",
-		route: "/auth/supplier/my",
+		display_name: "Manage Services",
+		route: "/auth/supplier/services",
 		icon: "bx bx-store",
 	},
 	{

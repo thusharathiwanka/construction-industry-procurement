@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const MaterialSchema = new mongoose.Schema({
-	materialName: { type: String, required: true},
-	//quantity: { type: Number, required },
+	name: { type: String, required: true },
+	code: { type: String, required: true },
 });
 
 const Material = mongoose.model("materials", MaterialSchema);

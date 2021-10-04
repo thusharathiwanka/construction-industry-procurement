@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -125,6 +126,19 @@ const Login = () => {
 									>
 										{btnState ? "SIGNING IN" : "SIGN IN"}
 									</button>
+								</div>
+								<div>
+									<p className="rest-pw-link">
+										Want to join in?
+										<Link
+											to={{
+												pathname: "/register",
+												state: { from: "admin" },
+											}}
+										>
+											&nbsp; Register as supplier
+										</Link>
+									</p>
 								</div>
 							</form>
 						</div>
