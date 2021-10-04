@@ -8,16 +8,16 @@ const Service = require("../models/service.model");
  */
 const saveService = async (req, res) => {
 	if (req.body) {
-		const { Service, unit, user } = req.body;
+		const { material, unit, user } = req.body;
 		// * user inputs validation
-		if (!Service || !unit) {
+		if (!material || !unit) {
 			return res.status(400).json({ message: "Please fill all the fields" });
 		}
 
 		try {
 			// * save service
 			const newService = new Service({
-				Service,
+				materialId: material,
 				unit,
 				supplierId: user,
 			});
@@ -43,7 +43,7 @@ const saveService = async (req, res) => {
  */
 const getServicesOfSupplier = async (req, res) => {
 	try {
-		const services = await Service.findOne({ supplierId: req.body.user });
+		const services = await Service.find({ supplierId: req.body.user });
 		res.status(200).json({ services: services });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
