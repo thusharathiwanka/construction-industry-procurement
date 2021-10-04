@@ -11,7 +11,10 @@ import SupplierDashboard from "../pages/SupplierDashboard";
 import SiteManagerDashboard from "../pages/SiteManagerDashboard";
 import ManageSites from "../pages/ManageSites";
 import SiteManagerForm from "../pages/siteManagerForm";
-import Inventory from "../pages/inventory";
+import ManageMaterials from "../pages/ManageMaterials";
+import Inventory from "../pages/Inventory";
+import Register from "../pages/Register";
+import ManageSuppliers from "../pages/ManageSuppliers";
 
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -23,6 +26,7 @@ const Routes = () => {
 	return (
 		<Switch>
 			<Route exact path="/" component={Login} />
+			<Route exact path="/register" component={Register} />
 			<Route
 				exact
 				path="/auth/manager/dashboard"
@@ -30,6 +34,8 @@ const Routes = () => {
 			/>
 			<Route exact path="/auth/manager/users" component={ManageUsers} />
 			<Route exact path="/auth/manager/sites" component={ManageSites} />
+			<Route exact path="/auth/manager/materials" component={ManageMaterials} />
+			<Route exact path="/auth/manager/suppliers" component={ManageSuppliers} />
 			<Route
 				exact
 				path="/auth/supplier/dashboard"
@@ -56,11 +62,7 @@ const Routes = () => {
 				path="/auth/sitemanager/requisitions"
 				component={SiteManagerForm}
 			/>
-			<Route
-				exact
-				path="/auth/sitemanager/inventory"
-				component={Inventory}
-			/>
+			<Route exact path="/auth/sitemanager/inventory" component={Inventory} />
 		</Switch>
 	);
 };

@@ -1,0 +1,149 @@
+import React, { useEffect, useState } from "react";
+
+import Sidebar from "../components/sidebar/Sidebar";
+import TopNav from "../components/topnav/TopNav";
+import Table from "../components/table/Table";
+import Spinner from "../components/loading/Spinner";
+
+import "../assets/css/Usercreate.css";
+import axios from "axios";
+
+const ManageUsers = () => {
+	const [error, setError] = useState("");
+	const [btnState, setBtnState] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [material, setMaterial] = useState({ code: "", name: "" });
+	const [materials, setMaterials] = useState([]);
+
+	const fields = ["", "Material Code", "Material Name"];
+
+	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
+
+	const renderOrderBody = (item, index) => (
+		<tr key={index}>
+			<td>{index + 1}</td>
+			<td>{item.code}</td>
+			<td>{item.name}</td>
+		</tr>
+	);
+
+	const saveMaterial = async (e) => {
+		e.preventDefault();
+		setBtnState(true);
+
+		for (let key of Object.keys(material)) {
+			if (!material[key]) {
+				setBtnState(false);
+				return setError("Please fill all the fields");
+			}
+		}
+
+		try {
+			const res = await axios.post("materials", material);
+			console.log(res);
+			setMaterial({
+				code: "",
+				name: "",
+			});
+			getAllMaterial();
+			setError("");
+			window.alert("Material registered successfully");
+			setBtnState(false);
+			setIsLoading(true);
+		} catch (err) {
+			setBtnState(false);
+			console.log(err.response);
+		}
+	};
+
+	const getAllMaterial = async () => {
+		try {
+			const res = await axios.get(`materials`);
+			setMaterials(res.data.materials);
+			setIsLoading(false);
+			console.log(res);
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
+	useEffect(() => getAllMaterial(), []);
+
+	return (
+		<div>
+			<Sidebar />
+			<div id="main" className="layout__content">
+				<TopNav />
+				<div className="layout__content-main">
+					<h1 className="page-header">Manage Materials</h1>
+					<div className="row">
+						<div className="col-12">
+							<form className="card" style={{ position: "relative" }}>
+								{error && (
+									<div className="error-bg" style={{ left: "3%" }}>
+										<p>{error}</p>
+									</div>
+								)}
+								<div className="row">
+									<div className="col-6">
+										<div className="rowuser">
+											<input
+												type="text"
+												placeholder="Material Code"
+												value={material.code}
+												onChange={(e) =>
+													setMaterial({
+														...material,
+														code: e.target.value,
+													})
+												}
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-6">
+										<div className="rowuser">
+											<input
+												type="text"
+												placeholder="Material Name"
+												value={material.name}
+												onChange={(e) =>
+													setMaterial({
+														...material,
+														name: e.target.value,
+													})
+												}
+												required
+											/>
+										</div>
+									</div>
+								</div>
+								<div className="rowuser">
+									<button type="submit" onClick={saveMaterial}>
+										Save
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div className="card col-12">
+						<h2>Material Details</h2>
+						{isLoading ? (
+							<Spinner />
+						) : (
+							<Table
+								limit="5"
+								headData={fields}
+								renderHead={(item, index) => renderOrderHead(item, index)}
+								bodyData={materials}
+								renderBody={(item, index) => renderOrderBody(item, index)}
+							/>
+						)}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default ManageUsers;

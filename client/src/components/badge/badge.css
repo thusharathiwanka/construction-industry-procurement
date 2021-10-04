@@ -7,11 +7,11 @@
 }
 
 .badge-danger {
-	background-color: var(--main-color-red);
+	background-color: var(--second-color-red);
 }
 
 .badge-success {
-	background-color: var(--main-color-green);
+	background-color: var(--main-color-blue);
 }
 
 .badge-primary {
@@ -19,5 +19,5 @@
 }
 
 .badge-warning {
-	background-color: var(--main-color-orange);
+	background-color: var(--second-color-orange);
 }
