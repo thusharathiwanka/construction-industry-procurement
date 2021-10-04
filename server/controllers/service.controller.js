@@ -8,7 +8,6 @@ const Service = require("../models/service.model");
  */
 const saveService = async (req, res) => {
 	if (req.body) {
-		console.log(req.body);
 		const { material, units, pricePerUnit, user } = req.body;
 		// * user inputs validation
 		if (!material || !units || !pricePerUnit) {
