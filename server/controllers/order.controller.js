@@ -1,5 +1,5 @@
 const Order = require("../models/order.model");
-
+const Site = require("../models/site.model")
 /**
  * use to save the order
  * @param {Object} req
@@ -10,8 +10,12 @@ const Order = require("../models/order.model");
 const saveOrder = async (req, res) => {
 	try {
 		if (req.body) {
+			const {location} = await Site.findById(req.body.siteid)
+			console.log(location);
 			const saveOrder = new Order({
-				
+				itemName:req.body.item,
+				address:location,
+				quantity:req.body.quantity
 			});
 			await saveOrder.save();
 			res.status(200).json(saveOrder._id);

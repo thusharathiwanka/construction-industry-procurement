@@ -5,16 +5,20 @@ import TopNav from "../components/topnav/TopNav";
 
 const SiteManagerForm = () => {
 
+    const siteId = localStorage.getItem("site")
+
     const [Order, setOrder] = useState({
         item:"Sand",
-        quantity:""
+        quantity:"",
+        siteid:siteId
     });
 
     const orderHandler = async()=>{
         try{ 
-            const res = await axios.post("/order",Order)
+            console.log(Order);
+            const res = await axios.post("/orders",Order)
         }catch(Err){
-            console.log(Err);
+            console.log(Err.response);
         }
     }
     return (
@@ -29,7 +33,8 @@ const SiteManagerForm = () => {
                         <div className="col-8">
                             <div className="card">
                                 <div className="row ">
-                                    <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'100%'}}>
+                                    {/* <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'100%'}}> */}
+                                    <div className="col-3"></div>
                                     <div className="col-3">
                                         <h3 style={{paddingTop:25}} >Select Item</h3>
                                     </div>
@@ -49,25 +54,28 @@ const SiteManagerForm = () => {
                                                 </select>
 										</div>
                                     </div>
-                                    </div>
+                                    <div className="col-3"></div>
+                                    {/* </div> */}
                                 </div>
                                 <div className="row ">
-                                    <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'100%'}}>
+                                    {/* <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'100%'}}> */}
+                                    <div className="col-3"></div>
                                     <div className="col-3">
                                         <h3 style={{paddingTop:25}}>Quantity</h3>
                                     </div>
                                     <div className="rowuser">
-                                        <div className="col-12">
+                                        <div className="col-10">
                                             <input
 												type="text"
-												placeholder="Employee Name"
+												placeholder="Quantity"
 												value={Order.quantity}
                                                 onChange={(e)=>setOrder({...Order,quantity:e.target.value})}
 												required
 											/>
                                         </div>
                                     </div>
-                                    </div>
+                                    <div className="col-3"></div>
+                                    {/* </div> */}
                                 </div>
                                 <div style={{paddingTop:50}}>
                                     <div className="row ">
