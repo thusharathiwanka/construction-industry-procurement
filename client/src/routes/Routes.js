@@ -8,9 +8,6 @@ import ManageUsers from "../pages/ManageUsers";
 import OfficerDashboard from "../pages/OfficerDashboard";
 import SupplierDashboard from "../pages/SupplierDashboard";
 import SiteManagerDashboard from "../pages/SiteManagerDashboard";
-<<<<<<< HEAD
-import OfficerOrders from "../pages/OfficerOrders";
-=======
 import ManageSites from "../pages/ManageSites";
 import SiteManagerForm from "../pages/siteManagerForm";
 import ManageMaterials from "../pages/ManageMaterials";
@@ -18,8 +15,6 @@ import Inventory from "../pages/inventory";
 import Register from "../pages/Register";
 import ManageSuppliers from "../pages/ManageSuppliers";
 import ManageServices from "../pages/ManageServices";
-
->>>>>>> 5d403dcf19dda39e6f3d37501f784a237c0db42e
 
 import { AuthContext } from "../contexts/AuthContext";
 
