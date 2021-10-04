@@ -10,20 +10,14 @@ import "../assets/css/Usercreate.css";
 
 const ManageServices = () => {
 	const [error, setError] = useState("");
-	const [orderDetails, setOrderDetails] = useState({});
-	const [selectedFoods, setSelectedFoods] = useState([]);
 	const [btnState, setBtnState] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [employees, setEmployees] = useState(true);
-	const [employeeDetails, setEmployeeDetails] = useState({
-		name: "",
-		email: "",
-		username: "",
-		position: "sitemanager",
-		phone: "",
-		weeklyWorkHrs: "",
-		salary: "",
-		site: "",
+	const [services, setServices] = useState([]);
+	const [materials, setMaterials] = useState([]);
+	const [serviceDetails, setServiceDetails] = useState({
+		material: "",
+		unit: "",
 	});
 	const fields = ["", "Material ", "Unit"];
 
@@ -37,52 +31,26 @@ const ManageServices = () => {
 		</tr>
 	);
 
-	const saveEmployeeDetails = async (e) => {
+	const saveServiceDetails = async (e) => {
 		e.preventDefault();
-		let endpoint;
-
-		e.preventDefault();
-		const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 		setBtnState(true);
 
-		for (let key of Object.keys(employeeDetails)) {
-			if (!employeeDetails[key]) {
+		for (let key of Object.keys(serviceDetails)) {
+			if (!serviceDetails[key]) {
 				setBtnState(false);
 				return setError("Please fill all the fields");
 			}
 		}
 
-		if (!employeeDetails.email.match(pattern)) {
-			setBtnState(false);
-			return setError("Please use valid email address");
-		}
-
-		if (employeeDetails.phone.length !== 10) {
-			setBtnState(false);
-			return setError("Please use valid phone number");
-		}
-
-		if (employeeDetails.site === "sitemanager") {
-			endpoint = "sitemanagers";
-		} else if (employeeDetails.site === "officers") {
-			endpoint = "officers";
-		}
-		console.log(employeeDetails);
-
 		try {
-			const res = await axios.post(endpoint, employeeDetails);
+			const res = await axios.post("supplier/services", serviceDetails);
 			console.log(res);
-			setEmployeeDetails({
-				name: "",
-				email: "",
-				username: "",
-				site: "",
-				phone: "",
-				weeklyWorkHrs: "",
-				salary: "",
+			setServiceDetails({
+				material: "",
+				unit: "",
 			});
 			setError("");
-			window.alert("House owner registered successfully");
+			window.alert("Service registered successfully");
 			setBtnState(false);
 			setIsLoading(true);
 		} catch (err) {
@@ -91,18 +59,20 @@ const ManageServices = () => {
 		}
 	};
 
-	const getAllEmployees = async () => {
+	const getAllData = async () => {
 		try {
-			const res = await axios.get(`users/`);
-			setEmployees(res.data.employees);
-			console.log(res.data.employees);
+			const res1 = await axios.get(`suppliers/services`);
+			const res2 = await axios.get(`materials`);
+			setEmployees(res1.data.services);
+			setMaterials(res2.data.materials);
+			console.log(res2.data.materials);
 			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
 		}
 	};
 
-	useEffect(() => getAllEmployees(), []);
+	useEffect(() => getAllData(), []);
 
 	return (
 		<div>
@@ -122,30 +92,40 @@ const ManageServices = () => {
 								<div className="row">
 									<div className="col-6">
 										<div className="rowuser">
-											<input
-												type="text"
-												placeholder="Material Name"
-												value={employeeDetails.name}
+											<select
+												name="site"
+												id="site"
+												value={serviceDetails.material}
 												onChange={(e) =>
-													setEmployeeDetails({
-														...employeeDetails,
-														name: e.target.value,
+													setServiceDetails({
+														...serviceDetails,
+														material: e.target.value,
 													})
 												}
 												required
-											/>
+											>
+												<option value="site" defaultValue>
+													SELECT MATERIAL
+												</option>
+												{materials.length > 0 &&
+													materials.map((material) => (
+														<option value={material._id}>
+															{material.name}
+														</option>
+													))}
+											</select>
 										</div>
 									</div>
 									<div className="col-6">
 										<div className="rowuser">
 											<input
-												type="email"
-												placeholder="Employee Email"
-												value={employeeDetails.email}
+												type="text"
+												placeholder="Units"
+												value={serviceDetails.unit}
 												onChange={(e) =>
-													setEmployeeDetails({
-														...employeeDetails,
-														email: e.target.value,
+													setServiceDetails({
+														...serviceDetails,
+														unit: e.target.value,
 													})
 												}
 												required
@@ -154,7 +134,7 @@ const ManageServices = () => {
 									</div>
 								</div>
 								<div className="rowuser">
-									<button type="submit" onClick={saveEmployeeDetails}>
+									<button type="submit" onClick={saveServiceDetails}>
 										Save
 									</button>
 								</div>
