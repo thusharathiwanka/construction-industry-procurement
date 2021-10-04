@@ -7,6 +7,7 @@ const SupplierSchema = new mongoose.Schema(
 		username: { type: String, require: true, trim: true },
 		password: { type: String, require: true, trim: true },
 		phone: { type: String, require: true, trim: true },
+		status: { type: String, require: true, trim: true, default: "pending" },
 		materials: [{ type: mongoose.Schema.Types.ObjectId, ref: "materials" }],
 	},
 	{ timestamps: true }

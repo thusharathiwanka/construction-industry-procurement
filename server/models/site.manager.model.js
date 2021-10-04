@@ -6,9 +6,9 @@ const SiteManagerSchema = new mongoose.Schema(
 		email: { type: String, require: true, trim: true },
 		username: { type: String, require: true, trim: true },
 		password: { type: String, require: true, trim: true },
+		isAssigned: { type: Boolean, require: true, default: false },
 		weeklyWorkHrs: { type: String, require: true, trim: true },
 		salary: { type: Number, require: true, trim: true },
-		siteId: { type: mongoose.Schema.Types.ObjectId, ref: "sites" },
 	},
 	{ timestamps: true }
 );

@@ -15,7 +15,7 @@ import profilePicture from "../assets/images/admin-user-img.jpg";
 
 import { AuthContext } from "../contexts/AuthContext";
 
-const AdminDashboard = () => {
+const ManageSuppliers = () => {
 	const [value, onChange] = useState(new Date());
 	const { loggedIn } = useContext(AuthContext);
 	const [suppliers, setSuppliers] = useState([]);
@@ -112,53 +112,11 @@ const AdminDashboard = () => {
 			<div id="main" className="layout__content">
 				<TopNav />
 				<div className="layout__content-main">
+					<h1 className="page-header">Manage Suppliers</h1>
+					<div className="row"></div>
 					<div className="row">
-						<div className="col-8 full-width">
-							<div className="card greeting-card">
-								<div className="row">
-									<div className="col-8 flex-column">
-										<h1 className="page-header">Good Morning! </h1>
-										<h3>Today you have 9 new notifications</h3>
-										<h3>Also new booking appointments for approval</h3>
-										<Link className="read-more">
-											Read more <i className="bx bx-right-arrow-alt"></i>
-										</Link>
-									</div>
-									<div className="col-4">
-										<img
-											className="admin-greeting"
-											src={AdminGreeting}
-											alt=""
-										/>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="col-4 full-width">
+						<div className="col-12">
 							<div className="card">
-								<h2
-									className="request-title"
-									style={{ color: "transparent", marginBottom: "-.2rem" }}
-								>
-									Calender
-								</h2>
-								<Calendar
-									className="calender"
-									onChange={onChange}
-									value={value}
-								/>
-							</div>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-8">
-							<div className="card">
-								<div className="flex">
-									<h2 className="request-title">Registered Suppliers</h2>
-									<Link to={`/auth/manager/users`}>
-										<button className="view-btn">View All</button>
-									</Link>
-								</div>
 								{isLoading ? (
 									<Spinner />
 								) : (
@@ -172,23 +130,6 @@ const AdminDashboard = () => {
 								)}
 							</div>
 						</div>
-						<div className="col-4">
-							<div className="card">
-								<div className="row">
-									<div className="col-4 full-width-1496">
-										<img
-											src={profilePicture}
-											alt=""
-											className="profile-picture"
-										/>
-									</div>
-									<div className="col-8">
-										<h2>Thushara Thiwanka</h2>
-										<h3 className="lighter">MANAGER</h3>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -196,4 +137,4 @@ const AdminDashboard = () => {
 	);
 };
 
-export default AdminDashboard;
+export default ManageSuppliers;

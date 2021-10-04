@@ -2,8 +2,12 @@ const mongoose = require("mongoose");
 
 const SiteSchema = new mongoose.Schema(
 	{
+		name: { type: String, require: true, trim: true },
 		location: { type: String, require: true, trim: true },
-		siteManager: { type: mongoose.Schema.Types.ObjectId, ref: "siteManagers" },
+		siteManagerId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "siteManagers",
+		},
 	},
 	{ timestamps: true }
 );
