@@ -47,10 +47,22 @@ const loginUser = async (req, res) => {
 		}
 
 		try {
+			let conditions;
+
+			if (userRole === "supplier") {
+				conditions = { username: username, status: "approved" };
+			} else {
+				conditions = { username: username };
+			}
+
 			// * checking for email existence
-			const existingUser = await User.findOne({
-				username: username,
-			});
+			const existingUser = await User.findOne(conditions);
+
+			if (!existingUser) {
+				return res.status(401).json({
+					message: "Wrong username or password",
+				});
+			}
 
 			if (!existingUser) {
 				return res.status(401).json({
