@@ -429,3 +429,21 @@ input::placeholder {
 		width: 100% !important;
 	}
 }
+
+.item-accept {
+	margin-left: 10px;
+	margin-right: 10px;
+	color: green;
+}
+
+.item-reject {
+	margin-left: 10px;
+	margin-right: 10px;
+	color: red;
+}
+
+.item-assign {
+	margin-left: 10px;
+	margin-right: 10px;
+	color: gray;
+}

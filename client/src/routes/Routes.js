@@ -9,6 +9,7 @@ import MyServices from "../pages/MyServices";
 import OfficerDashboard from "../pages/OfficerDashboard";
 import SupplierDashboard from "../pages/SupplierDashboard";
 import SiteManagerDashboard from "../pages/SiteManagerDashboard";
+import OfficerOrders from "../pages/OfficerOrders";
 
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -46,6 +47,12 @@ const Routes = () => {
 				exact
 				path="/auth/sitemanager/dashboard"
 				component={SiteManagerDashboard}
+			/>
+
+			<Route
+				exact
+				path="/auth/sitemanager/orderList"
+				component={OfficerOrders}
 			/>
 		</Switch>
 	);
