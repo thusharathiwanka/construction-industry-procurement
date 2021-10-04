@@ -1,6 +1,7 @@
 const Supplier = require("../models/supplier.model");
 
 const hashPassword = require("../helpers/hash.password");
+const sendMail = require("../configs/email.config");
 
 /**
  * use to save a  new supplier
@@ -83,15 +84,81 @@ const saveSupplier = async (req, res) => {
  * use to get all suppliers
  * @param {*} req
  * @param {*} res
+ * @returns res
  */
 const getSupplier = async (req, res) => {
 	try {
-		const allSuppliers = await Supplier.find({ materials: req.params.id });
-		res.status(200).json(allSuppliers);
+		const allSuppliers = await Supplier.find();
+		res.status(200).json({ suppliers: allSuppliers });
 	} catch (err) {
 		res.status(400).json({ message: err.message });
-		// console.log(err.message);
 	}
 };
 
-module.exports = { saveSupplier, getSupplier };
+/**
+ * rejects the supplier
+ * @param {req} req
+ * @param {res} res
+ * @returns  res
+ */
+const rejectSupplier = async (req, res) => {
+	if (req.params) {
+		const { id } = req.params;
+
+		try {
+			await Supplier.findByIdAndUpdate(id, {
+				status: "rejected",
+			});
+
+			const { email } = await Supplier.findById(id);
+
+			await sendMail(
+				email,
+				"Registration Request",
+				`<div><p>Your registration request has been rejected.</p><p>Thank you.</p></div>`
+			);
+
+			return res.status(200).send();
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send();
+		}
+	}
+
+	return res.status(400).send();
+};
+
+/**
+ * approve the supplier
+ * @param {req} req
+ * @param {res} res
+ * @returns  res
+ */
+const approveSupplier = async (req, res) => {
+	if (req.params) {
+		const { id } = req.params;
+
+		try {
+			await Supplier.findByIdAndUpdate(id, {
+				status: "approved",
+			});
+
+			const { email } = await Supplier.findById(id);
+
+			await sendMail(
+				email,
+				"Registration Request",
+				`<div><p>Your registration request has been approved. You can login to your account using given credentials.</p><p>Thank you.</p></div>`
+			);
+
+			return res.status(200).send();
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send();
+		}
+	}
+
+	return res.status(400).send();
+};
+
+module.exports = { saveSupplier, getSupplier, approveSupplier, rejectSupplier };

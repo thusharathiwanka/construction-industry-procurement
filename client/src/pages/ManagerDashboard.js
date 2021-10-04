@@ -1,6 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
+
 import Sidebar from "../components/sidebar/Sidebar";
+import Spinner from "../components/loading/Spinner";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import AdminGreeting from "../assets/images/admin-greeting.png";
@@ -15,85 +18,84 @@ import { AuthContext } from "../contexts/AuthContext";
 const AdminDashboard = () => {
 	const [value, onChange] = useState(new Date());
 	const { loggedIn } = useContext(AuthContext);
-	const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
-	const rows = [
-		{
-			id: "1",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Approved",
-		},
-		{
-			id: "2",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "3",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Declined",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-	];
+	const [suppliers, setSuppliers] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const fields = ["", "Name", "email", "Username", "Status", "Actions"];
 
 	const permissionStatus = {
-		Pending: "warning",
-		Approved: "success",
-		Declined: "danger",
+		pending: "warning",
+		approved: "success",
+		rejected: "danger",
 	};
 
-	const deleteHandler = (id) => {
-		console.log(id);
+	const deleteHandler = async (id) => {
+		try {
+			const res = await axios.patch(`/suppliers/reject/${id}`);
+			if (res.statusText === "OK") {
+				getAllSuppliers();
+				window.alert("Supplier request has been successfully rejected");
+			}
+		} catch (err) {
+			console.log(err.response);
+		}
 	};
+
+	const successHandler = async (id) => {
+		try {
+			const res = await axios.patch(`/suppliers/approve/${id}`);
+			console.log(res);
+			if (res.statusText === "OK") {
+				getAllSuppliers();
+				window.alert("Supplier request has been successfully approved");
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const getAllSuppliers = async () => {
+		setIsLoading(true);
+		try {
+			const res = await axios.get(`suppliers`);
+			setSuppliers(res.data.suppliers);
+			setIsLoading(false);
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
+	useEffect(() => getAllSuppliers(), []);
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
 			<td>{index + 1}</td>
-			<td>{item.date}</td>
-			<td>{item.houseOwner}</td>
-			<td>{item.providence}</td>
+			<td>{item.name}</td>
+			<td>{item.email}</td>
+			<td>{item.username}</td>
 			<td>
 				<Badge type={permissionStatus[item.status]} content={item.status} />
 			</td>
 			<td className="">
-				{item.status === "Pending" && (
+				{item.status === "pending" && (
 					<>
 						<button className="action-btn check">
-							<i className="bx bx-check"></i>
+							<i
+								className="bx bx-check"
+								onClick={() => {
+									if (window.confirm("Are you sure to approve this request?")) {
+										successHandler(item._id);
+									}
+								}}
+							></i>
 						</button>
 						<button className="action-btn x">
 							<i
 								className="bx bx-x"
 								onClick={() => {
-									if (window.confirm("Are you sure to delete this request?")) {
-										deleteHandler(item.id);
+									if (window.confirm("Are you sure to reject this request?")) {
+										deleteHandler(item._id);
 									}
 								}}
 							></i>
@@ -152,18 +154,22 @@ const AdminDashboard = () => {
 						<div className="col-8">
 							<div className="card">
 								<div className="flex">
-									<h2 className="request-title">Registered Users</h2>
+									<h2 className="request-title">Registered Suppliers</h2>
 									<Link to={`/auth/manager/users`}>
 										<button className="view-btn">View All</button>
 									</Link>
 								</div>
-								<Table
-									limit="5"
-									headData={fields}
-									renderHead={(item, index) => renderOrderHead(item, index)}
-									bodyData={rows}
-									renderBody={(item, index) => renderOrderBody(item, index)}
-								/>
+								{isLoading ? (
+									<Spinner />
+								) : (
+									<Table
+										limit="5"
+										headData={fields}
+										renderHead={(item, index) => renderOrderHead(item, index)}
+										bodyData={suppliers}
+										renderBody={(item, index) => renderOrderBody(item, index)}
+									/>
+								)}
 							</div>
 						</div>
 						<div className="col-4">
