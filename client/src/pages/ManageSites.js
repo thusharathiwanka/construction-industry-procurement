@@ -44,6 +44,11 @@ const ManageUsers = () => {
 			}
 		}
 
+		if (site.siteManagerId === "sitemanager") {
+			setBtnState(false);
+			return setError("Please fill all the fields");
+		}
+
 		try {
 			const res = await axios.post("sites", site);
 			console.log(res);
@@ -148,7 +153,9 @@ const ManageUsers = () => {
 												}
 												required
 											>
-												<option default>SELECT SITE MANAGER</option>
+												<option defaultValue value="sitemanager">
+													SELECT SITE MANAGER
+												</option>
 												{siteManagers.length !== 0 &&
 													siteManagers.map((siteManager) => (
 														<option value={siteManager._id}>
