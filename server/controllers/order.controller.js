@@ -111,7 +111,7 @@ const deletePendingOrders = async (res, req) => {
  */
 const getItemDetailsOfficer = async (req, res) => {
 	try {
-		const orderListOff = Order.find({ isApprovedByOfficer: "pending" });
+		const orderListOff = await Order.find({ isApprovedByOfficer: "pending" });
 		res.status(200).json(orderListOff);
 	} catch (error) {
 		res.status(400).json({ message: error.message });
@@ -128,7 +128,7 @@ const getItemDetailsOfficer = async (req, res) => {
 
 const getItemDetailsProcurement = async (req, res) => {
 	try {
-		const orderListProc = Order.find({ isApprovedByManager: "pending" });
+		const orderListProc = await Order.find({ isApprovedByManager: "pending" });
 		res.status(200).json(orderListProc);
 	} catch (error) {
 		res.status(400).json({ message: error.message });
@@ -143,8 +143,8 @@ const getItemDetailsProcurement = async (req, res) => {
  */
 const allOrders = async (req, res) => {
 	try {
-		const allOrders = Order.find();
-		res.status(200).json(allOrders);
+		const allOrders = await Order.find();
+		res.status(202).json({ orders: allOrders });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
 		// console.log(error);

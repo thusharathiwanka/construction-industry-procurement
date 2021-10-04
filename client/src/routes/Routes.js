@@ -15,8 +15,10 @@ import Inventory from "../pages/inventory";
 import Register from "../pages/Register";
 import ManageSuppliers from "../pages/ManageSuppliers";
 import ManageServices from "../pages/ManageServices";
+import OfficerOrders from "../pages/OfficerOrders";
 
 import { AuthContext } from "../contexts/AuthContext";
+import Assign from "../pages/Assign";
 
 const Routes = () => {
 	const { loggedIn } = useContext(AuthContext);
@@ -58,11 +60,8 @@ const Routes = () => {
 				component={SiteManagerDashboard}
 			/>
 
-			<Route
-				exact
-				path="/auth/sitemanager/orderList"
-				component={OfficerOrders}
-			/>
+			<Route exact path="/auth/officers/orderList" component={OfficerOrders} />
+			<Route exact path="/auth/officers/form" component={Assign} />
 			<Route
 				exact
 				path="/auth/sitemanager/requisitions"
