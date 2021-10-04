@@ -4,22 +4,16 @@ import TopNav from "../components/topnav/TopNav";
 
 const inventory = () => {
     return (
-         <div>
+        <div>
             <Sidebar/>
             <div id="main" className="layout__content">
 				<TopNav />
 				<div className="layout__content-main">
-                    <h1 className="page-header">Manage Requisition</h1>
+                    <h1 className="page-header">Manage Inventory</h1>
                     <div className="row ">
                         <div className="col-2"></div>
                         <div className="col-8">
                             <div className="card">
-                                <div className="row ">
-                                    
-                                </div>
-                                <div className="row ">
-                                    
-                                </div>
                                 <div className="row ">
                                     
                                 </div>

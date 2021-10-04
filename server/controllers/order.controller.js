@@ -1,5 +1,5 @@
 const Order = require("../models/order.model");
-
+const Site = require("../models/site.model")
 /**
  * use to save the order
  * @param {Object} req
@@ -10,7 +10,13 @@ const Order = require("../models/order.model");
 const saveOrder = async (req, res) => {
 	try {
 		if (req.body) {
-			const saveOrder = new Order(req.body);
+			const {location} = await Site.findById(req.body.siteid)
+			console.log(location);
+			const saveOrder = new Order({
+				itemName:req.body.item,
+				address:location,
+				quantity:req.body.quantity
+			});
 			await saveOrder.save();
 			res.status(200).json(saveOrder._id);
 		}
@@ -143,7 +149,7 @@ const getItemDetailsProcurement = async (req, res) => {
  */
 const allOrders = async (req, res) => {
 	try {
-		const allOrders = await Order.find();
+		const allOrders = await Order.find().populate("siteManagerId");
 		res.status(200).json({ orders: allOrders });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
