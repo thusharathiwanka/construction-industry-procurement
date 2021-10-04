@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Select from "react-select";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
@@ -11,11 +10,6 @@ import "../assets/css/Usercreate.css";
 
 const ManageServices = () => {
 	const [error, setError] = useState("");
-	const [options, setOptions] = useState([
-		{ value: "chocolate", label: "Chocolate" },
-		{ value: "strawberry", label: "Strawberry" },
-		{ value: "vanilla", label: "Vanilla" },
-	]);
 	const [orderDetails, setOrderDetails] = useState({});
 	const [selectedFoods, setSelectedFoods] = useState([]);
 	const [btnState, setBtnState] = useState(false);
@@ -31,15 +25,7 @@ const ManageServices = () => {
 		salary: "",
 		site: "",
 	});
-	const fields = [
-		"",
-		"Employee Name",
-		"Email",
-		"Username",
-		"Phone",
-		"Weekly Work Hrs",
-		"Salary",
-	];
+	const fields = ["", "Material ", "Unit"];
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
@@ -48,10 +34,6 @@ const ManageServices = () => {
 			<td>{index + 1}</td>
 			<td>{item.name}</td>
 			<td>{item.email}</td>
-			<td>{item.username}</td>
-			<td>{item.phone}</td>
-			<td>{item.weeklyWorkHrs}</td>
-			<td>{item.salary}</td>
 		</tr>
 	);
 
@@ -142,7 +124,7 @@ const ManageServices = () => {
 										<div className="rowuser">
 											<input
 												type="text"
-												placeholder="Employee Name"
+												placeholder="Material Name"
 												value={employeeDetails.name}
 												onChange={(e) =>
 													setEmployeeDetails({
@@ -167,84 +149,6 @@ const ManageServices = () => {
 													})
 												}
 												required
-											/>
-										</div>
-									</div>
-									<div className="col-6">
-										<div className="rowuser">
-											<input
-												type="text"
-												placeholder="Mobile Number"
-												value={employeeDetails.phone}
-												onChange={(e) =>
-													setEmployeeDetails({
-														...employeeDetails,
-														phone: e.target.value,
-													})
-												}
-												required
-												maxLength="10"
-											/>
-										</div>
-									</div>
-									<div className="col-6">
-										<div className="rowuser">
-											<input
-												type="text"
-												placeholder="Username"
-												value={employeeDetails.username}
-												onChange={(e) =>
-													setEmployeeDetails({
-														...employeeDetails,
-														username: e.target.value,
-													})
-												}
-												required
-											/>
-										</div>
-									</div>
-									<div className="col-6">
-										<div className="rowuser">
-											<input
-												type="text"
-												placeholder="Weekly Work Hours"
-												value={employeeDetails.weeklyWorkHrs}
-												onChange={(e) =>
-													setEmployeeDetails({
-														...employeeDetails,
-														weeklyWorkHrs: e.target.value,
-													})
-												}
-												required
-											/>
-										</div>
-									</div>
-									<div className="col-6">
-										<div className="rowuser">
-											<input
-												type="text"
-												placeholder="Salary"
-												value={employeeDetails.salary}
-												onChange={(e) =>
-													setEmployeeDetails({
-														...employeeDetails,
-														salary: e.target.value,
-													})
-												}
-												required
-											/>
-										</div>
-									</div>
-									<div className="col-6">
-										<div className="rowuser">
-											<Select
-												style={{ width: "100%" }}
-												isMulti
-												name="options"
-												options={options}
-												className="basic-multi-select"
-												classNamePrefix="select"
-												onChange={setSelectedFoods}
 											/>
 										</div>
 									</div>

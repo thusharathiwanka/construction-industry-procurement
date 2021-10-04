@@ -11,11 +11,10 @@ import SiteManagerDashboard from "../pages/SiteManagerDashboard";
 import ManageSites from "../pages/ManageSites";
 import SiteManagerForm from "../pages/siteManagerForm";
 import ManageMaterials from "../pages/ManageMaterials";
-import Inventory from "../pages/inventory";
+import Inventory from "../pages/Inventory";
 import Register from "../pages/Register";
 import ManageSuppliers from "../pages/ManageSuppliers";
 import ManageServices from "../pages/ManageServices";
-
 
 import { AuthContext } from "../contexts/AuthContext";
 
