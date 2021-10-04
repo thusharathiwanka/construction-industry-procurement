@@ -3,6 +3,7 @@ const router = require("express").Router();
 const {
 	verifyProcurementManagerAuth,
 } = require("../auth/procurement.manager.auth");
+const { verifySupplierAuth } = require("../auth/supplier.auth");
 const SupplierController = require("../controllers/supplier.controller");
 
 router.post("/", SupplierController.saveSupplier);
@@ -18,6 +19,11 @@ router.patch(
 	"/approve/:id",
 	verifyProcurementManagerAuth,
 	SupplierController.approveSupplier
+);
+router.patch(
+	"/services",
+	verifySupplierAuth,
+	SupplierController.updateSupplierMaterials
 );
 
 module.exports = router;

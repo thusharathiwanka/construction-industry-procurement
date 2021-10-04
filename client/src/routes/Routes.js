@@ -5,7 +5,6 @@ import Login from "../pages/Login";
 import ManagerDashboard from "../pages/ManagerDashboard";
 import ManageOrdersSupplier from "../pages/ManageOrdersSupplier";
 import ManageUsers from "../pages/ManageUsers";
-import MyServices from "../pages/MyServices";
 import OfficerDashboard from "../pages/OfficerDashboard";
 import SupplierDashboard from "../pages/SupplierDashboard";
 import SiteManagerDashboard from "../pages/SiteManagerDashboard";
@@ -15,6 +14,7 @@ import ManageMaterials from "../pages/ManageMaterials";
 import Inventory from "../pages/Inventory";
 import Register from "../pages/Register";
 import ManageSuppliers from "../pages/ManageSuppliers";
+import ManageServices from "../pages/ManageServices";
 
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -46,7 +46,7 @@ const Routes = () => {
 				path="/auth/supplier/orders"
 				component={ManageOrdersSupplier}
 			/>
-			<Route exact path="/auth/supplier/services" component={MyServices} />
+			<Route exact path="/auth/supplier/services" component={ManageServices} />
 			<Route
 				exact
 				path="/auth/officer/dashboard"
