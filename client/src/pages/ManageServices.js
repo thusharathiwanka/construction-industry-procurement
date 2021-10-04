@@ -9,7 +9,7 @@ import Spinner from "../components/loading/Spinner";
 
 import "../assets/css/Usercreate.css";
 
-const MyServices = () => {
+const ManageServices = () => {
 	const [error, setError] = useState("");
 	const [options, setOptions] = useState([
 		{ value: "chocolate", label: "Chocolate" },
@@ -277,4 +277,4 @@ const MyServices = () => {
 	);
 };
 
-export default MyServices;
+export default ManageServices;

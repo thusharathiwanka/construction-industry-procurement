@@ -13,6 +13,7 @@ const OrderSchema = new mongoose.Schema(
 		quantity: { type: Number, required: true },
 		total: { type: Number, trim: true, default: 0 },
 		supplierId: { type: mongoose.Schema.Types.ObjectId, ref: "suppliers" },
+		siteId: { type: mongoose.Schema.Types.ObjectId, ref: "sites" },
 	},
 	{ timestamps: true },
 	{ versionKey: false }

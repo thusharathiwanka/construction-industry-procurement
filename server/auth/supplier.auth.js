@@ -18,6 +18,7 @@ const verifySupplierAuth = (req, res, next) => {
 			if (!verified.type === "supplier")
 				return res.status(401).json({ message: "Unauthorized" });
 
+			req.body.user = verified.user;
 			next();
 		} catch (err) {
 			console.error(err.message);
