@@ -1,8 +1,22 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
 
-const siteManagerForm = () => {
+const SiteManagerForm = () => {
+
+    const [Order, setOrder] = useState({
+        item:"Sand",
+        quantity:""
+    });
+
+    const orderHandler = async()=>{
+        try{ 
+            const res = await axios.post("/order",Order)
+        }catch(Err){
+            console.log(Err);
+        }
+    }
     return (
         <div>
             <Sidebar/>
@@ -24,7 +38,8 @@ const siteManagerForm = () => {
 											<select
                                                     name="position"
                                                     id="position"
-                                                    value={" "}
+                                                    value={Order.item}
+                                                    onChange={(e)=>setOrder({...Order,item:e.target.value})}
                                                     required
                                                 >
                                                     <option value="sand">Sand</option>
@@ -46,7 +61,8 @@ const siteManagerForm = () => {
                                             <input
 												type="text"
 												placeholder="Employee Name"
-												value={""}
+												value={Order.quantity}
+                                                onChange={(e)=>setOrder({...Order,quantity:e.target.value})}
 												required
 											/>
                                         </div>
@@ -57,7 +73,7 @@ const siteManagerForm = () => {
                                     <div className="row ">
                                         <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'100%'}}>
                                             <div className="rowuser">
-                                        <button type="submit " >
+                                        <button type="submit " onClick={orderHandler}>
                                             Add
                                         </button>
                                     </div>
@@ -74,4 +90,4 @@ const siteManagerForm = () => {
     )
 }
 
-export default siteManagerForm
+export default SiteManagerForm

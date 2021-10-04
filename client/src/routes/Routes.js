@@ -9,7 +9,7 @@ import OfficerDashboard from "../pages/OfficerDashboard";
 import SupplierDashboard from "../pages/SupplierDashboard";
 import SiteManagerDashboard from "../pages/SiteManagerDashboard";
 import ManageSites from "../pages/ManageSites";
-import SiteManagerForm from "../pages/siteManagerForm";
+import SiteManagerForm from "../pages/SiteManagerForm";
 import ManageMaterials from "../pages/ManageMaterials";
 import Inventory from "../pages/Inventory";
 import Register from "../pages/Register";

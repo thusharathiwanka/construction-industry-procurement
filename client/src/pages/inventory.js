@@ -9,7 +9,7 @@ const inventory = () => {
             <div id="main" className="layout__content">
 				<TopNav />
 				<div className="layout__content-main">
-                    <h1 className="page-header">Manage Requisition</h1>
+                    <h1 className="page-header">Manage Inventory</h1>
                     <div className="row ">
                         <div className="col-2"></div>
                         <div className="col-8">
