@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const ServicesSchema = new mongoose.Schema({
 	materialId: { type: mongoose.Schema.Types.ObjectId, ref: "materials" },
-	units: { type: Number, trim: true },
+	units: { type: Number, trim: true, required: true },
 	supplierId: { type: mongoose.Schema.Types.ObjectId, ref: "suppliers" },
 });
 

@@ -17,7 +17,7 @@ const ManageServices = () => {
 	const [materials, setMaterials] = useState([]);
 	const [serviceDetails, setServiceDetails] = useState({
 		material: "",
-		unit: "",
+		units: "",
 	});
 	const fields = ["", "Material ", "Unit"];
 
@@ -26,8 +26,8 @@ const ManageServices = () => {
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
 			<td>{index + 1}</td>
-			<td>{item.name}</td>
-			<td>{item.email}</td>
+			<td>{item.materialId.name}</td>
+			<td>{item.units}</td>
 		</tr>
 	);
 
@@ -43,11 +43,11 @@ const ManageServices = () => {
 		}
 
 		try {
-			const res = await axios.post("supplier/services", serviceDetails);
+			const res = await axios.post("suppliers/services", serviceDetails);
 			console.log(res);
 			setServiceDetails({
 				material: "",
-				unit: "",
+				units: "",
 			});
 			setError("");
 			window.alert("Service registered successfully");
@@ -65,7 +65,6 @@ const ManageServices = () => {
 			const res2 = await axios.get(`materials`);
 			setEmployees(res1.data.services);
 			setMaterials(res2.data.materials);
-			console.log(res2.data.materials);
 			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
@@ -121,11 +120,11 @@ const ManageServices = () => {
 											<input
 												type="text"
 												placeholder="Units"
-												value={serviceDetails.unit}
+												value={serviceDetails.units}
 												onChange={(e) =>
 													setServiceDetails({
 														...serviceDetails,
-														unit: e.target.value,
+														units: e.target.value,
 													})
 												}
 												required
@@ -142,7 +141,7 @@ const ManageServices = () => {
 						</div>
 					</div>
 					<div className="card">
-						<h2>Employee Details</h2>
+						<h2>My Services Details</h2>
 						{isLoading ? (
 							<Spinner />
 						) : (

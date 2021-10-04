@@ -8,9 +8,10 @@ const Service = require("../models/service.model");
  */
 const saveService = async (req, res) => {
 	if (req.body) {
-		const { material, unit, user } = req.body;
+		console.log(req.body);
+		const { material, units, user } = req.body;
 		// * user inputs validation
-		if (!material || !unit) {
+		if (!material || !units) {
 			return res.status(400).json({ message: "Please fill all the fields" });
 		}
 
@@ -18,7 +19,7 @@ const saveService = async (req, res) => {
 			// * save service
 			const newService = new Service({
 				materialId: material,
-				unit,
+				units,
 				supplierId: user,
 			});
 
@@ -43,7 +44,9 @@ const saveService = async (req, res) => {
  */
 const getServicesOfSupplier = async (req, res) => {
 	try {
-		const services = await Service.find({ supplierId: req.body.user });
+		const services = await Service.find({ supplierId: req.body.user })
+			.populate("materialId")
+			.populate("supplierId");
 		res.status(200).json({ services: services });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
@@ -58,7 +61,9 @@ const getServicesOfSupplier = async (req, res) => {
  */
 const getServices = async (req, res) => {
 	try {
-		const services = await Service.find();
+		const services = await Service.find()
+			.populate("materialId")
+			.populate("supplierId");
 		res.status(200).json({ services: services });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
