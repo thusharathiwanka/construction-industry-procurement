@@ -18,7 +18,7 @@ const ManageUsers = () => {
 		name: "",
 		email: "",
 		username: "",
-		position: "sitemanager",
+		position: "",
 		phone: "",
 		weeklyWorkHrs: "",
 		salary: "",
@@ -111,7 +111,7 @@ const ManageUsers = () => {
 
 	const getAllEmployees = async () => {
 		try {
-			const res1 = await axios.get(`users/`);
+			const res1 = await axios.get(`users`);
 			setEmployees(res1.data.employees);
 			const res2 = await axios.get(`sites`);
 			setSites(res2.data.sites);
@@ -250,7 +250,7 @@ const ManageUsers = () => {
 												}
 												required
 											>
-												<option value="position" default>
+												<option value="position" defaultValue>
 													SELECT POSITION
 												</option>
 												<option value="sitemanager">Site Manager</option>

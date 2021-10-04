@@ -143,7 +143,7 @@ const getItemDetailsProcurement = async (req, res) => {
  */
 const allOrders = async (req, res) => {
 	try {
-		const allOrders = Order.find();
+		const allOrders = await Order.find();
 		res.status(200).json({ orders: allOrders });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
