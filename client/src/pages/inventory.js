@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
@@ -6,10 +7,18 @@ const Inventory = () => {
     
     const [Inventory, setInventory] = useState({
         item:"Sand",
-        max:""
+        maxCapacity:""
 
     })
 
+    const inventoryHandler = async()=>{
+        try{ 
+            console.log(Inventory); 
+            const res = await axios.patch("/orders",Inventory)
+        }catch(Err){
+            console.log(Err.response);
+        }
+    }
     return (
         <div>
             <Sidebar/>
