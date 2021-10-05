@@ -13,9 +13,10 @@ const saveOrder = async (req, res) => {
 			const { location } = await Site.findById(req.body.siteid);
 			console.log(location);
 			const saveOrder = new Order({
-				itemName: req.body.item,
+				itemName: req.body.item.name,
 				address: location,
 				quantity: req.body.quantity,
+				orderItem:req.body.item.id,
 			});
 			await saveOrder.save();
 			res.status(200).json(saveOrder._id);

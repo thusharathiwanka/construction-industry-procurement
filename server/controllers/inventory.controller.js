@@ -16,7 +16,7 @@ const updateInventory = async(req, res)=>{
     try {
 		if (req.body) {
 			await Inventory.findOneAndUpdate({item:req.body.item},{
-                max:req.body.max,
+                maxCapacity:req.body.maxCapacity
             })
 			res.status(200).json(saveOrder._id);
 		}
@@ -26,7 +26,25 @@ const updateInventory = async(req, res)=>{
 	}
 }
 
+const saveInventoryItem = async(req, res)=>{
+    try {
+		if (req.body) {
+			const inventory = await Inventory({
+				item: req.body.item,
+				maxCapacity: req.body.maxCapacity,
+				quantity:req.body.quantity
+			})
+			await inventory.save()
+			res.status(200).json(inventory);
+		}
+	} catch (error) {
+		res.status(400);
+		console.log(error);
+	}
+} 
+
 module.exports = {
 	getInventoryItem,
 	updateInventory,
+	saveInventoryItem
 }
