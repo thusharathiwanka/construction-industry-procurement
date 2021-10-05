@@ -17,6 +17,7 @@ import ManageSuppliers from "../pages/ManageSuppliers";
 import ManageServices from "../pages/ManageServices";
 import OfficerOrders from "../pages/OfficerOrders";
 import DeliveryReport from "../pages/DeliveryReport";
+import ManagetAllOrders from "../pages/ManagetAllOrders";
 
 import { AuthContext } from "../contexts/AuthContext";
 import Assign from "../pages/Assign";
@@ -70,6 +71,11 @@ const Routes = () => {
       />
       <Route exact path="/auth/sitemanager/inventory" component={Inventory} />
       <Route exact path="/auth/deliveryreport" component={DeliveryReport} />
+      <Route
+        exact
+        path="/auth/manager/allorders"
+        component={ManagetAllOrders}
+      />
     </Switch>
   );
 };
