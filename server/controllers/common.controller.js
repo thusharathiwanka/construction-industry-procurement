@@ -5,6 +5,7 @@ const ProcurementOfficer = require("../models/procurement.officer.model");
 const ProcurementManager = require("../models/procurement.manager.model");
 const SiteManager = require("../models/site.manager.model");
 const Supplier = require("../models/supplier.model");
+const Site = require("../models/site.model");
 
 /**
  * use to login users
@@ -88,6 +89,12 @@ const loginUser = async (req, res) => {
 				process.env.JWT_SECRET
 			);
 
+			if (userRole === "sitemanager") {
+				const site = await Site.findOne({ siteManagerId: existingUser._id });
+				return res
+					.cookie("token", token, { httpOnly: true })
+					.send({ type: userRole, site: site._id });
+			}
 			//* sending token as a cookie
 			return res
 				.cookie("token", token, { httpOnly: true })
