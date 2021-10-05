@@ -140,7 +140,7 @@ const ManageUsers = () => {
 								)}
 								<div className="row">
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="text"
 												placeholder="Employee Name"
@@ -156,7 +156,7 @@ const ManageUsers = () => {
 										</div>
 									</div>
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="email"
 												placeholder="Employee Email"
@@ -172,7 +172,7 @@ const ManageUsers = () => {
 										</div>
 									</div>
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="text"
 												placeholder="Mobile Number"
@@ -189,7 +189,7 @@ const ManageUsers = () => {
 										</div>
 									</div>
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="text"
 												placeholder="Username"
@@ -205,7 +205,7 @@ const ManageUsers = () => {
 										</div>
 									</div>
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="text"
 												placeholder="Weekly Work Hours"
@@ -221,7 +221,7 @@ const ManageUsers = () => {
 										</div>
 									</div>
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="text"
 												placeholder="Salary"
@@ -237,7 +237,7 @@ const ManageUsers = () => {
 										</div>
 									</div>
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<select
 												name="position"
 												id="position"
@@ -260,7 +260,7 @@ const ManageUsers = () => {
 									</div>
 									{employeeDetails.position === "sitemanager" ? (
 										<div className="col-6">
-											<div className="rowuser">
+											<div className="row-user">
 												<select
 													name="site"
 													id="site"
@@ -287,7 +287,7 @@ const ManageUsers = () => {
 										""
 									)}
 								</div>
-								<div className="rowuser">
+								<div className="row-user">
 									<button type="submit" onClick={saveEmployeeDetails}>
 										{btnState ? "Saving" : "Save"}
 									</button>

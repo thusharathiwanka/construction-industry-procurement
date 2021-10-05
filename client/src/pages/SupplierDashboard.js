@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Calendar from "react-calendar";
 
 import "../components/badge/badge.css";
 import "react-calendar/dist/Calendar.css";
 
 import Badge from "../components/badge/Badge";
+import Error from "../components/toast/Error";
 import Sidebar from "../components/sidebar/Sidebar";
+import Spinner from "../components/loading/Spinner";
 import Table from "../components/table/Table";
 import TopNav from "../components/topnav/TopNav";
-import Error from "../components/toast/Error";
-import Spinner from "../components/loading/Spinner";
 
 import AdminGreeting from "../assets/images/admin-greeting.png";
-import profilePicture from "../assets/images/admin-user-img.jpg";
+import ProfilePicture from "../assets/images/admin-user-img.jpg";
 
 const SupplierDashboard = () => {
-	const [value, onChange] = useState(new Date());
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 	const [orderDetails, setOrderDetails] = useState([]);
+	const [value, onChange] = useState(new Date());
+
 	const fields = [
 		"",
 		"Item",
@@ -42,7 +43,7 @@ const SupplierDashboard = () => {
 			<td>{item.address}</td>
 			<td>{new Date(item.updatedAt).toDateString()}</td>
 			<td>
-				<div className="rowuser" style={{ paddingTop: "0" }}>
+				<div className="row-user" style={{ paddingTop: "0" }}>
 					{item.DeliveryStatus === "pending" ? (
 						<Badge type="warning" content={item.DeliveryStatus} />
 					) : item.DeliveryStatus === "preparing" ? (
@@ -83,8 +84,17 @@ const SupplierDashboard = () => {
 								<div className="row">
 									<div className="col-8 flex-column">
 										<h1 className="page-header">Good Morning! </h1>
-										<h3>Today you have {orderDetails.length} new orders</h3>
-										<h3>Also older order status to review</h3>
+										<h3>
+											Today you have{" "}
+											{
+												orderDetails.filter(
+													(orderDetail) =>
+														orderDetail.DeliveryStatus === "pending"
+												).length
+											}{" "}
+											new orders
+										</h3>
+										<h3>Also older order statuses to review</h3>
 										<Link className="read-more" to="/auth/supplier/orders">
 											Read more <i className="bx bx-right-arrow-alt"></i>
 										</Link>
@@ -147,7 +157,7 @@ const SupplierDashboard = () => {
 								<div className="row">
 									<div className="col-4 full-width-1496">
 										<img
-											src={profilePicture}
+											src={ProfilePicture}
 											alt=""
 											className="profile-picture"
 										/>

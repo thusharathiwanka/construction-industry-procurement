@@ -145,7 +145,7 @@ const SiteManagerForm = () => {
 										</h3>
 									</div>
 									<div className="col-4">
-										<div className="rowuser">
+										<div className="row-user">
 											<select
 												name="position"
 												id="position"
@@ -189,7 +189,7 @@ const SiteManagerForm = () => {
 										</h3>
 									</div>
 									<div className="col-4">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="number"
 												min="0"
@@ -213,7 +213,7 @@ const SiteManagerForm = () => {
 												width: "100%",
 											}}
 										>
-											<div className="rowuser">
+											<div className="row-user">
 												<button type="submit " onClick={orderHandler}>
 													Add
 												</button>
