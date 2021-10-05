@@ -4,6 +4,7 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import axios from "axios";
+import Popup from "./Popup";
 
 const OfficerOrders = () => {
 	const fields = [
@@ -18,6 +19,7 @@ const OfficerOrders = () => {
 	];
 
 	const [orders, setOrders] = useState(null);
+	const [trigger, setTrigger] = useState(false);
 
 	const acceptOrder = async (id) => {
 		console.log("hi");
@@ -77,8 +79,19 @@ const OfficerOrders = () => {
 				>
 					<i className="bx bx-x"></i>
 				</button>
-				<button className="action-btn item-assign ">
+				<button
+					className="action-btn item-assign "
+					onClick={() => {
+						setTrigger(true);
+					}}
+				>
 					<i className="bx bxs-user-plus"></i>
+					<Popup
+						trigger={trigger}
+						setTrigger={setTrigger}
+						order={item.itemName}
+						sitemng={item.siteManagerId}
+					/>
 				</button>
 			</td>
 		</tr>
