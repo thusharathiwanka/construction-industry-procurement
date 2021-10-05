@@ -121,7 +121,7 @@ const ManageServices = () => {
 									<div className="col-4">
 										<div className="rowuser">
 											<input
-												type="text"
+												type="number"
 												placeholder="Units"
 												value={serviceDetails.units}
 												onChange={(e) =>
@@ -165,7 +165,7 @@ const ManageServices = () => {
 							<Spinner />
 						) : (
 							<Table
-								limit="5"
+								limit="10"
 								headData={fields}
 								renderHead={(item, index) => renderOrderHead(item, index)}
 								bodyData={employees}
