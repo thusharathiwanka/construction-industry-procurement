@@ -1,5 +1,5 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
@@ -7,11 +7,10 @@ import { Link } from "react-router-dom";
 import Badge from "../components/badge/Badge";
 
 const SiteManagerForm = () => {
-
-    const siteId = localStorage.getItem("site")
-    const [Materials, setMaterials] = useState([])
-    const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
-    const rows = [
+	const siteId = localStorage.getItem("site");
+	const [Materials, setMaterials] = useState([]);
+	const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
+	const rows = [
 		{
 			id: "1",
 			date: "2021.08.06",
@@ -55,31 +54,30 @@ const SiteManagerForm = () => {
 			status: "Pending",
 		},
 	];
-    const permissionStatus = {
+	const permissionStatus = {
 		Pending: "warning",
 		Approved: "success",
 		Declined: "danger",
 	};
-    const [Order, setOrder] = useState({
-        item:{},
-        quantity:0,
-        siteid:siteId
-    });
-    console.log(Order);
-   
-    useEffect(() => {
-        const FetchData = async()=>{
-            const res = await axios.get(`materials`);
-            setMaterials(res.data.materials)
+	const [Order, setOrder] = useState({
+		item: {},
+		quantity: 0,
+		siteid: siteId,
+	});
+	console.log(Order);
 
-        }
-        FetchData()
-    }, [])
-    const deleteHandler = (id) => {
+	useEffect(() => {
+		const FetchData = async () => {
+			const res = await axios.get(`materials`);
+			setMaterials(res.data.materials);
+		};
+		FetchData();
+	}, []);
+	const deleteHandler = (id) => {
 		console.log(id);
 	};
 
-    const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
+	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
@@ -112,40 +110,60 @@ const SiteManagerForm = () => {
 		</tr>
 	);
 
-
-    const orderHandler = async()=>{
-        try{ 
-            console.log(Order);
-            const res = await axios.post("/orders",Order)
-        }catch(Err){
-            console.log(Err.response);
-        }
-    }
-    return (
-        <div>
-            <Sidebar/>
-            <div id="main" className="layout__content">
+	const orderHandler = async () => {
+		try {
+			console.log(Order);
+			const res = await axios.post("/orders", Order);
+		} catch (Err) {
+			console.log(Err.response);
+		}
+	};
+	return (
+		<div>
+			<Sidebar />
+			<div id="main" className="layout__content">
 				<TopNav />
 				<div className="layout__content-main">
-                    <h1 className="page-header">Manage Requisition</h1>
-                    <div className="row ">
-                        <div className="col-12">
-                            <div className="card">
-                                <div className="row "> 
-                                    <div className="col-2" >
-                                            <h3 style={{paddingTop:28, display:'flex',whiteSpace:'nowrap',paddingLeft:"25px",  justifyContent:'center', alignItems:'center', width:'100%'}} >Select Item</h3>
-                                    </div>
-                                    <div className="col-4">
-                                        <div className="rowuser">
+					<h1 className="page-header">Manage Requisition</h1>
+					<div className="row ">
+						<div className="col-12">
+							<div className="card">
+								<div className="row ">
+									<div className="col-2">
+										<h3
+											style={{
+												paddingTop: 28,
+												display: "flex",
+												whiteSpace: "nowrap",
+												paddingLeft: "25px",
+												justifyContent: "center",
+												alignItems: "center",
+												width: "100%",
+											}}
+										>
+											Select Item
+										</h3>
+									</div>
+									<div className="col-4">
+										<div className="rowuser">
 											<select
-                                                    name="position"
-                                                    id="position"
-                                                    value={Order.item.id}
-                                                    onChange={(e)=>{setOrder({...Order,item:{id:e.target.value,name:e.target.options[e.target.selectedIndex].text}}) 
-                                                console.log(e);}}
-                                                    required
-                                                >
-                                                    {/* <option value="site" defaultValue>
+												name="position"
+												id="position"
+												value={Order.item.id}
+												onChange={(e) => {
+													setOrder({
+														...Order,
+														item: {
+															id: e.target.value,
+															name: e.target.options[e.target.selectedIndex]
+																.text,
+														},
+													});
+													console.log(e);
+												}}
+												required
+											>
+												{/* <option value="site" defaultValue>
 													SELECT MATERIAL
 												</option> */}
 												{Materials.length > 0 &&
@@ -154,45 +172,60 @@ const SiteManagerForm = () => {
 															{material.name}
 														</option>
 													))}
-                                                </select>
+											</select>
 										</div>
-                                    </div>
-                                        <div className="col-2">
-                                            
-                                            <h3 style={{paddingTop:28, display:'flex', justifyContent:'center', alignItems:'center', width:'100%'}}>Quantity</h3>
-                                    
-                                        </div>
-                                    <div className="col-4">
-                                        <div className="rowuser">
-                                            <input
+									</div>
+									<div className="col-2">
+										<h3
+											style={{
+												paddingTop: 28,
+												display: "flex",
+												justifyContent: "center",
+												alignItems: "center",
+												width: "100%",
+											}}
+										>
+											Quantity
+										</h3>
+									</div>
+									<div className="col-4">
+										<div className="rowuser">
+											<input
 												type="number"
-                                                min="0"
+												min="0"
 												placeholder="Quantity"
-                                                onChange={(e)=>setOrder({...Order,quantity:e.target.value})}
+												onChange={(e) =>
+													setOrder({ ...Order, quantity: e.target.value })
+												}
 												required
 											/>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                        
-                                <div style={{paddingTop:50}}>
-                                    <div className="row ">
-                                        <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'100%'}}>
-                                            <div className="rowuser">
-                                        <button type="submit " onClick={orderHandler}>
-                                            Add
-                                        </button>
-                                    </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div className="row">
-                        <div className="col-8">
+										</div>
+									</div>
+								</div>
+
+								<div style={{ paddingTop: 50 }}>
+									<div className="row ">
+										<div
+											style={{
+												display: "flex",
+												justifyContent: "center",
+												alignItems: "center",
+												width: "100%",
+											}}
+										>
+											<div className="rowuser">
+												<button type="submit " onClick={orderHandler}>
+													Add
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="row">
+						<div className="col-8">
 							<div className="card">
 								<div className="flex">
 									<h2 className="request-title">All Orders</h2>
@@ -206,11 +239,11 @@ const SiteManagerForm = () => {
 								/>
 							</div>
 						</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
 
-export default SiteManagerForm
+export default SiteManagerForm;
