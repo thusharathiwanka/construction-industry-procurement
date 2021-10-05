@@ -9,5 +9,6 @@ router.use("/orders", require("./order.routes"));
 router.use("/reports", require("./report.routes"));
 router.use("/sites", require("./site.routes"));
 router.use("/materials", require("./material.routes"));
+router.use("/inventory", require("./inventory.routes"));
 
 module.exports = router;
