@@ -5,14 +5,14 @@ import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Spinner from "../components/loading/Spinner";
+import Error from "../components/toast/Error";
 
 import "../assets/css/Usercreate.css";
 
 const ManageOrdersSupplier = () => {
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
-	const [employees, setEmployees] = useState(true);
-	const [employeeDetails, setEmployeeDetails] = useState({
+	const [orderDetails, setOrderDetails] = useState({
 		name: "",
 		email: "",
 		username: "",
@@ -24,12 +24,12 @@ const ManageOrdersSupplier = () => {
 	});
 	const fields = [
 		"",
-		"Employee Name",
-		"Email",
-		"Username",
-		"Phone",
-		"Weekly Work Hrs",
-		"Salary",
+		"Item",
+		"Quantity",
+		"Total Price",
+		"Delivery Address",
+		"Received At",
+		"Actions",
 	];
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
@@ -37,27 +37,41 @@ const ManageOrdersSupplier = () => {
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
 			<td>{index + 1}</td>
-			<td>{item.name}</td>
-			<td>{item.email}</td>
-			<td>{item.username}</td>
-			<td>{item.phone}</td>
-			<td>{item.weeklyWorkHrs}</td>
-			<td>{item.salary}</td>
+			<td>{item.itemName}</td>
+			<td>{item.quantity}</td>
+			<td>{item.total}</td>
+			<td>{item.address}</td>
+			<td>{new Date(item.updatedAt).toDateString()}</td>
+			<td>
+				<div className="rowuser" style={{ paddingTop: "0" }}>
+					{item.DeliveryStatus === "pending" ? (
+						<button style={{ padding: ".2rem 1rem", height: "30px" }}>
+							Mark as preparing
+						</button>
+					) : item.DeliveryStatus === "preparing" ? (
+						<button style={{ padding: ".2rem 1rem", height: "30px" }}>
+							Mark as delivered
+						</button>
+					) : (
+						<p>Delivered</p>
+					)}
+				</div>
+			</td>
 		</tr>
 	);
 
-	const getAllEmployees = async () => {
+	const getAllOrders = async () => {
 		try {
-			const res = await axios.get(`users/`);
-			setEmployees(res.data.employees);
-			console.log(res.data.employees);
+			const res = await axios.get("orders/supplier");
+			setOrderDetails(res.data.orders);
+			console.log(res.data.orders);
 			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
 		}
 	};
 
-	useEffect(() => getAllEmployees(), []);
+	useEffect(() => getAllOrders(), []);
 
 	return (
 		<div>
@@ -67,17 +81,22 @@ const ManageOrdersSupplier = () => {
 				<div className="layout__content-main">
 					<h1 className="page-header">Manage Orders</h1>
 					<div className="card">
-						<h2>Order Details</h2>
+						<h2>Received Orders</h2>
 						{isLoading ? (
 							<Spinner />
-						) : (
+						) : orderDetails.length > 0 ? (
 							<Table
 								limit="5"
 								headData={fields}
 								renderHead={(item, index) => renderOrderHead(item, index)}
-								bodyData={employees}
+								bodyData={orderDetails}
 								renderBody={(item, index) => renderOrderBody(item, index)}
 							/>
+						) : (
+							<>
+								{setError("No orders found")}
+								<Error message={error} />
+							</>
 						)}
 					</div>
 				</div>
