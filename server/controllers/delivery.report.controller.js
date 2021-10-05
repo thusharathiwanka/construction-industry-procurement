@@ -39,16 +39,20 @@ const saveDeliveryReport = async (req, res) => {
 	return res.status(400).send();
 };
 
-const getDeliveryReport = async(req, res)=>{
+/**
+ * retrieve delivery reports filtered by orderId
+ * @param {*} req
+ * @param {*} res
+ */
+const getDeliveryReport = async (req, res) => {
 	try {
-		const reports = deliveryReport.find({ orderId: req.params.id});
+		const reports = deliveryReport.find({ orderId: req.params.id });
 		res.status(200).json(reports);
 	} catch (error) {
 		res.status(400).json({ message: error.message });
 	}
-
-}
+};
 module.exports = {
 	saveDeliveryReport,
-	getDeliveryReport
+	getDeliveryReport,
 };

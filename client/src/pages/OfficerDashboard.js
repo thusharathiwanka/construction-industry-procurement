@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Calendar from "react-calendar";
 
@@ -13,10 +13,20 @@ import AdminGreeting from "../assets/images/admin-greeting.png";
 import Badge from "../components/badge/Badge";
 
 import profilePicture from "../assets/images/admin-user-img.jpg";
+import axios from "axios";
 
 const OfficerDashboard = () => {
 	const [value, onChange] = useState(new Date());
-	const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
+	const [orders, setOrders] = useState(null);
+	const fields = [
+		"Order ID",
+		"Item Name",
+		"Quantity",
+		"Total",
+		"Created Date",
+		"Status",
+		"Actions",
+	];
 	const rows = [
 		{
 			id: "1",
@@ -63,7 +73,7 @@ const OfficerDashboard = () => {
 	];
 
 	const permissionStatus = {
-		Pending: "warning",
+		pending: "warning",
 		Approved: "success",
 		Declined: "danger",
 	};
@@ -76,12 +86,17 @@ const OfficerDashboard = () => {
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
-			<td>{item.id}</td>
-			<td>{item.date}</td>
-			<td>{item.houseOwner}</td>
-			<td>{item.providence}</td>
+			<td>{index + 1}</td>
+			<td>{item.itemName}</td>
+			<td>{item.quantity}</td>
+			<td>{item.total}</td>
+
+			<td>{new Date(item.createdAt).toLocaleDateString()}</td>
 			<td>
-				<Badge type={permissionStatus[item.status]} content={item.status} />
+				<Badge
+					type={permissionStatus[item.isApprovedByOfficer]}
+					content={item.isApprovedByOfficer}
+				/>
 			</td>
 			<td className="">
 				{item.status === "Pending" && (
@@ -104,6 +119,18 @@ const OfficerDashboard = () => {
 			</td>
 		</tr>
 	);
+
+	const getAllOrder = async () => {
+		const res = await axios.get("orders/officer");
+		setOrders(res.data.orders);
+		console.log(res);
+	};
+
+	console.log(orders);
+
+	useEffect(() => {
+		getAllOrder();
+	}, []);
 
 	return (
 		<div>
@@ -154,17 +181,19 @@ const OfficerDashboard = () => {
 							<div className="card">
 								<div className="flex">
 									<h2 className="request-title">New Orders</h2>
-									<Link to={`/auth/officer/orders`}>
+									<Link to={`/auth/officers/orderlist`}>
 										<button className="view-btn">View All</button>
 									</Link>
 								</div>
-								<Table
-									limit="5"
-									headData={fields}
-									renderHead={(item, index) => renderOrderHead(item, index)}
-									bodyData={rows}
-									renderBody={(item, index) => renderOrderBody(item, index)}
-								/>
+								{orders && (
+									<Table
+										limit="5"
+										headData={fields}
+										renderHead={(item, index) => renderOrderHead(item, index)}
+										bodyData={orders}
+										renderBody={(item, index) => renderOrderBody(item, index)}
+									/>
+								)}
 							</div>
 						</div>
 						<div className="col-4">
