@@ -112,7 +112,7 @@ const deletePendingOrders = async (res, req) => {
 const getItemDetailsOfficer = async (req, res) => {
 	try {
 		const orderListOff = await Order.find({ isApprovedByOfficer: "pending" });
-		res.status(200).json(orderListOff);
+		res.status(200).json({ orders: orderListOff });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
 		// console.log(error);

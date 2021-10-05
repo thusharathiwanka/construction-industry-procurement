@@ -7,49 +7,78 @@ import axios from "axios";
 
 const OfficerOrders = () => {
 	const fields = [
-		"",
 		"Order ID",
+
+		"Item Name",
 		"Quantity",
 		"Total",
 		"Created Date",
 		"Status",
 		"Actions",
 	];
-	const deleteHandler = (id) => {
-		console.log(id);
-	};
+
 	const [orders, setOrders] = useState(null);
+
+	const acceptOrder = async (id) => {
+		console.log("hi");
+
+		try {
+			const res = await axios.put(`orders/officer/${id}`, {
+				status: "approved",
+			});
+			console.log(res);
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
+	const deleteHandler = async (id) => {
+		console.log("hi");
+		try {
+			const res = await axios.put(`orders/officer/${id}`, {
+				status: "rejected",
+			});
+			console.log(res);
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
 			<td>{index + 1}</td>
-			<td>{item.orderItem}</td>
+			<td>{item.itemName}</td>
 			<td>{item.quantity}</td>
 			<td>{item.total}</td>
 			<td>{new Date(item.createdAt).toLocaleDateString()}</td>
 			<td>
 				<Badge
-					type={permissionStatus[item.DeliveryStatus]}
-					content={item.DeliveryStatus}
+					type={permissionStatus[item.isApprovedByOfficer]}
+					content={item.isApprovedByOfficer}
 				/>
 			</td>
 			<td>
-				<button className="action-btn check">
+				<button
+					className="action-btn check"
+					onClick={() => {
+						acceptOrder(item._id);
+					}}
+				>
 					<i className="bx bx-check"></i>
 				</button>
-				<button className="action-btn x">
-					<i
-						className="bx bx-x"
-						onClick={() => {
-							if (window.confirm("Are you sure to delete this request?")) {
-								deleteHandler(item.id);
-							}
-						}}
-					></i>
+				<button
+					className="action-btn x"
+					onClick={() => {
+						if (window.confirm("Are you sure to delete this request?")) {
+							deleteHandler(item._id);
+						}
+					}}
+				>
+					<i className="bx bx-x"></i>
 				</button>
 				<button className="action-btn item-assign ">
-					<i class="bx bxs-user-plus"></i>
+					<i className="bx bxs-user-plus"></i>
 				</button>
 			</td>
 		</tr>
@@ -60,7 +89,6 @@ const OfficerOrders = () => {
 		console.log(res.data.orders);
 		setOrders(res.data.orders);
 	};
-	console.log(orders);
 
 	useEffect(() => {
 		getAllOrder();
@@ -68,8 +96,8 @@ const OfficerOrders = () => {
 
 	const permissionStatus = {
 		pending: "warning",
-		Approved: "success",
-		Declined: "danger",
+		approved: "success",
+		rejected: "danger",
 	};
 
 	return (

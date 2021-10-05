@@ -60,7 +60,7 @@ const Routes = () => {
 				component={SiteManagerDashboard}
 			/>
 
-			<Route exact path="/auth/officers/orderList" component={OfficerOrders} />
+			<Route exact path="/auth/officers/orderlist" component={OfficerOrders} />
 			<Route exact path="/auth/officers/form" component={Assign} />
 			<Route
 				exact
