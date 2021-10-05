@@ -18,6 +18,11 @@ router.get(
 	verifyProcurementOfficer,
 	OrderController.getItemDetailsOfficer
 );
+router.put(
+	"/officer/:id",
+	verifyProcurementOfficer,
+	OrderController.changeOrderStatusByOfficer
+);
 router.get(
 	"/proc",
 	verifyProcurementManagerAuth,
@@ -27,6 +32,12 @@ router.get(
 	"/supplier/:id",
 	verifySupplierAuth,
 	OrderController.getOrdersOfSupplier
+);
+
+router.put(
+	"/proc/:id",
+	verifyProcurementManagerAuth,
+	OrderController.changeOrderStatusByManager
 );
 
 module.exports = router;
