@@ -126,7 +126,7 @@ const ManageServices = () => {
 								)}
 								<div className="row">
 									<div className="col-4">
-										<div className="rowuser">
+										<div className="row-user">
 											<select
 												name="site"
 												id="site"
@@ -152,7 +152,7 @@ const ManageServices = () => {
 										</div>
 									</div>
 									<div className="col-4">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="number"
 												placeholder="Units"
@@ -168,7 +168,7 @@ const ManageServices = () => {
 										</div>
 									</div>
 									<div className="col-4">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="number"
 												placeholder="Price per unit"
@@ -184,7 +184,7 @@ const ManageServices = () => {
 										</div>
 									</div>
 								</div>
-								<div className="rowuser">
+								<div className="row-user">
 									<button type="submit" onClick={saveServiceDetails}>
 										{btnState ? "Saving" : "Save"}
 									</button>

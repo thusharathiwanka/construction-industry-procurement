@@ -1,4 +1,4 @@
-.rowuser {
+.row-user {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -34,7 +34,7 @@
 	color: rgba(136, 136, 136, 0.9);
 }
 
-.rowuser input {
+.row-user input {
 	width: 100%;
 	box-sizing: border-box;
 	border: 1px solid var(--main-color-blue);
@@ -65,7 +65,7 @@
 	box-shadow: inset 0px -3px 0px 0px rgba(187, 187, 187, 0.2);
 	transition: box-shadow 0.2s ease-in;
 }
-.rowuser select {
+.row-user select {
 	width: 100%;
 	box-sizing: border-box;
 	border: 1px solid var(--main-color-blue);
@@ -89,19 +89,19 @@
 	border-radius: 15px;
 }
 
-.rowuser input::-webkit-input-placeholder {
+.row-user input::-webkit-input-placeholder {
 	opacity: 1;
 	transition: opacity 0.25s ease-out;
 }
 
-.rowuser label {
+.row-user label {
 	align-self: start;
 	padding-left: 4.5rem;
 	padding-bottom: 0.5rem;
 	color: rgba(187, 187, 187, 0.9);
 }
 
-.rowuser button {
+.row-user button {
 	border-radius: 5px;
 	height: 50px;
 	padding: 0 3rem;
@@ -119,7 +119,7 @@
 	transition: opacity 0.25s ease-out;
 }
 
-.rowuser button:hover {
+.row-user button:hover {
 	opacity: 0.8;
 }
 
@@ -185,11 +185,11 @@ a:hover {
 	opacity: 0.8;
 }
 @media screen and (max-width: 900px) {
-	.rowuser input {
+	.row-user input {
 		box-sizing: border-box;
 		padding: 1rem;
 	}
-	.rowuser label {
+	.row-user label {
 		align-self: start;
 		padding-left: 5rem;
 		padding-bottom: 0.5rem;
@@ -213,12 +213,12 @@ a:hover {
 	}
 }
 @media screen and (max-width: 600px) {
-	.rowuser input {
+	.row-user input {
 		box-sizing: border-box;
 		padding: 1rem;
 		font-size: 1rem;
 	}
-	.rowuser label {
+	.row-user label {
 		align-self: start;
 		padding-left: 4.5rem;
 		padding-bottom: 0.5rem;

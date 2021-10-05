@@ -37,7 +37,7 @@ const ManageOrdersSupplier = () => {
 			<td>{new Date(item.updatedAt).toDateString()}</td>
 			<td style={{ textTransform: "capitalize" }}>{item.DeliveryStatus}</td>
 			<td>
-				<div className="rowuser" style={{ paddingTop: "0" }}>
+				<div className="row-user" style={{ paddingTop: "0" }}>
 					{item.DeliveryStatus === "pending" ? (
 						<div
 							style={{ cursor: "pointer" }}
