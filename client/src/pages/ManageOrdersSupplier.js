@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
@@ -6,7 +7,6 @@ import Table from "../components/table/Table";
 import Spinner from "../components/loading/Spinner";
 
 import "../assets/css/Usercreate.css";
-import axios from "axios";
 
 const ManageOrdersSupplier = () => {
 	const [error, setError] = useState("");

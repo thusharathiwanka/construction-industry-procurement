@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+import "../assets/css/Usercreate.css";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Spinner from "../components/loading/Spinner";
 
-import "../assets/css/Usercreate.css";
-import axios from "axios";
-
 const ManageUsers = () => {
 	const [error, setError] = useState("");
 	const [btnState, setBtnState] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [employees, setEmployees] = useState(true);
+	const [sites, setSites] = useState([]);
 	const [employeeDetails, setEmployeeDetails] = useState({
 		name: "",
 		email: "",
 		username: "",
-		position: "sitemanager",
+		position: "",
 		phone: "",
 		weeklyWorkHrs: "",
 		salary: "",
@@ -72,6 +73,14 @@ const ManageUsers = () => {
 			return setError("Please use valid phone number");
 		}
 
+		if (
+			employeeDetails.site === "site" ||
+			employeeDetails.position === "position"
+		) {
+			setBtnState(false);
+			return setError("Please fill all the fields");
+		}
+
 		if (employeeDetails.site === "sitemanager") {
 			endpoint = "sitemanagers";
 		} else if (employeeDetails.site === "officers") {
@@ -81,7 +90,6 @@ const ManageUsers = () => {
 
 		try {
 			const res = await axios.post(endpoint, employeeDetails);
-			console.log(res);
 			setEmployeeDetails({
 				name: "",
 				email: "",
@@ -103,9 +111,10 @@ const ManageUsers = () => {
 
 	const getAllEmployees = async () => {
 		try {
-			const res = await axios.get(`users/`);
-			setEmployees(res.data.employees);
-			console.log(res.data.employees);
+			const res1 = await axios.get(`users`);
+			setEmployees(res1.data.employees);
+			const res2 = await axios.get(`sites`);
+			setSites(res2.data.sites);
 			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
@@ -241,6 +250,9 @@ const ManageUsers = () => {
 												}
 												required
 											>
+												<option value="position" defaultValue>
+													SELECT POSITION
+												</option>
 												<option value="sitemanager">Site Manager</option>
 												<option value="officer">Procurement Officer</option>
 											</select>
@@ -261,8 +273,13 @@ const ManageUsers = () => {
 													}
 													required
 												>
-													<option value="site">Site 1</option>
-													<option value="officer">Site 2</option>
+													<option value="site" defaultValue>
+														SELECT SITE
+													</option>
+													{sites.length > 0 &&
+														sites.map((site) => (
+															<option value={site._id}>{site.name}</option>
+														))}
 												</select>
 											</div>
 										</div>
@@ -272,7 +289,7 @@ const ManageUsers = () => {
 								</div>
 								<div className="rowuser">
 									<button type="submit" onClick={saveEmployeeDetails}>
-										Save
+										{btnState ? "Saving" : "Save"}
 									</button>
 								</div>
 							</form>
