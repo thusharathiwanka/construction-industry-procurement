@@ -174,8 +174,8 @@ const SupplierDashboard = () => {
 										/>
 									</div>
 									<div className="col-8">
-										<h2>Mavindu Iddugoda</h2>
-										<h3 className="lighter">PRESIDENT</h3>
+										<h2>{localStorage.getItem("name")}</h2>
+										<h3 className="lighter">SUPPLIER</h3>
 									</div>
 								</div>
 							</div>
