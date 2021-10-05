@@ -13,21 +13,22 @@ const ManageServices = () => {
 	const [btnState, setBtnState] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [employees, setEmployees] = useState(true);
-	const [services, setServices] = useState([]);
 	const [materials, setMaterials] = useState([]);
 	const [serviceDetails, setServiceDetails] = useState({
 		material: "",
-		unit: "",
+		units: "",
+		pricePerUnit: "",
 	});
-	const fields = ["", "Material ", "Unit"];
+	const fields = ["", "Material ", "Units", "Price per Unit"];
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
 			<td>{index + 1}</td>
-			<td>{item.name}</td>
-			<td>{item.email}</td>
+			<td>{item.materialId.name}</td>
+			<td>{item.units}</td>
+			<td>{item.pricePerUnit}</td>
 		</tr>
 	);
 
@@ -43,12 +44,14 @@ const ManageServices = () => {
 		}
 
 		try {
-			const res = await axios.post("supplier/services", serviceDetails);
-			console.log(res);
+			const res = await axios.post("suppliers/services", serviceDetails);
 			setServiceDetails({
 				material: "",
-				unit: "",
+				units: "",
+				pricePerUnit: "",
 			});
+
+			getAllData();
 			setError("");
 			window.alert("Service registered successfully");
 			setBtnState(false);
@@ -65,7 +68,6 @@ const ManageServices = () => {
 			const res2 = await axios.get(`materials`);
 			setEmployees(res1.data.services);
 			setMaterials(res2.data.materials);
-			console.log(res2.data.materials);
 			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
@@ -90,7 +92,7 @@ const ManageServices = () => {
 									</div>
 								)}
 								<div className="row">
-									<div className="col-6">
+									<div className="col-4">
 										<div className="rowuser">
 											<select
 												name="site"
@@ -116,16 +118,32 @@ const ManageServices = () => {
 											</select>
 										</div>
 									</div>
-									<div className="col-6">
+									<div className="col-4">
 										<div className="rowuser">
 											<input
 												type="text"
 												placeholder="Units"
-												value={serviceDetails.unit}
+												value={serviceDetails.units}
 												onChange={(e) =>
 													setServiceDetails({
 														...serviceDetails,
-														unit: e.target.value,
+														units: e.target.value,
+													})
+												}
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-4">
+										<div className="rowuser">
+											<input
+												type="number"
+												placeholder="Price per unit"
+												value={serviceDetails.pricePerUnit}
+												onChange={(e) =>
+													setServiceDetails({
+														...serviceDetails,
+														pricePerUnit: e.target.value,
 													})
 												}
 												required
@@ -135,14 +153,14 @@ const ManageServices = () => {
 								</div>
 								<div className="rowuser">
 									<button type="submit" onClick={saveServiceDetails}>
-										Save
+										{btnState ? "Saving" : "Save"}
 									</button>
 								</div>
 							</form>
 						</div>
 					</div>
 					<div className="card">
-						<h2>Employee Details</h2>
+						<h2>My Services Details</h2>
 						{isLoading ? (
 							<Spinner />
 						) : (
