@@ -5,19 +5,20 @@ import Login from "../pages/Login";
 import ManagerDashboard from "../pages/ManagerDashboard";
 import ManageOrdersSupplier from "../pages/ManageOrdersSupplier";
 import ManageUsers from "../pages/ManageUsers";
-import MyServices from "../pages/MyServices";
 import OfficerDashboard from "../pages/OfficerDashboard";
 import SupplierDashboard from "../pages/SupplierDashboard";
 import SiteManagerDashboard from "../pages/SiteManagerDashboard";
 import ManageSites from "../pages/ManageSites";
-import SiteManagerForm from "../pages/siteManagerForm";
+import SiteManagerForm from "../pages/SiteManagerForm";
 import ManageMaterials from "../pages/ManageMaterials";
-import Inventory from "../pages/inventory";
+import Inventory from "../pages/Inventory";
 import Register from "../pages/Register";
 import ManageSuppliers from "../pages/ManageSuppliers";
-
+import ManageServices from "../pages/ManageServices";
+import OfficerOrders from "../pages/OfficerOrders";
 
 import { AuthContext } from "../contexts/AuthContext";
+import Assign from "../pages/Assign";
 
 const Routes = () => {
 	const { loggedIn } = useContext(AuthContext);
@@ -47,7 +48,7 @@ const Routes = () => {
 				path="/auth/supplier/orders"
 				component={ManageOrdersSupplier}
 			/>
-			<Route exact path="/auth/supplier/services" component={MyServices} />
+			<Route exact path="/auth/supplier/services" component={ManageServices} />
 			<Route
 				exact
 				path="/auth/officer/dashboard"
@@ -58,6 +59,9 @@ const Routes = () => {
 				path="/auth/sitemanager/dashboard"
 				component={SiteManagerDashboard}
 			/>
+
+			<Route exact path="/auth/officers/orderlist" component={OfficerOrders} />
+			<Route exact path="/auth/officers/form" component={Assign} />
 			<Route
 				exact
 				path="/auth/sitemanager/requisitions"

@@ -18,6 +18,7 @@ const verifyProcurementManagerAuth = (req, res, next) => {
 			if (!verified.type === "manager")
 				return res.status(401).json({ message: "Unauthorized" });
 
+			req.body.user = verified.user;
 			next();
 		} catch (err) {
 			console.error(err.message);

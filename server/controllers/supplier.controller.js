@@ -161,4 +161,41 @@ const approveSupplier = async (req, res) => {
 	return res.status(400).send();
 };
 
-module.exports = { saveSupplier, getSupplier, approveSupplier, rejectSupplier };
+/**
+ * save materials of supplier
+ * @param {req} req
+ * @param {res} res
+ * @returns  res
+ */
+const updateSupplierMaterials = async (req, res) => {
+	if (req.body) {
+		const { material, materialQuantity, user } = req.body;
+
+		// * user inputs validation
+		if (!material || !materialQuantity) {
+			return res.status(400).json({ message: "Please fill all the fields" });
+		}
+
+		try {
+			await Supplier.findByIdAndUpdate(user, {
+				material: material,
+				materialQuantity: materialQuantity,
+			});
+
+			return res.status(200).send();
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send();
+		}
+	}
+
+	return res.status(400).send();
+};
+
+module.exports = {
+	saveSupplier,
+	getSupplier,
+	approveSupplier,
+	rejectSupplier,
+	updateSupplierMaterials,
+};

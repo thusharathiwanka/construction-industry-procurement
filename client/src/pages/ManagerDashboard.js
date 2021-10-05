@@ -20,7 +20,7 @@ const AdminDashboard = () => {
 	const { loggedIn } = useContext(AuthContext);
 	const [suppliers, setSuppliers] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const fields = ["", "Name", "email", "Username", "Status", "Actions"];
+	const fields = ["", "Name", "Email", "Username", "Status", "Actions"];
 
 	const permissionStatus = {
 		pending: "warning",
