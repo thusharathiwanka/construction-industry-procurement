@@ -22,7 +22,6 @@ const saveOrder = async (req, res) => {
 		}
 	} catch (error) {
 		res.status(400).json({ message: error.message });
-		// console.log(error);
 	}
 };
 
@@ -40,7 +39,6 @@ const updateOrderQuantity = async (req, res) => {
 		});
 	} catch (error) {
 		res.status(400).json({ error: error.message });
-		// console.log(error);
 	}
 };
 
@@ -57,7 +55,6 @@ const changeOrderStatusByOfficer = async (req, res) => {
 		});
 	} catch (error) {
 		res.status(400).json({ message: error.json });
-		// console.log(error);
 	}
 };
 
@@ -74,7 +71,57 @@ const changeOrderStatusByManager = async (req, res) => {
 		});
 	} catch (error) {
 		res.status(400).json({ message: error.message });
-		// console.log(error);
+	}
+};
+
+/**
+ * use to change delivery status as preparing by supplier
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const changeDeliveryStatusBySupplierAsPreparing = async (req, res) => {
+	try {
+		await Order.findByIdAndUpdate(req.params.id, {
+			DeliveryStatus: "preparing",
+		});
+		res.status(200).send();
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
+/**
+ * use to change delivery status as delivering by supplier
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const changeDeliveryStatusBySupplierAsDelivering = async (req, res) => {
+	try {
+		await Order.findByIdAndUpdate(req.params.id, {
+			DeliveryStatus: "delivering",
+		});
+		res.status(200).send();
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
+/**
+ * use to change delivery status as delivered by supplier
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const changeDeliveryStatusBySupplierAsDelivered = async (req, res) => {
+	try {
+		await Order.findByIdAndUpdate(req.params.id, {
+			DeliveryStatus: "delivered",
+		});
+		res.status(200).send();
+	} catch (error) {
+		res.status(400).json({ message: error.message });
 	}
 };
 
@@ -91,7 +138,6 @@ const addSupplier = async (res, req) => {
 		});
 	} catch (error) {
 		res.status(400).json({ message: error.message });
-		// console.log(error);
 	}
 };
 
@@ -106,12 +152,11 @@ const deletePendingOrders = async (res, req) => {
 		res.status(200).json(deletedOrder);
 	} catch (error) {
 		res.status(400).json({ message: error.message });
-		// console.log(error);
 	}
 };
 
 /**
- * retrive all orders where isApprovedByOfficer = "pending"
+ * retrieve all orders where isApprovedByOfficer = "pending"
  * @param {*} req
  * @param {*} res
  */
@@ -121,12 +166,11 @@ const getItemDetailsOfficer = async (req, res) => {
 		res.status(200).json({ orders: orderListOff });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
-		// console.log(error);
 	}
 };
 
 /**
- * retrive all orders where isApprovedByManager = "pending"
+ * retrieve all orders where isApprovedByManager = "pending"
  * @param {Object} req
  * @param {Object} res
  * @returns {Object} res
@@ -138,12 +182,11 @@ const getItemDetailsProcurement = async (req, res) => {
 		res.status(200).json(orderListProc);
 	} catch (error) {
 		res.status(400).json({ message: error.message });
-		// console.log(error);
 	}
 };
 
 /**
- * retrives all orders in the orders table
+ * retrieves all orders in the orders table
  * @param {*} req
  * @param {*} res
  */
@@ -153,7 +196,6 @@ const allOrders = async (req, res) => {
 		res.status(200).json({ orders: allOrders });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
-		// console.log(error);
 	}
 };
 
@@ -185,4 +227,7 @@ module.exports = {
 	getItemDetailsProcurement,
 	allOrders,
 	getOrdersOfSupplier,
+	changeDeliveryStatusBySupplierAsPreparing,
+	changeDeliveryStatusBySupplierAsDelivered,
+	changeDeliveryStatusBySupplierAsDelivering,
 };
