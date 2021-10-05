@@ -85,6 +85,7 @@ const changeDeliveryStatusBySupplierAsPreparing = async (req, res) => {
 		await Order.findByIdAndUpdate(req.params.id, {
 			DeliveryStatus: "preparing",
 		});
+		res.status(200).send();
 	} catch (error) {
 		res.status(400).json({ message: error.message });
 	}
@@ -101,6 +102,7 @@ const changeDeliveryStatusBySupplierAsDelivering = async (req, res) => {
 		await Order.findByIdAndUpdate(req.params.id, {
 			DeliveryStatus: "delivering",
 		});
+		res.status(200).send();
 	} catch (error) {
 		res.status(400).json({ message: error.message });
 	}
@@ -117,6 +119,7 @@ const changeDeliveryStatusBySupplierAsDelivered = async (req, res) => {
 		await Order.findByIdAndUpdate(req.params.id, {
 			DeliveryStatus: "delivered",
 		});
+		res.status(200).send();
 	} catch (error) {
 		res.status(400).json({ message: error.message });
 	}

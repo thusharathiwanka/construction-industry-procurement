@@ -41,7 +41,7 @@ router.put(
 	OrderController.changeOrderStatusByManager
 );
 router.put(
-	"/supplier/prepare:id",
+	"/supplier/prepare/:id",
 	verifySupplierAuth,
 	OrderController.changeDeliveryStatusBySupplierAsPreparing
 );

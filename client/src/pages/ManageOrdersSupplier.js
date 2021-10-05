@@ -6,22 +6,14 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Spinner from "../components/loading/Spinner";
 import Error from "../components/toast/Error";
+import Badge from "../components/badge/Badge";
 
 import "../assets/css/Usercreate.css";
 
 const ManageOrdersSupplier = () => {
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
-	const [orderDetails, setOrderDetails] = useState({
-		name: "",
-		email: "",
-		username: "",
-		position: "sitemanager",
-		phone: "",
-		weeklyWorkHrs: "",
-		salary: "",
-		site: "",
-	});
+	const [orderDetails, setOrderDetails] = useState([]);
 	const fields = [
 		"",
 		"Item",
@@ -29,6 +21,7 @@ const ManageOrdersSupplier = () => {
 		"Total Price",
 		"Delivery Address",
 		"Received At",
+		"Status",
 		"Actions",
 	];
 
@@ -42,29 +35,83 @@ const ManageOrdersSupplier = () => {
 			<td>{item.total}</td>
 			<td>{item.address}</td>
 			<td>{new Date(item.updatedAt).toDateString()}</td>
+			<td style={{ textTransform: "capitalize" }}>{item.DeliveryStatus}</td>
 			<td>
 				<div className="rowuser" style={{ paddingTop: "0" }}>
 					{item.DeliveryStatus === "pending" ? (
-						<button style={{ padding: ".2rem 1rem", height: "30px" }}>
-							Mark as preparing
-						</button>
+						<div
+							style={{ cursor: "pointer" }}
+							onClick={() => changeDeliveryStatusAsPreparing(item._id)}
+						>
+							<Badge type="warning" content="Mark as preparing" />
+						</div>
 					) : item.DeliveryStatus === "preparing" ? (
-						<button style={{ padding: ".2rem 1rem", height: "30px" }}>
-							Mark as delivered
-						</button>
+						<div
+							style={{ cursor: "pointer" }}
+							onClick={() => changeDeliveryStatusAsDelivering(item._id)}
+						>
+							<Badge type="primary" content="Mark as delivering" />
+						</div>
+					) : item.DeliveryStatus === "delivering" ? (
+						<div
+							style={{ cursor: "pointer" }}
+							onClick={() => changeDeliveryStatusAsDelivered(item._id)}
+						>
+							<Badge type="success" content="Mark as delivered" />
+						</div>
 					) : (
-						<p>Delivered</p>
+						""
 					)}
 				</div>
 			</td>
 		</tr>
 	);
 
+	const changeDeliveryStatusAsPreparing = async (id) => {
+		setIsLoading(true);
+		try {
+			const res = await axios.put(`orders/supplier/prepare/${id}`);
+			if (res.statusText === "OK") {
+				getAllOrders();
+				setIsLoading(false);
+				window.alert("Delivery status changed as preparing");
+			}
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
+	const changeDeliveryStatusAsDelivering = async (id) => {
+		try {
+			const res = await axios.put(`orders/supplier/deliver/${id}`);
+			if (res.statusText === "OK") {
+				getAllOrders();
+				setIsLoading(false);
+				window.alert("Delivery status changed as delivering");
+			}
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
+	const changeDeliveryStatusAsDelivered = async (id) => {
+		try {
+			const res = await axios.put(`orders/supplier/delivered/${id}`);
+			if (res.statusText === "OK") {
+				getAllOrders();
+				window.alert("Delivery status changed as delivered");
+				setIsLoading(false);
+			}
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
 	const getAllOrders = async () => {
+		setIsLoading(true);
 		try {
 			const res = await axios.get("orders/supplier");
 			setOrderDetails(res.data.orders);
-			console.log(res.data.orders);
 			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
