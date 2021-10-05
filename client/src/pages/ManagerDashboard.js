@@ -77,7 +77,7 @@ const AdminDashboard = () => {
 			<td>
 				<Badge type={permissionStatus[item.status]} content={item.status} />
 			</td>
-			<td className="">
+			<td>
 				{item.status === "pending" && (
 					<>
 						<button className="action-btn check">

@@ -19,7 +19,7 @@ const ManageServices = () => {
 		units: "",
 		pricePerUnit: "",
 	});
-	const fields = ["", "Material ", "Units", "Price per Unit"];
+	const fields = ["", "Material ", "Units", "Price per Unit", "Actions"];
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
@@ -29,6 +29,20 @@ const ManageServices = () => {
 			<td>{item.materialId.name}</td>
 			<td>{item.units}</td>
 			<td>{item.pricePerUnit}</td>
+			<td>
+				<>
+					<button className="action-btn x">
+						<i
+							className="bx bx-x"
+							onClick={() => {
+								if (window.confirm("Are you sure to delete this service?")) {
+									deleteHandler(item._id);
+								}
+							}}
+						></i>
+					</button>
+				</>
+			</td>
 		</tr>
 	);
 
@@ -58,6 +72,25 @@ const ManageServices = () => {
 			setIsLoading(true);
 		} catch (err) {
 			setBtnState(false);
+			console.log(err.response);
+		}
+	};
+
+	const deleteHandler = async (id) => {
+		console.log(id);
+		try {
+			const res = await axios.delete(
+				`suppliers/services/${id}`,
+				serviceDetails
+			);
+
+			if (res.statusText === "OK") {
+				getAllData();
+				setError("");
+				window.alert("Service has been successfully deleted");
+				setIsLoading(true);
+			}
+		} catch (err) {
 			console.log(err.response);
 		}
 	};
@@ -121,7 +154,7 @@ const ManageServices = () => {
 									<div className="col-4">
 										<div className="rowuser">
 											<input
-												type="text"
+												type="number"
 												placeholder="Units"
 												value={serviceDetails.units}
 												onChange={(e) =>
@@ -165,7 +198,7 @@ const ManageServices = () => {
 							<Spinner />
 						) : (
 							<Table
-								limit="5"
+								limit="10"
 								headData={fields}
 								renderHead={(item, index) => renderOrderHead(item, index)}
 								bodyData={employees}
