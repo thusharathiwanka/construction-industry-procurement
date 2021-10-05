@@ -30,6 +30,7 @@ const Login = () => {
 			const res = await axios.post("users/login", user);
 			setUser({ username: "", password: "" });
 			setBtnState(false);
+			localStorage.setItem("name", res.data.user);
 			if (res.data.type === "sitemanager") {
 				localStorage.setItem("site", res.data.site);
 			}

@@ -1,65 +1,36 @@
-import React, { useContext } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 import "./topnav.css";
 
-import { Link } from "react-router-dom";
-// import UserContext from "../../userContext";
 import Dropdown from "../dropdown/Dropdown";
-
-// import user_image from '../../assets/images/tuat.png'
 
 const notifications = [
 	{
 		icon: "bx bx-error",
-		content: "Curabitur id eros quis nunc suscipit blandit",
+		content: "Lorem ipsum dolor sit amet  elit.",
 	},
 	{
 		icon: "bx bx-package",
-		content: "Duis malesuada justo eu sapien elementum, in semper diam posuere",
+		content: "Lorem ipsum dolor sit amet  elit.",
 	},
 	{
 		icon: "bx bx-cart",
-		content: "Donec at nisi sit amet tortor commodo porttitor pretium a erat",
+		content: "Lorem ipsum dolor sit amet  elit.",
 	},
 	{
 		icon: "bx bx-error",
-		content: "In gravida mauris et nisi",
+		content: "Lorem ipsum dolor sit amet  elit.",
 	},
 	{
 		icon: "bx bx-cart",
-		content: "Curabitur id eros quis nunc suscipit blandit",
-	},
-];
-
-const user_menu = [
-	{
-		icon: "bx bx-user",
-		content: "Profile",
-	},
-	{
-		icon: "bx bx-wallet-alt",
-		content: "My Wallet",
-	},
-	{
-		icon: "bx bx-cog",
-		content: "Settings",
-	},
-	{
-		icon: "bx bx-log-out-circle bx-rotate-180",
-		onClick: ClearLocalStorage,
-		route: "/Home",
-		content: "Logout",
+		content: "Lorem ipsum dolor sit amet  elit.",
 	},
 ];
 
 const curr_user = {
-	display_name: "Mavindu Iddugoda",
-	// image: user_image
+	display_name: localStorage.getItem("name"),
 };
-
-function ClearLocalStorage() {
-	localStorage.clear();
-}
 
 const renderNotificationItem = (item, index) => (
 	<div className="notification-item" key={index}>
@@ -86,7 +57,7 @@ const renderUserMenu = (item, index) => (
 	</Link>
 );
 
-const Topnav = () => {
+const TopNav = () => {
 	return (
 		<div className="topnav">
 			<div className="topnav__search">
@@ -114,4 +85,4 @@ const Topnav = () => {
 	);
 };
 
-export default Topnav;
+export default TopNav;
