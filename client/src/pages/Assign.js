@@ -1,23 +1,50 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Checkbox from "react-simple-checkbox";
 
-const AssignSupplier = () => {
+const AssignSupplier = ({ item, sitemng }) => {
+	const [state, setState] = React.useState({
+		one: true,
+		two: false,
+		three: false,
+		four: false,
+		five: false,
+	});
+	const [supliers, setSupliers] = useState([]);
+	const getSuppliers = async (id) => {
+		let user = sitemng;
+		console.log(user);
+		try {
+			const res = await axios.get(`orders/supplier/${id}`, user);
+			setSupliers(res.data.orders);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		getSuppliers();
+	}, []);
+
 	return (
-		<div>
+		<div style={{ width: "400px", height: "200px" }}>
 			<form>
-				<div className="row card col-6">
-					<div className="col-4 ">
+				<div className="row card ">
+					<div className=" ">
 						<div className="rowuser">
-							<Checkbox
-								colour={"#4A4A4A"}
-								size={3}
-								tickSize={2}
-								checked={true}
-							/>
-							<p style={{ fontSize: "24px", marginLeft: "120px" }}>Sand</p>
+							<p
+								style={{
+									fontSize: "24px",
+									marginLeft: "32px",
+									marginRight: "50px",
+									marginTop: "20px",
+								}}
+							>
+								{item}
+							</p>
 						</div>
 					</div>
-					<div className="col-5 ">
+					<div className=" ">
 						<div className="rowuser">
 							<select name="" id="">
 								<option>Suplier 01</option>
