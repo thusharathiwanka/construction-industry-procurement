@@ -1,12 +1,12 @@
 const Order = require("../models/order.model");
 const Site = require("../models/site.model");
+
 /**
  * use to save the order
  * @param {Object} req
  * @param {Object} res
  * @returns {Object} res
  */
-
 const saveOrder = async (req, res) => {
 	try {
 		if (req.body) {
@@ -16,7 +16,7 @@ const saveOrder = async (req, res) => {
 				itemName: req.body.item.name,
 				address: location,
 				quantity: req.body.quantity,
-				orderItem:req.body.item.id,
+				orderItem: req.body.item.id,
 			});
 			await saveOrder.save();
 			res.status(200).json(saveOrder._id);
@@ -27,7 +27,7 @@ const saveOrder = async (req, res) => {
 };
 
 /**
- * use to update Order Quantity
+ * use to update order quantity
  * @param {Object} req
  * @param {Object} res
  * @returns {Object} res
@@ -44,7 +44,7 @@ const updateOrderQuantity = async (req, res) => {
 };
 
 /**
- * use to change Order Status By Officer
+ * use to change order status by officer
  * @param {Object} req
  * @param {Object} res
  * @returns {Object} res
@@ -60,7 +60,7 @@ const changeOrderStatusByOfficer = async (req, res) => {
 };
 
 /**
- * use to change Order Status By Manager
+ * use to change order status by manager
  * @param {Object} req
  * @param {Object} res
  * @returns {Object} res
@@ -143,11 +143,12 @@ const addSupplier = async (res, req) => {
 };
 
 /**
- * deletes a  order by Id
- * @param {*} res
- * @param {*} req
+ * deletes a  order by id
+ * @param {Object} res
+ * @param {Object} req
+ * @returns res
  */
-const deletePendingOrders = async (res, req) => {
+const deletePendingOrders = async (req, res) => {
 	try {
 		const deletedOrder = await Order.findByIdAndDelete(req.params.id);
 		res.status(200).json(deletedOrder);
@@ -158,8 +159,9 @@ const deletePendingOrders = async (res, req) => {
 
 /**
  * retrieve all orders where isApprovedByOfficer = "pending"
- * @param {*} req
- * @param {*} res
+ * @param {Object} req
+ * @param {Object} res
+ * @returns res
  */
 const getItemDetailsOfficer = async (req, res) => {
 	try {
@@ -176,7 +178,6 @@ const getItemDetailsOfficer = async (req, res) => {
  * @param {Object} res
  * @returns {Object} res
  */
-
 const getItemDetailsProcurement = async (req, res) => {
 	try {
 		const orderListProc = await Order.find({ isApprovedByManager: "pending" });
@@ -188,8 +189,9 @@ const getItemDetailsProcurement = async (req, res) => {
 
 /**
  * retrieves all orders in the orders table
- * @param {*} req
- * @param {*} res
+ * @param {Object} req
+ * @param {Object} res
+ * @returns res
  */
 const allOrders = async (req, res) => {
 	try {
