@@ -5,6 +5,7 @@ const ProcurementOfficer = require("../models/procurement.officer.model");
 const ProcurementManager = require("../models/procurement.manager.model");
 const SiteManager = require("../models/site.manager.model");
 const Supplier = require("../models/supplier.model");
+const Site = require("../models/site.model");
 
 /**
  * use to login users
@@ -47,10 +48,22 @@ const loginUser = async (req, res) => {
 		}
 
 		try {
+			let conditions;
+
+			if (userRole === "supplier") {
+				conditions = { username: username, status: "approved" };
+			} else {
+				conditions = { username: username };
+			}
+
 			// * checking for email existence
-			const existingUser = await User.findOne({
-				username: username,
-			});
+			const existingUser = await User.findOne(conditions);
+
+			if (!existingUser) {
+				return res.status(401).json({
+					message: "Wrong username or password",
+				});
+			}
 
 			if (!existingUser) {
 				return res.status(401).json({
@@ -76,6 +89,12 @@ const loginUser = async (req, res) => {
 				process.env.JWT_SECRET
 			);
 
+			if (userRole === "sitemanager") {
+				const site = await Site.findOne({ siteManagerId: existingUser._id });
+				return res
+					.cookie("token", token, { httpOnly: true })
+					.send({ type: userRole, site: site._id });
+			}
 			//* sending token as a cookie
 			return res
 				.cookie("token", token, { httpOnly: true })

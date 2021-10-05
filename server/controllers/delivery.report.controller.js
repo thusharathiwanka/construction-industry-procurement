@@ -39,6 +39,11 @@ const saveDeliveryReport = async (req, res) => {
   return res.status(400).send();
 };
 
+/**
+ * retrieve delivery reports filtered by orderId
+ * @param {*} req
+ * @param {*} res
+ */
 const getDeliveryReport = async (req, res) => {
   try {
     const reports = deliveryReport.find({ orderId: req.params.id });

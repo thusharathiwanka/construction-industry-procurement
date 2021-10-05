@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const OrderController = require("../controllers/order.controller");
+
 const { verifySiteManagerAuth } = require("../auth/site.manager.auth");
 const {
 	verifyProcurementOfficer,
@@ -7,6 +8,7 @@ const {
 const {
 	verifyProcurementManagerAuth,
 } = require("../auth/procurement.manager.auth");
+const { verifySupplierAuth } = require("../auth/supplier.auth");
 
 router.post("/", verifySiteManagerAuth, OrderController.saveOrder);
 
@@ -16,10 +18,26 @@ router.get(
 	verifyProcurementOfficer,
 	OrderController.getItemDetailsOfficer
 );
+router.put(
+	"/officer/:id",
+	verifyProcurementOfficer,
+	OrderController.changeOrderStatusByOfficer
+);
 router.get(
 	"/proc",
 	verifyProcurementManagerAuth,
 	OrderController.getItemDetailsProcurement
+);
+router.get(
+	"/supplier/:id",
+	verifySupplierAuth,
+	OrderController.getOrdersOfSupplier
+);
+
+router.put(
+	"/proc/:id",
+	verifyProcurementManagerAuth,
+	OrderController.changeOrderStatusByManager
 );
 
 module.exports = router;

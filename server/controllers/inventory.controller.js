@@ -15,10 +15,8 @@ const getInventoryItem = async(req, res)=>{
 const updateInventory = async(req, res)=>{
     try {
 		if (req.body) {
-			await Inventory.findByIdAndUpdate(req.params.id,{
-                quantity:req.body.quantity,
+			await Inventory.findOneAndUpdate({item:req.body.item},{
                 max:req.body.max,
-                min:req.body.min
             })
 			res.status(200).json(saveOrder._id);
 		}
