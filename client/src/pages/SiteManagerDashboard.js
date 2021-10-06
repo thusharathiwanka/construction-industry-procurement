@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
@@ -9,94 +9,51 @@ import "../components/badge/badge.css";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import profilePicture from "../assets/images/admin-user-img.jpg";
+import Spinner from "../components/loading/Spinner";
+import axios from "axios";
 
 const SiteManagerDashboard = () => {
 	const [value, onChange] = useState(new Date());
-	const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
-	const rows = [
-		{
-			id: "1",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Approved",
-		},
-		{
-			id: "2",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "3",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Declined",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-	];
+	const fields = ["", "Required Date", "Item", "Quantity", "Delivery Status"];
+	const [OrderDetail, setOrderDetail] = useState([])
+	const [Loading, setLoading] = useState(false);
 
-	const permissionStatus = {
-		Pending: "warning",
-		Approved: "success",
-		Declined: "danger",
-	};
-
-	const deleteHandler = (id) => {
-		console.log(id);
-	};
+	useEffect(() => {
+		const FetchData = async () => {
+			const res = await axios.get("/orders/approved");
+			setOrderDetail(res.data.orders);
+			console.log(res.data);
+			if(res.statusText === "OK" ){
+			setLoading(true)
+		}
+		
+		};
+		FetchData();
+		
+	}, []);
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
-			<td>{item.id}</td>
-			<td>{item.date}</td>
-			<td>{item.houseOwner}</td>
-			<td>{item.providence}</td>
+			<td>{index + 1}</td>
+			<td>{item.requiredDate}</td>
+			<td>{item.itemName}</td>
+			<td>{item.quantity}</td>
 			<td>
-				<Badge type={permissionStatus[item.status]} content={item.status} />
-			</td>
-			<td className="">
-				{item.status === "Pending" && (
-					<>
-						<button className="action-btn check">
-							<i className="bx bx-check"></i>
-						</button>
-						<button className="action-btn x">
-							<i
-								className="bx bx-x"
-								onClick={() => {
-									if (window.confirm("Are you sure to delete this request?")) {
-										deleteHandler(item.id);
-									}
-								}}
-							></i>
-						</button>
-					</>
-				)}
+				<div className="row-user" style={{ paddingTop: "0" }}>
+					{item.DeliveryStatus === "pending" ? (
+						<Badge type="warning" content={item.DeliveryStatus} />
+					) : item.DeliveryStatus === "preparing" ? (
+						<Badge type="primary" content={item.DeliveryStatus} />
+					) : item.DeliveryStatus === "delivering" ? (
+						<Badge type="success" content={item.DeliveryStatus} />
+					) : item.DeliveryStatus === "delivered" ? (
+						<Badge type="success" content={item.DeliveryStatus} />
+					) : (
+						""
+					)}
+				</div>
 			</td>
 		</tr>
 	);
@@ -154,13 +111,13 @@ const SiteManagerDashboard = () => {
 										<button className="view-btn">View All</button>
 									</Link>
 								</div>
-								<Table
-									limit="5"
+								{Loading ? <Table
+									// limit="5"
 									headData={fields}
 									renderHead={(item, index) => renderOrderHead(item, index)}
-									bodyData={rows}
+									bodyData={OrderDetail}
 									renderBody={(item, index) => renderOrderBody(item, index)}
-								/>
+								/>:<Spinner/>}
 							</div>
 						</div>
 						<div className="col-4">

@@ -5,6 +5,7 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import { Link } from "react-router-dom";
 import Badge from "../components/badge/Badge";
+import Spinner from "../components/loading/Spinner";
 
 const Inventory = () => {
 	const fields = ["", "Item", "Quantity", "Maximum Capacity", "Status"];
@@ -19,7 +20,7 @@ const Inventory = () => {
 
 	useEffect(() => {
 		const FetchData = async () => {
-			const res = await axios.get("/inventory", Inventory);
+			const res = await axios.get("/inventory");
 			setInventoryDetails(res.data);
 			console.log(res.data);
 			if(res.statusText === "OK" ){
@@ -170,7 +171,7 @@ const Inventory = () => {
 									bodyData={InventoryDetails}
 									renderBody={(item, index) => renderOrderBody(item, index)}
 								/>
-								):""}
+								):<Spinner/>}
 								
 							</div>
 						</div>
