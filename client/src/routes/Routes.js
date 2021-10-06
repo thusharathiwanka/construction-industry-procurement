@@ -18,6 +18,7 @@ import ManageServices from "../pages/ManageServices";
 import OfficerOrders from "../pages/OfficerOrders";
 import DeliveryReport from "../pages/DeliveryReport";
 import ManagetAllOrders from "../pages/ManagetAllOrders";
+import ManagerApprovedOrders from "../pages/ManagerApprovedOrders";
 
 import { AuthContext } from "../contexts/AuthContext";
 import Assign from "../pages/Assign";
@@ -75,6 +76,11 @@ const Routes = () => {
         exact
         path="/auth/manager/allorders"
         component={ManagetAllOrders}
+      />
+      <Route
+        exact
+        path="/auth/manager/ApprovedOrders"
+        component={ManagerApprovedOrders}
       />
     </Switch>
   );

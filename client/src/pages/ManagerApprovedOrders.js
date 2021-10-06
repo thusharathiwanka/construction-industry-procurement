@@ -4,9 +4,8 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
-const ManagetAllOrders = () => {
+const ManagerApprovedOrders = () => {
   const fields = [
     "Order ID",
     "Item Name",
@@ -17,6 +16,7 @@ const ManagetAllOrders = () => {
   ];
 
   const [orders, setOrders] = useState(null);
+  const [allorders, setAllOrders] = useState(null);
 
   const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
@@ -36,15 +36,13 @@ const ManagetAllOrders = () => {
     </tr>
   );
 
-  const getAllOrder = async () => {
-    const res = await axios.get("orders/");
-
-    console.log(res.data.orders);
-    setOrders(res.data.orders);
+  const getApproveOrders = async () => {
+    const res = await axios.get("orders/getApproveOrders");
+    setAllOrders(res.data.orders);
+    console.log(res);
   };
-
   useEffect(() => {
-    getAllOrder();
+    getApproveOrders();
   }, []);
   const permissionStatus = {
     pending: "warning",
@@ -54,31 +52,26 @@ const ManagetAllOrders = () => {
   return (
     <div>
       <Sidebar />
+
       <div id="main" className="layout__content">
         <TopNav />
         <div className="layout__content-main">
           <div className="card">
             <h2>All Order Details</h2>
-            {orders && (
+            {allorders && (
               <Table
                 limit="5"
                 headData={fields}
                 renderHead={(item, index) => renderOrderHead(item, index)}
-                bodyData={orders}
+                bodyData={allorders}
                 renderBody={(item, index) => renderOrderBody(item, index)}
               />
             )}
           </div>
         </div>
       </div>
-      <div className="rowuser" to="/auth/manager/allorders">
-        Approved Orders
-      </div>
-      <Link className="rowuser" to={"/auth/manager/allorders"}>
-        Pay
-      </Link>
     </div>
   );
 };
 
-export default ManagetAllOrders;
+export default ManagerApprovedOrders;
