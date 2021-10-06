@@ -5,6 +5,7 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import { Link } from "react-router-dom";
 import Badge from "../components/badge/Badge";
+import DatePicker from "react-datepicker";
 
 const SiteManagerForm = () => {
 	const siteId = localStorage.getItem("site");
@@ -63,6 +64,8 @@ const SiteManagerForm = () => {
 		item: {},
 		quantity: 0,
 		siteid: siteId,
+		requiredDate:"",
+		urgentOrder:false
 	});
 	console.log(Order);
 
@@ -163,9 +166,6 @@ const SiteManagerForm = () => {
 												}}
 												required
 											>
-												{/* <option value="site" defaultValue>
-													SELECT MATERIAL
-												</option> */}
 												{Materials.length > 0 &&
 													Materials.map((material) => (
 														<option value={material._id}>
@@ -202,8 +202,46 @@ const SiteManagerForm = () => {
 										</div>
 									</div>
 								</div>
-
-								<div style={{ paddingTop: 50 }}>
+								<div className="row ">
+									<div className="col-2">
+										<h3
+											style={{
+												paddingTop: 28,
+												display: "flex",
+												whiteSpace: "nowrap",
+												paddingLeft: "55px",
+												justifyContent: "center",
+												alignItems: "center",
+												width: "100%",
+											}}
+										>
+											Required Date
+										</h3>
+									</div>
+									<div className="col-4">
+										<div className="row-user">
+										<input type='date'  onChange={(e) =>{ setOrder({ ...Order, requiredDate: e.target.value })
+									console.log(Order.requiredDate);}} />
+											
+										</div>
+									</div>
+								</div>
+								<div className="row ">
+									<div style={{
+												display: "flex",
+												justifyContent: "center",
+												alignItems: "center",
+												width: "100%",
+											}}>
+									<div className="row-user" style={{display:'inline',paddingTop: 30 }} >
+										
+										<input type="checkbox" onChange={(e)=>{setOrder({ ...Order, urgentOrder:!Order.urgentOrder})
+									console.log(Order.urgentOrder);}} style={{width:17, height:17, display:'inline'}} />
+										<h4 style={{ marginLeft:12,display:'inline'}}>Urgent Order</h4>
+										</div>
+									</div>
+								</div>
+								<div style={{ paddingTop: 10 }}>
 									<div className="row ">
 										<div
 											style={{

@@ -17,6 +17,8 @@ const saveOrder = async (req, res) => {
 				address: location,
 				quantity: req.body.quantity,
 				orderItem: req.body.item.id,
+				requiredDate: req.body.requiredDate,
+				urgentOrder: req.body.urgentOrder
 			});
 			await saveOrder.save();
 			res.status(200).json(saveOrder._id);
