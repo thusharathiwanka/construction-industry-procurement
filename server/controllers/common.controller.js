@@ -93,12 +93,12 @@ const loginUser = async (req, res) => {
 				const site = await Site.findOne({ siteManagerId: existingUser._id });
 				return res
 					.cookie("token", token, { httpOnly: true })
-					.send({ type: userRole, site: site._id });
+					.send({ type: userRole, site: site._id, user: existingUser.name });
 			}
 			//* sending token as a cookie
 			return res
 				.cookie("token", token, { httpOnly: true })
-				.send({ type: userRole, site: existingUser.site });
+				.send({ type: userRole, user: existingUser.name });
 		} catch (err) {
 			console.error(err.message);
 			return res.status(500).send();

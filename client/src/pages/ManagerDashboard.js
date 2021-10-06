@@ -77,7 +77,7 @@ const AdminDashboard = () => {
 			<td>
 				<Badge type={permissionStatus[item.status]} content={item.status} />
 			</td>
-			<td className="">
+			<td>
 				{item.status === "pending" && (
 					<>
 						<button className="action-btn check">
@@ -183,7 +183,7 @@ const AdminDashboard = () => {
 										/>
 									</div>
 									<div className="col-8">
-										<h2>Thushara Thiwanka</h2>
+										<h2>{localStorage.getItem("name")}</h2>
 										<h3 className="lighter">MANAGER</h3>
 									</div>
 								</div>

@@ -4,7 +4,7 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import axios from "axios";
-import { Link } from "react-router-dom";
+
 
 const ManagetAllOrders = () => {
   const fields = [
@@ -74,9 +74,17 @@ const ManagetAllOrders = () => {
       <div className="rowuser" to="/auth/manager/allorders">
         Approved Orders
       </div>
-      <Link className="rowuser" to={"/auth/manager/allorders"}>
-        Pay
-      </Link>
+          {orders && (
+            <Table
+              limit="5"
+              headData={fields}
+              renderHead={(item, index) => renderOrderHead(item, index)}
+              bodyData={orders}
+              renderBody={(item, index) => renderOrderBody(item, index)}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };

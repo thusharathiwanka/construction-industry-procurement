@@ -1,105 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "../components/sidebar/Sidebar";
-import TopNav from "../components/topnav/TopNav";
-import Table from "../components/table/Table";
-import AdminGreeting from "../assets/images/admin-greeting.png";
-import Badge from "../components/badge/Badge";
-import "../components/badge/badge.css";
+import axios from "axios";
 import Calendar from "react-calendar";
+
+import "../components/badge/badge.css";
 import "react-calendar/dist/Calendar.css";
-import profilePicture from "../assets/images/admin-user-img.jpg";
+
+import Badge from "../components/badge/Badge";
+import Error from "../components/toast/Error";
+import Sidebar from "../components/sidebar/Sidebar";
+import Spinner from "../components/loading/Spinner";
+import Table from "../components/table/Table";
+import TopNav from "../components/topnav/TopNav";
+
+import AdminGreeting from "../assets/images/admin-greeting.png";
+import ProfilePicture from "../assets/images/admin-user-img.jpg";
 
 const SupplierDashboard = () => {
+	const [error, setError] = useState("");
+	const [isLoading, setIsLoading] = useState(true);
+	const [orderDetails, setOrderDetails] = useState([]);
 	const [value, onChange] = useState(new Date());
-	const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
-	const rows = [
-		{
-			id: "1",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Approved",
-		},
-		{
-			id: "2",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "3",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Declined",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
+
+	const fields = [
+		"",
+		"Item",
+		"Quantity",
+		"Total Price",
+		"Delivery Address",
+		"Received At",
+		"Status",
 	];
-
-	const permissionStatus = {
-		Pending: "warning",
-		Approved: "success",
-		Declined: "danger",
-	};
-
-	const deleteHandler = (id) => {
-		console.log(id);
-	};
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
-			<td>{item.id}</td>
-			<td>{item.date}</td>
-			<td>{item.houseOwner}</td>
-			<td>{item.providence}</td>
+			<td>{index + 1}</td>
+			<td>{item.itemName}</td>
+			<td>{item.quantity}</td>
+			<td>{item.total}</td>
+			<td>{item.address}</td>
+			<td>{new Date(item.updatedAt).toDateString()}</td>
 			<td>
-				<Badge type={permissionStatus[item.status]} content={item.status} />
-			</td>
-			<td className="">
-				{item.status === "Pending" && (
-					<>
-						<button className="action-btn check">
-							<i className="bx bx-check"></i>
-						</button>
-						<button className="action-btn x">
-							<i
-								className="bx bx-x"
-								onClick={() => {
-									if (window.confirm("Are you sure to delete this request?")) {
-										deleteHandler(item.id);
-									}
-								}}
-							></i>
-						</button>
-					</>
-				)}
+				<div className="row-user" style={{ paddingTop: "0" }}>
+					{item.DeliveryStatus === "pending" ? (
+						<Badge type="warning" content={item.DeliveryStatus} />
+					) : item.DeliveryStatus === "preparing" ? (
+						<Badge type="primary" content={item.DeliveryStatus} />
+					) : item.DeliveryStatus === "delivering" ? (
+						<Badge type="success" content={item.DeliveryStatus} />
+					) : item.DeliveryStatus === "delivered" ? (
+						<Badge type="success" content={item.DeliveryStatus} />
+					) : (
+						""
+					)}
+				</div>
 			</td>
 		</tr>
 	);
+
+	const getAllOrders = async () => {
+		try {
+			const res = await axios.get("orders/supplier");
+			setOrderDetails(res.data.orders);
+			setIsLoading(false);
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
+	useEffect(() => getAllOrders(), []);
 
 	return (
 		<div>
@@ -113,9 +84,18 @@ const SupplierDashboard = () => {
 								<div className="row">
 									<div className="col-8 flex-column">
 										<h1 className="page-header">Good Morning! </h1>
-										<h3>Today you have 9 new notifications</h3>
-										<h3>Also new booking appointments for approval</h3>
-										<Link className="read-more">
+										<h3>
+											Today you have{" "}
+											{
+												orderDetails.filter(
+													(orderDetail) =>
+														orderDetail.DeliveryStatus === "pending"
+												).length
+											}{" "}
+											new orders
+										</h3>
+										<h3>Also older order statuses to review</h3>
+										<Link className="read-more" to="/auth/supplier/orders">
 											Read more <i className="bx bx-right-arrow-alt"></i>
 										</Link>
 									</div>
@@ -154,13 +134,22 @@ const SupplierDashboard = () => {
 										<button className="view-btn">View All</button>
 									</Link>
 								</div>
-								<Table
-									limit="5"
-									headData={fields}
-									renderHead={(item, index) => renderOrderHead(item, index)}
-									bodyData={rows}
-									renderBody={(item, index) => renderOrderBody(item, index)}
-								/>
+								{isLoading ? (
+									<Spinner />
+								) : orderDetails.length > 0 ? (
+									<Table
+										limit="5"
+										headData={fields}
+										renderHead={(item, index) => renderOrderHead(item, index)}
+										bodyData={orderDetails}
+										renderBody={(item, index) => renderOrderBody(item, index)}
+									/>
+								) : (
+									<>
+										{setError("No orders found")}
+										<Error message={error} />
+									</>
+								)}
 							</div>
 						</div>
 						<div className="col-4">
@@ -168,14 +157,14 @@ const SupplierDashboard = () => {
 								<div className="row">
 									<div className="col-4 full-width-1496">
 										<img
-											src={profilePicture}
+											src={ProfilePicture}
 											alt=""
 											className="profile-picture"
 										/>
 									</div>
 									<div className="col-8">
-										<h2>Mavindu Iddugoda</h2>
-										<h3 className="lighter">PRESIDENT</h3>
+										<h2>{localStorage.getItem("name")}</h2>
+										<h3 className="lighter">SUPPLIER</h3>
 									</div>
 								</div>
 							</div>
