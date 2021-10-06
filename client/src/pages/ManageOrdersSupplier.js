@@ -37,7 +37,7 @@ const ManageOrdersSupplier = () => {
 			<td>{new Date(item.updatedAt).toDateString()}</td>
 			<td style={{ textTransform: "capitalize" }}>{item.DeliveryStatus}</td>
 			<td>
-				<div className="rowuser" style={{ paddingTop: "0" }}>
+				<div className="row-user" style={{ paddingTop: "0" }}>
 					{item.DeliveryStatus === "pending" ? (
 						<div
 							style={{ cursor: "pointer" }}
@@ -68,13 +68,15 @@ const ManageOrdersSupplier = () => {
 	);
 
 	const changeDeliveryStatusAsPreparing = async (id) => {
-		setIsLoading(true);
 		try {
 			const res = await axios.put(`orders/supplier/prepare/${id}`);
 			if (res.statusText === "OK") {
+				setIsLoading(true);
 				getAllOrders();
-				setIsLoading(false);
+				setError("");
 				window.alert("Delivery status changed as preparing");
+				window.location.reload();
+				setIsLoading(false);
 			}
 		} catch (err) {
 			console.log(err.response);
@@ -88,6 +90,7 @@ const ManageOrdersSupplier = () => {
 				getAllOrders();
 				setIsLoading(false);
 				window.alert("Delivery status changed as delivering");
+				window.location.reload();
 			}
 		} catch (err) {
 			console.log(err.response);
@@ -101,6 +104,7 @@ const ManageOrdersSupplier = () => {
 				getAllOrders();
 				window.alert("Delivery status changed as delivered");
 				setIsLoading(false);
+				window.location.reload();
 			}
 		} catch (err) {
 			console.log(err.response);
@@ -108,7 +112,6 @@ const ManageOrdersSupplier = () => {
 	};
 
 	const getAllOrders = async () => {
-		setIsLoading(true);
 		try {
 			const res = await axios.get("orders/supplier");
 			setOrderDetails(res.data.orders);
