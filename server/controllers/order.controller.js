@@ -18,7 +18,8 @@ const saveOrder = async (req, res) => {
 				quantity: req.body.quantity,
 				orderItem: req.body.item.id,
 				requiredDate: req.body.requiredDate,
-				urgentOrder: req.body.urgentOrder
+				urgentOrder: req.body.urgentOrder,
+				siteManagerId:req.body.user
 			});
 			await saveOrder.save();
 			res.status(200).json(saveOrder._id);
@@ -205,6 +206,21 @@ const allOrders = async (req, res) => {
 };
 
 /**
+ * retrieves all orders in the orders table
+ * @param {Object} req
+ * @param {Object} res
+ * @returns res
+ */
+const getManagerApprovedOrders = async (req, res) => {
+	try {
+		const allOrders = await Order.find({siteManagerId: req.body.user, isApprovedByManager:"approved"});
+		res.status(200).json({ orders: allOrders });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
+/**
  * retrieves all orders of given supplier
  * @param {Object} req
  * @param {Object} res
@@ -235,4 +251,5 @@ module.exports = {
 	changeDeliveryStatusBySupplierAsPreparing,
 	changeDeliveryStatusBySupplierAsDelivered,
 	changeDeliveryStatusBySupplierAsDelivering,
+	getManagerApprovedOrders
 };

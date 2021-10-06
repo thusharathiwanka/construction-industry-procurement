@@ -24,6 +24,13 @@ router.get(
 	verifyProcurementManagerAuth,
 	OrderController.getItemDetailsProcurement
 );
+
+router.get(
+	"/approved",
+	verifySiteManagerAuth,
+	OrderController.getManagerApprovedOrders
+);
+
 router.get(
 	"/supplier",
 	verifySupplierAuth,
