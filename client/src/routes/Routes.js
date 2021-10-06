@@ -17,7 +17,7 @@ import ManageSuppliers from "../pages/ManageSuppliers";
 import ManageServices from "../pages/ManageServices";
 import OfficerOrders from "../pages/OfficerOrders";
 import DeliveryReport from "../pages/DeliveryReport";
-import ManagetAllOrders from "../pages/ManagetAllOrders";
+import ManagetAllOrders from "../pages/ManageAllOrders";
 import ManagerApprovedOrders from "../pages/ManagerApprovedOrders";
 
 import { AuthContext } from "../contexts/AuthContext";
