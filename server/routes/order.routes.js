@@ -14,7 +14,6 @@ const {
 router.post("/", verifySiteManagerAuth, OrderController.saveOrder);
 
 router.get("/", verifySiteManagerAuth, OrderController.allOrders);
-
 router.get(
 	"/officer",
 	verifyProcurementOfficer,
