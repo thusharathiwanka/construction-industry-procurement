@@ -49,6 +49,7 @@ const getServicesOfSupplier = async (req, res) => {
 			.populate("supplierId");
 		res.status(200).json({ services: services });
 	} catch (error) {
+		console.log(err);
 		res.status(400).json({ message: error.message });
 	}
 };
@@ -76,7 +77,7 @@ const getServices = async (req, res) => {
  * @param {res} res
  * @returns  res
  */
-const getServicesOfSupplierbyMaterial = async (req, res) => {
+const getServicesOfSupplierByMaterial = async (req, res) => {
 	try {
 		const supplierlist = await Service.find({
 			materialId: req.params.id,
@@ -87,7 +88,7 @@ const getServicesOfSupplierbyMaterial = async (req, res) => {
 	}
 };
 
-/*
+/**
  * use to delete service by service id
  * @param {Object} res
  * @param {Object} req
@@ -106,6 +107,6 @@ module.exports = {
 	saveService,
 	getServices,
 	getServicesOfSupplier,
-	getServicesOfSupplierbyMaterial,
+	getServicesOfSupplierByMaterial,
 	deleteService,
 };
