@@ -7,7 +7,7 @@ router.post("/", verifySupplierAuth, ServiceController.saveService);
 router.get("/:id", ServiceController.getServicesOfSupplierbyMaterial);
 
 router.get("/", verifySupplierAuth, ServiceController.getServices);
-router.get("/:id", verifySupplierAuth, ServiceController.getServicesOfSupplier);
+router.get("/my", verifySupplierAuth, ServiceController.getServicesOfSupplier);
 
 router.delete("/:id", verifySupplierAuth, ServiceController.deleteService);
 
