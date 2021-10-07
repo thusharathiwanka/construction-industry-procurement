@@ -88,7 +88,7 @@ const saveSupplier = async (req, res) => {
  */
 const getSupplier = async (req, res) => {
 	try {
-		const allSuppliers = await Supplier.find();
+		const allSuppliers = await Supplier.find().sort({ createdAt: -1 });
 		res.status(200).json({ suppliers: allSuppliers });
 	} catch (err) {
 		res.status(400).json({ message: err.message });
