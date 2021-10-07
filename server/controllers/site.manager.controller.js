@@ -97,6 +97,12 @@ const saveSiteManager = async (req, res) => {
 	return res.status(400).send();
 };
 
+/**
+ * use to get unassigned site managers
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
 const getUnassignedSiteManagers = async (req, res) => {
 	try {
 		const siteManagers = await SiteManager.find({ isAssigned: false });
@@ -106,4 +112,24 @@ const getUnassignedSiteManagers = async (req, res) => {
 	}
 };
 
-module.exports = { saveSiteManager, getUnassignedSiteManagers };
+/**
+ * use to remove the procurement
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const deleteSiteManager = async (req, res) => {
+	try {
+		await SiteManager.findByIdAndDelete(req.params.id);
+		res.status(200).send();
+	} catch (err) {
+		console.log(err.message);
+		res.status(400).send();
+	}
+};
+
+module.exports = {
+	saveSiteManager,
+	getUnassignedSiteManagers,
+	deleteSiteManager,
+};

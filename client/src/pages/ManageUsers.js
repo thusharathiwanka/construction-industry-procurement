@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 import "../assets/css/Usercreate.css";
 
@@ -44,6 +45,20 @@ const ManageUsers = () => {
 			<td>{item.username}</td>
 			<td>{item.weeklyWorkHrs}</td>
 			<td>{item.salary}</td>
+			<td>
+				<>
+					<button
+						className="action-btn x"
+						onClick={() => {
+							if (window.confirm("Are you sure to delete this employee?")) {
+								deleteHandler(item._id, item.username);
+							}
+						}}
+					>
+						<RiDeleteBinLine />
+					</button>
+				</>
+			</td>
 		</tr>
 	);
 
@@ -104,6 +119,29 @@ const ManageUsers = () => {
 			setIsLoading(true);
 		} catch (err) {
 			setBtnState(false);
+			console.log(err.response);
+		}
+	};
+
+	const deleteHandler = async (id, username) => {
+		try {
+			let endpoint;
+
+			if (username.includes("@sitemanager")) {
+				endpoint = `sitemanagers/${id}`;
+			} else {
+				endpoint = `officers/${id}`;
+			}
+
+			const res = await axios.delete(endpoint);
+
+			if (res.statusText === "OK") {
+				getAllEmployees();
+				setError("");
+				window.alert("Employee has been successfully deleted");
+				setIsLoading(true);
+			}
+		} catch (err) {
 			console.log(err.response);
 		}
 	};
