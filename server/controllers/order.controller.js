@@ -198,7 +198,7 @@ const getItemDetailsProcurement = async (req, res) => {
  */
 const allOrders = async (req, res) => {
   try {
-    const allOrders = await Order.find().populate("siteManagerId");
+    const allOrders = await Order.find({siteManagerId:req.body.user});
     res.status(200).json({ orders: allOrders });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -262,7 +262,7 @@ module.exports = {
 	changeOrderStatusByManager,
 	getItemDetailsOfficer,
 	getItemDetailsProcurement,
-  getApproveOrders,
+  	getApproveOrders,
 	allOrders,
 	getOrdersOfSupplier,
 	changeDeliveryStatusBySupplierAsPreparing,

@@ -5,15 +5,16 @@ const OrderController = require("../controllers/order.controller");
 const { verifySiteManagerAuth } = require("../auth/site.manager.auth");
 const { verifySupplierAuth } = require("../auth/supplier.auth");
 const {
-  verifyProcurementOfficer,
+verifyProcurementOfficer,
 } = require("../auth/procurement.officer.auth");
 const {
-  verifyProcurementManagerAuth,
+verifyProcurementManagerAuth,
 } = require("../auth/procurement.manager.auth");
 
 router.post("/", verifySiteManagerAuth, OrderController.saveOrder);
 
-router.get("/", OrderController.allOrders);
+router.get("/", verifySiteManagerAuth, OrderController.allOrders);
+
 router.get(
   "/officer",
   verifyProcurementOfficer,
@@ -32,10 +33,18 @@ router.get(
   OrderController.getItemDetailsProcurement
 );
 
+
+
 router.get(
 	"/approved",
 	verifySiteManagerAuth,
 	OrderController.getManagerApprovedOrders
+);
+
+router.delete(
+	"/delete/:id",
+	verifySiteManagerAuth,
+	OrderController.deletePendingOrders
 );
 
 router.get(
