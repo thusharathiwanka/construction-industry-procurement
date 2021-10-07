@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
-const Inventory = mongoose.Schema({
+const InventorySchema = mongoose.Schema({
 	siteId: { type: mongoose.Schema.Types.ObjectId, ref: "sites" },
 	item: { type: String, required: true },
 	quantity: { type: Number, required: true },
 	maxCapacity: { type: Number, required: true },
 });
 
-const inventory = mongoose.model("inventory", Inventory);
+const Inventory = mongoose.model("inventory", InventorySchema);
 
-module.exports = inventory;
+module.exports = Inventory;
