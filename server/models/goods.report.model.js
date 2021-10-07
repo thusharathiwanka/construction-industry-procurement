@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const GoodsReport = mongoose.Schema({
+const GoodsReportSchema = mongoose.Schema({
 	orderId: { type: mongoose.Schema.Types.ObjectId, ref: "orders" },
 	item: { type: String, required: true },
 	quantity: { type: Number, required: true },
@@ -9,6 +9,6 @@ const GoodsReport = mongoose.Schema({
 	description: { type: String, required: true },
 });
 
-const Goodsreport = mongoose.model("goodsReports", GoodsReport);
+const GoodsReport = mongoose.model("goodsReports", GoodsReportSchema);
 
-module.exports = Goodsreport;
+module.exports = GoodsReport;

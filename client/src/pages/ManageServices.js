@@ -97,7 +97,7 @@ const ManageServices = () => {
 
 	const getAllData = async () => {
 		try {
-			const res1 = await axios.get(`suppliers/services`);
+			const res1 = await axios.get(`suppliers/services/my`);
 			const res2 = await axios.get(`materials`);
 			setEmployees(res1.data.services);
 			setMaterials(res2.data.materials);

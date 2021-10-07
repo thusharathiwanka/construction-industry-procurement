@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import AOS from "aos";
+import { CookiesProvider } from "react-cookie";
 
 import "boxicons/css/boxicons.min.css";
 import "aos/dist/aos.css";
@@ -28,9 +29,11 @@ function App() {
 	});
 
 	return (
-		<AuthContextProvider>
-			<Layout />
-		</AuthContextProvider>
+		<CookiesProvider>
+			<AuthContextProvider>
+				<Layout />
+			</AuthContextProvider>
+		</CookiesProvider>
 	);
 }
 
