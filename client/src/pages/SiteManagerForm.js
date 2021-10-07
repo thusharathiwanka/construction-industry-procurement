@@ -15,7 +15,7 @@ const SiteManagerForm = () => {
 	const fields = ["", "Required Date", "Item", "Quantity","Order Status","Delivery Status", "Action", "Goods Receipt"];
 	const [OrderDetail, setOrderDetail] = useState([])
 	const [Loading, setLoading] = useState(false);
-	const [Id, setId] = useState(true)
+	const [Id, setId] = useState("")
 	
 	const [Order, setOrder] = useState({
 		item: {},
@@ -26,8 +26,7 @@ const SiteManagerForm = () => {
 	});
 	console.log(Order);
 
-	useEffect(() => {
-		const FetchData = async () => {
+	const FetchData = async () => {
 
 			const resMaterials = await axios.get(`materials`);
 			setMaterials(resMaterials.data.materials);
@@ -40,15 +39,18 @@ const SiteManagerForm = () => {
 			}
 
 		};
+
+	useEffect(() => {
+		
 		FetchData();
-	}, [Id]);
+	}, []);
 
 	const deleteHandler = async(id) => {
 		console.log(id);
 		try{
 			const res = await axios.delete(`/orders/delete/${id}`);
 			if(res.statusText === "OK" ){
-				setId(!Id)
+				window.location.reload()
 			}
 		}catch (Err) {
 			console.log(Err.response);
@@ -60,7 +62,7 @@ const SiteManagerForm = () => {
 			console.log(Order);
 			const res = await axios.post("/orders", Order);
 			if(res.statusText === "OK" ){
-			setId(!Id)
+			window.location.reload()
 		}
 		} catch (Err) {
 			console.log(Err.response);
@@ -122,12 +124,9 @@ const SiteManagerForm = () => {
 				) : item.isApprovedByManager === "rejected" || item.isApprovedByOfficer === "rejected" ? (
 						<button className="action-btn W">
 						<VscReport
-							// onClick={() => {
-							// 		if (window.confirm("Are you sure to delete this request?")) {
-							// 			deleteHandler(item._id);
-							// 			setId(item._id)
-							// 		}
-							// 	}}
+							onClick={() => {
+									
+								}}
 						/>
 						</button>
 				):""}

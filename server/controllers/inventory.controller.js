@@ -15,10 +15,10 @@ const getInventoryItem = async(req, res)=>{
 const updateInventory = async(req, res)=>{
     try {
 		if (req.body) {
-			await Inventory.findOneAndUpdate({item:req.body.item},{
-                maxCapacity:req.body.maxCapacity
+			const resInventory = await Inventory.findOneAndUpdate({item:req.body.item},{
+                quantity:req.body.quantity
             })
-			res.status(200).json(saveOrder._id);
+			res.status(200).json(resInventory);
 		}
 	} catch (error) {
 		res.status(400);
