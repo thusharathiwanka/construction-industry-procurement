@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 describe("POST @ /sites endpoint", () => {
-	it("should create a site and return an id and type", async () => {
+	it("should create a site and return id with response code 201", async () => {
 		try {
 			const res = axios.post("http://localhost:5000/api/v1/sites", {
 				name: "Thushara",
@@ -34,7 +34,7 @@ describe("POST @ /sites endpoint", () => {
 });
 
 describe("GET @ /sites endpoint", () => {
-	it("should return fill all the fields with response code 400", async () => {
+	it("should return array with site objects with response code 200", async () => {
 		try {
 			const res = axios.post("http://localhost:5000/api/v1/sites");
 
