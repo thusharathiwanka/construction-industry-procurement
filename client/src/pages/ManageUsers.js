@@ -29,9 +29,9 @@ const ManageUsers = () => {
 		"Employee Name",
 		"Email",
 		"Username",
-		"Phone",
 		"Weekly Work Hrs",
 		"Salary",
+		"Actions",
 	];
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
@@ -42,7 +42,6 @@ const ManageUsers = () => {
 			<td>{item.name}</td>
 			<td>{item.email}</td>
 			<td>{item.username}</td>
-			<td>{item.phone}</td>
 			<td>{item.weeklyWorkHrs}</td>
 			<td>{item.salary}</td>
 		</tr>

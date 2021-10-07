@@ -9,7 +9,6 @@ const DeliveryReport = require("../models/delivery.report.model");
 const saveDeliveryReport = async (req, res) => {
 	if (req.body) {
 		const { description, item, quantity, orderId } = req.body;
-		// console.log(req.body);
 		// * user inputs validation
 		if (!description || !item || !quantity) {
 			return res.status(400).json({ message: "Please fill all the fields" });
@@ -24,13 +23,11 @@ const saveDeliveryReport = async (req, res) => {
 				orderId,
 			});
 
-			// console.log(newReport);
 			await newReport.save();
 
 			// * sending as saved
 			return res.status(201).json({ message: "Report successfully created" });
 		} catch (err) {
-			// console.log(err);
 			console.error(err.message);
 			return res.status(500).send();
 		}

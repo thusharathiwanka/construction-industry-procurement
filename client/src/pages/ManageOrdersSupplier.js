@@ -86,11 +86,9 @@ const ManageOrdersSupplier = () => {
 					) : item.DeliveryStatus === "delivered" ? (
 						<div
 							style={{ cursor: "pointer" }}
-							onClick={() => {
-								if (window.confirm("Are you sure to send delivery report?")) {
-									changeDeliveryStatusAsDelivered(item._id);
-								}
-							}}
+							onClick={() =>
+								(window.location.href = "/auth/supplier/deliveryreports")
+							}
 						>
 							<Badge type="normal" content="Send Delivery Report" />
 						</div>

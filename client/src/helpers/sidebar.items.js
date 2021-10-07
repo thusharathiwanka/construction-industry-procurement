@@ -99,6 +99,11 @@ const sidebar_supplier = [
 		icon: "bx bx-store",
 	},
 	{
+		display_name: "Manage Delivery Reports",
+		route: "/auth/supplier/services",
+		icon: "bx bx-notepad",
+	},
+	{
 		display_name: "Sign Out",
 		route: "",
 		icon: "bx bx-log-out",

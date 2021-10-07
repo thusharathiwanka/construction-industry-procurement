@@ -6,6 +6,8 @@ const DeliveryReportSchema = mongoose.Schema(
 		item: { type: String, required: true },
 		quantity: { type: String, required: true },
 		description: { type: String, required: true },
+		total: { type: String, required: true },
+		address: { type: String, required: true },
 	},
 	{ timestamp: true },
 	{ versionKey: false }
