@@ -24,66 +24,62 @@ import { AuthContext } from "../contexts/AuthContext";
 import Assign from "../pages/Assign";
 
 const Routes = () => {
-  const { loggedIn } = useContext(AuthContext);
+	const { loggedIn } = useContext(AuthContext);
 
-  console.log(loggedIn);
+	console.log(loggedIn);
 
-  return (
-    <Switch>
-      <Route exact path="/" component={Login} />
-      <Route exact path="/register" component={Register} />
-      <Route
-        exact
-        path="/auth/manager/dashboard"
-        component={ManagerDashboard}
-      />
-      <Route exact path="/auth/manager/users" component={ManageUsers} />
-      <Route exact path="/auth/manager/sites" component={ManageSites} />
-      <Route exact path="/auth/manager/materials" component={ManageMaterials} />
-      <Route exact path="/auth/manager/suppliers" component={ManageSuppliers} />
-      <Route
-        exact
-        path="/auth/supplier/dashboard"
-        component={SupplierDashboard}
-      />
-      <Route
-        exact
-        path="/auth/supplier/orders"
-        component={ManageOrdersSupplier}
-      />
-      <Route exact path="/auth/supplier/services" component={ManageServices} />
-      <Route
-        exact
-        path="/auth/officer/dashboard"
-        component={OfficerDashboard}
-      />
-      <Route
-        exact
-        path="/auth/sitemanager/dashboard"
-        component={SiteManagerDashboard}
-      />
+	return (
+		<Switch>
+			<Route exact path="/" component={Login} />
+			<Route exact path="/register" component={Register} />
+			<Route
+				exact
+				path="/auth/manager/dashboard"
+				component={ManagerDashboard}
+			/>
+			<Route exact path="/auth/manager/users" component={ManageUsers} />
+			<Route exact path="/auth/manager/sites" component={ManageSites} />
+			<Route exact path="/auth/manager/materials" component={ManageMaterials} />
+			<Route exact path="/auth/manager/suppliers" component={ManageSuppliers} />
+			<Route
+				exact
+				path="/auth/supplier/dashboard"
+				component={SupplierDashboard}
+			/>
+			<Route
+				exact
+				path="/auth/supplier/orders"
+				component={ManageOrdersSupplier}
+			/>
+			<Route exact path="/auth/supplier/services" component={ManageServices} />
+			<Route
+				exact
+				path="/auth/officer/dashboard"
+				component={OfficerDashboard}
+			/>
+			<Route
+				exact
+				path="/auth/sitemanager/dashboard"
+				component={SiteManagerDashboard}
+			/>
 
-      <Route exact path="/auth/officers/orderlist" component={OfficerOrders} />
-      <Route exact path="/auth/officers/form" component={Assign} />
-      <Route
-        exact
-        path="/auth/sitemanager/requisitions"
-        component={SiteManagerForm}
-      />
-      <Route exact path="/auth/sitemanager/inventory" component={Inventory} />
-      <Route exact path="/auth/deliveryreport" component={DeliveryReport} />
-      <Route
-        exact
-        path="/auth/manager/allorders"
-        component={ManagetAllOrders}
-      />
-      <Route
-        exact
-        path="/auth/manager/ApprovedOrders"
-        component={ManagerApprovedOrders}
-      />
-    </Switch>
-  );
+			<Route exact path="/auth/officers/orderlist" component={OfficerOrders} />
+			<Route exact path="/auth/officers/form" component={Assign} />
+			<Route
+				exact
+				path="/auth/sitemanager/requisitions"
+				component={SiteManagerForm}
+			/>
+			<Route exact path="/auth/sitemanager/inventory" component={Inventory} />
+			<Route exact path="/auth/deliveryreport" component={DeliveryReport} />
+			<Route exact path="/auth/manager/allorders" component={ManageAllOrders} />
+			<Route
+				exact
+				path="/auth/manager/ApprovedOrders"
+				component={ManagerApprovedOrders}
+			/>
+		</Switch>
+	);
 };
 
 export default Routes;
