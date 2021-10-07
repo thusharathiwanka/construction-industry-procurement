@@ -49,7 +49,8 @@ router.put(
   "/proc/:id",
   verifyProcurementManagerAuth,
   OrderController.changeOrderStatusByManager
-
+);
+router.get(
 	"/supplier",
 	verifySupplierAuth,
 	OrderController.getOrdersOfSupplier

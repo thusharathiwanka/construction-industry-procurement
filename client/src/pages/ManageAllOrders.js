@@ -84,8 +84,6 @@ const ManagetAllOrders = () => {
             />
           )}
         </div>
-      </div>
-    </div>
   );
 };
 
