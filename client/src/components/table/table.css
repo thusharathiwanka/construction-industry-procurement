@@ -11,10 +11,12 @@ table {
 
 thead {
 	background-color: var(--second-bg);
+	white-space: nowrap;
 }
 
 tr {
 	text-align: left;
+	white-space: nowrap;
 }
 
 th,

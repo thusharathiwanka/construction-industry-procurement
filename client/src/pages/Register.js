@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-import RegisterImage from "../assets/images/register-img.png";
-import logoImage from "../assets/images/logo.png";
 import Error from "../components/toast/Error";
 import Success from "../components/toast/Success";
 
+import RegisterImage from "../assets/images/register-img.png";
+import LogoImage from "../assets/images/logo.png";
+
 const Login = () => {
+	const [btnState, setBtnState] = useState(false);
+	const [error, setError] = useState("");
+	const [success, setSuccess] = useState("");
 	const [user, setUser] = useState({
 		username: "",
 		password: "",
@@ -15,9 +19,6 @@ const Login = () => {
 		email: "",
 		phone: "",
 	});
-	const [error, setError] = useState("");
-	const [success, setSuccess] = useState("");
-	const [btnState, setBtnState] = useState(false);
 
 	const registerUser = async (e) => {
 		e.preventDefault();
@@ -36,6 +37,7 @@ const Login = () => {
 					email: "",
 					phone: "",
 				});
+
 				setBtnState(false);
 				return setSuccess(
 					"You are registered. We will let you about the approval. Thank you"
@@ -52,7 +54,7 @@ const Login = () => {
 		<>
 			<div className="login-container">
 				<img
-					src={logoImage}
+					src={LogoImage}
 					alt="logo-img"
 					className="logo"
 					data-aos="fade"
@@ -97,7 +99,7 @@ const Login = () => {
 								<div className="row">
 									<div className="col-12">
 										<div
-											className="rowuser"
+											className="row-user"
 											data-aos="fade-left"
 											data-aos-delay="100"
 										>
@@ -115,7 +117,7 @@ const Login = () => {
 									</div>
 									<div className="col-12">
 										<div
-											className="rowuser"
+											className="row-user"
 											data-aos="fade-left"
 											data-aos-delay="100"
 										>
@@ -133,7 +135,7 @@ const Login = () => {
 									</div>
 									<div className="col-12">
 										<div
-											className="rowuser"
+											className="row-user"
 											data-aos="fade-left"
 											data-aos-delay="100"
 										>
@@ -151,7 +153,7 @@ const Login = () => {
 									</div>
 									<div className="col-12">
 										<div
-											className="rowuser"
+											className="row-user"
 											data-aos="fade-left"
 											data-aos-delay="100"
 										>
@@ -172,7 +174,7 @@ const Login = () => {
 										data-aos="fade-left"
 										data-aos-delay="200"
 									>
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="text"
 												placeholder="Phone Number"
@@ -187,7 +189,7 @@ const Login = () => {
 										</div>
 									</div>
 								</div>
-								<div className="rowuser">
+								<div className="row-user">
 									<button
 										type="submit"
 										className="width-full"
@@ -201,7 +203,7 @@ const Login = () => {
 						</div>
 					</div>
 				</div>
-				<div className="rowuser">
+				<div className="row-user">
 					<Link to="/" style={{ width: "100%", paddingBottom: ".5rem" }}>
 						<button
 							className="width-full"

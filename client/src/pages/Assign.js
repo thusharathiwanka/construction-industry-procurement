@@ -31,7 +31,7 @@ const AssignSupplier = ({ item, sitemng }) => {
 			<form>
 				<div className="row card ">
 					<div className=" ">
-						<div className="rowuser">
+						<div className="row-user">
 							<p
 								style={{
 									fontSize: "24px",
@@ -45,7 +45,7 @@ const AssignSupplier = ({ item, sitemng }) => {
 						</div>
 					</div>
 					<div className=" ">
-						<div className="rowuser">
+						<div className="row-user">
 							<select name="" id="">
 								<option>Suplier 01</option>
 							</select>

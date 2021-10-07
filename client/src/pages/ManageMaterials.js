@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-
-import Sidebar from "../components/sidebar/Sidebar";
-import TopNav from "../components/topnav/TopNav";
-import Table from "../components/table/Table";
-import Spinner from "../components/loading/Spinner";
-
-import "../assets/css/Usercreate.css";
 import axios from "axios";
 
+import Sidebar from "../components/sidebar/Sidebar";
+import Spinner from "../components/loading/Spinner";
+import Table from "../components/table/Table";
+import TopNav from "../components/topnav/TopNav";
+
+import "../assets/css/Usercreate.css";
+
 const ManageUsers = () => {
-	const [error, setError] = useState("");
 	const [btnState, setBtnState] = useState(false);
+	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 	const [material, setMaterial] = useState({ code: "", name: "" });
 	const [materials, setMaterials] = useState([]);
@@ -61,7 +61,6 @@ const ManageUsers = () => {
 			const res = await axios.get(`materials`);
 			setMaterials(res.data.materials);
 			setIsLoading(false);
-			console.log(res);
 		} catch (err) {
 			console.log(err.response);
 		}
@@ -86,7 +85,7 @@ const ManageUsers = () => {
 								)}
 								<div className="row">
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="text"
 												placeholder="Material Code"
@@ -102,7 +101,7 @@ const ManageUsers = () => {
 										</div>
 									</div>
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="text"
 												placeholder="Material Name"
@@ -118,9 +117,9 @@ const ManageUsers = () => {
 										</div>
 									</div>
 								</div>
-								<div className="rowuser">
+								<div className="row-user">
 									<button type="submit" onClick={saveMaterial}>
-										Save
+										{btnState ? "Saving" : "Save"}
 									</button>
 								</div>
 							</form>

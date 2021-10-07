@@ -4,7 +4,6 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const ManagetAllOrders = () => {
   const fields = [

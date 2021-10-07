@@ -5,31 +5,24 @@ import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Spinner from "../components/loading/Spinner";
+import Error from "../components/toast/Error";
+import Badge from "../components/badge/Badge";
 
 import "../assets/css/Usercreate.css";
 
 const ManageOrdersSupplier = () => {
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
-	const [employees, setEmployees] = useState(true);
-	const [employeeDetails, setEmployeeDetails] = useState({
-		name: "",
-		email: "",
-		username: "",
-		position: "sitemanager",
-		phone: "",
-		weeklyWorkHrs: "",
-		salary: "",
-		site: "",
-	});
+	const [orderDetails, setOrderDetails] = useState([]);
 	const fields = [
 		"",
-		"Employee Name",
-		"Email",
-		"Username",
-		"Phone",
-		"Weekly Work Hrs",
-		"Salary",
+		"Item",
+		"Quantity",
+		"Total Price",
+		"Delivery Address",
+		"Received At",
+		"Status",
+		"Actions",
 	];
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
@@ -37,27 +30,98 @@ const ManageOrdersSupplier = () => {
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
 			<td>{index + 1}</td>
-			<td>{item.name}</td>
-			<td>{item.email}</td>
-			<td>{item.username}</td>
-			<td>{item.phone}</td>
-			<td>{item.weeklyWorkHrs}</td>
-			<td>{item.salary}</td>
+			<td>{item.itemName}</td>
+			<td>{item.quantity}</td>
+			<td>{item.total}</td>
+			<td>{item.address}</td>
+			<td>{new Date(item.updatedAt).toDateString()}</td>
+			<td style={{ textTransform: "capitalize" }}>{item.DeliveryStatus}</td>
+			<td>
+				<div className="row-user" style={{ paddingTop: "0" }}>
+					{item.DeliveryStatus === "pending" ? (
+						<div
+							style={{ cursor: "pointer" }}
+							onClick={() => changeDeliveryStatusAsPreparing(item._id)}
+						>
+							<Badge type="warning" content="Mark as preparing" />
+						</div>
+					) : item.DeliveryStatus === "preparing" ? (
+						<div
+							style={{ cursor: "pointer" }}
+							onClick={() => changeDeliveryStatusAsDelivering(item._id)}
+						>
+							<Badge type="primary" content="Mark as delivering" />
+						</div>
+					) : item.DeliveryStatus === "delivering" ? (
+						<div
+							style={{ cursor: "pointer" }}
+							onClick={() => changeDeliveryStatusAsDelivered(item._id)}
+						>
+							<Badge type="success" content="Mark as delivered" />
+						</div>
+					) : (
+						""
+					)}
+				</div>
+			</td>
 		</tr>
 	);
 
-	const getAllEmployees = async () => {
+	const changeDeliveryStatusAsPreparing = async (id) => {
 		try {
-			const res = await axios.get(`users/`);
-			setEmployees(res.data.employees);
-			console.log(res.data.employees);
+			const res = await axios.put(`orders/supplier/prepare/${id}`);
+			if (res.statusText === "OK") {
+				setIsLoading(true);
+				getAllOrders();
+				setError("");
+				window.alert("Delivery status changed as preparing");
+				window.location.reload();
+				setIsLoading(false);
+			}
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
+	const changeDeliveryStatusAsDelivering = async (id) => {
+		try {
+			const res = await axios.put(`orders/supplier/deliver/${id}`);
+			if (res.statusText === "OK") {
+				getAllOrders();
+				setIsLoading(false);
+				window.alert("Delivery status changed as delivering");
+				window.location.reload();
+			}
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
+	const changeDeliveryStatusAsDelivered = async (id) => {
+		try {
+			const res = await axios.put(`orders/supplier/delivered/${id}`);
+			if (res.statusText === "OK") {
+				getAllOrders();
+				window.alert("Delivery status changed as delivered");
+				setIsLoading(false);
+				window.location.reload();
+			}
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
+	const getAllOrders = async () => {
+		try {
+			const res = await axios.get("orders/supplier");
+			setOrderDetails(res.data.orders);
 			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
 		}
 	};
 
-	useEffect(() => getAllEmployees(), []);
+	useEffect(() => getAllOrders(), []);
 
 	return (
 		<div>
@@ -67,17 +131,22 @@ const ManageOrdersSupplier = () => {
 				<div className="layout__content-main">
 					<h1 className="page-header">Manage Orders</h1>
 					<div className="card">
-						<h2>Order Details</h2>
+						<h2>Received Orders</h2>
 						{isLoading ? (
 							<Spinner />
-						) : (
+						) : orderDetails.length > 0 ? (
 							<Table
 								limit="5"
 								headData={fields}
 								renderHead={(item, index) => renderOrderHead(item, index)}
-								bodyData={employees}
+								bodyData={orderDetails}
 								renderBody={(item, index) => renderOrderBody(item, index)}
 							/>
+						) : (
+							<>
+								{setError("No orders found")}
+								<Error message={error} />
+							</>
 						)}
 					</div>
 				</div>
