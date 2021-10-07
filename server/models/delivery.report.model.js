@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const DeliveryReport = mongoose.Schema(
+const DeliveryReportSchema = mongoose.Schema(
 	{
 		orderId: { type: mongoose.Schema.Types.ObjectId, ref: "orders" },
 		item: { type: String, required: true },
@@ -11,6 +11,6 @@ const DeliveryReport = mongoose.Schema(
 	{ versionKey: false }
 );
 
-const deliveryReport = mongoose.model("deliveryReports", DeliveryReport);
+const DeliveryReport = mongoose.model("deliveryReports", DeliveryReportSchema);
 
-module.exports = deliveryReport;
+module.exports = DeliveryReport;
