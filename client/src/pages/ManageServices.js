@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
@@ -31,15 +32,15 @@ const ManageServices = () => {
 			<td>{item.pricePerUnit}</td>
 			<td>
 				<>
-					<button className="action-btn x">
-						<i
-							className="bx bx-x"
-							onClick={() => {
-								if (window.confirm("Are you sure to delete this service?")) {
-									deleteHandler(item._id);
-								}
-							}}
-						></i>
+					<button
+						className="action-btn x"
+						onClick={() => {
+							if (window.confirm("Are you sure to delete this service?")) {
+								deleteHandler(item._id);
+							}
+						}}
+					>
+						<RiDeleteBinLine />
 					</button>
 				</>
 			</td>
@@ -97,7 +98,7 @@ const ManageServices = () => {
 
 	const getAllData = async () => {
 		try {
-			const res1 = await axios.get(`suppliers/services`);
+			const res1 = await axios.get(`suppliers/services/my`);
 			const res2 = await axios.get(`materials`);
 			setEmployees(res1.data.services);
 			setMaterials(res2.data.materials);

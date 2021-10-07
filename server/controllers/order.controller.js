@@ -9,22 +9,25 @@ const Site = require("../models/site.model");
  * @returns {Object} res
  */
 const saveOrder = async (req, res) => {
-  try {
-    if (req.body) {
-      const { location } = await Site.findById(req.body.siteid);
-      console.log(location);
-      const saveOrder = new Order({
-        itemName: req.body.item.name,
-        address: location,
-        quantity: req.body.quantity,
-        orderItem: req.body.item.id,
-      });
-      await saveOrder.save();
-      res.status(200).json(saveOrder._id);
-    }
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+	try {
+		if (req.body) {
+			const { location } = await Site.findById(req.body.siteid);
+			console.log(location);
+			const saveOrder = new Order({
+				itemName: req.body.item.name,
+				address: location,
+				quantity: req.body.quantity,
+				orderItem: req.body.item.id,
+				requiredDate: req.body.requiredDate,
+				urgentOrder: req.body.urgentOrder,
+				siteManagerId:req.body.user
+			});
+			await saveOrder.save();
+			res.status(200).json(saveOrder._id);
+		}
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
 };
 
 /**
@@ -196,7 +199,7 @@ const getItemDetailsProcurement = async (req, res) => {
  */
 const allOrders = async (req, res) => {
   try {
-    const allOrders = await Order.find().populate("siteManagerId");
+    const allOrders = await Order.find({siteManagerId:req.body.user});
     res.status(200).json({ orders: allOrders });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -236,6 +239,7 @@ const changeStatusToRejected = async (req, res) => {
   }
 };
 /**
+
  * retrive all orders and change where isApprovedByManager = "approved"
  * @param {Object} req
  * @param {Object} res
@@ -252,6 +256,19 @@ const changeStatusToApproved = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
+
+ * retrieves all orders in the orders table
+ * @param {Object} req
+ * @param {Object} res
+ * @returns res
+ */
+const getManagerApprovedOrders = async (req, res) => {
+	try {
+		const allOrders = await Order.find({siteManagerId: req.body.user, isApprovedByManager:"approved"});
+		res.status(200).json({ orders: allOrders });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
 };
 
 /**
@@ -271,21 +288,23 @@ const getOrdersOfSupplier = async (req, res) => {
   }
 };
 
+
 module.exports = {
-  saveOrder,
-  addSupplier,
-  deletePendingOrders,
-  updateOrderQuantity,
-  changeOrderStatusByOfficer,
-  changeOrderStatusByManager,
-  getItemDetailsOfficer,
-  getItemDetailsProcurement,
+	saveOrder,
+	addSupplier,
+	deletePendingOrders,
+	updateOrderQuantity,
+	changeOrderStatusByOfficer,
+	changeOrderStatusByManager,
+	getItemDetailsOfficer,
+	getItemDetailsProcurement,
   getApproveOrders,
-  allOrders,
-  getOrdersOfSupplier,
   changeStatusToRejected,
   changeStatusToApproved,
-  changeDeliveryStatusBySupplierAsPreparing,
-  changeDeliveryStatusBySupplierAsDelivered,
-  changeDeliveryStatusBySupplierAsDelivering,
+	allOrders,
+	getOrdersOfSupplier,
+	changeDeliveryStatusBySupplierAsPreparing,
+	changeDeliveryStatusBySupplierAsDelivered,
+	changeDeliveryStatusBySupplierAsDelivering,
+	getManagerApprovedOrders
 };

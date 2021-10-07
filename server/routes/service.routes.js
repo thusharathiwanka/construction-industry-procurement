@@ -5,8 +5,9 @@ const ServiceController = require("../controllers/service.controller");
 
 router.post("/", verifySupplierAuth, ServiceController.saveService);
 
+router.get("/my", verifySupplierAuth, ServiceController.getServicesOfSupplier);
 router.get("/", verifySupplierAuth, ServiceController.getServices);
-router.get("/:id", verifySupplierAuth, ServiceController.getServicesOfSupplier);
+router.get("/:id", ServiceController.getServicesOfSupplierByMaterial);
 
 router.delete("/:id", verifySupplierAuth, ServiceController.deleteService);
 

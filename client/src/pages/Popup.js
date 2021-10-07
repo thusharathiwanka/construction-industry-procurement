@@ -11,7 +11,11 @@ function Popup(props) {
 					onClick={() => props.setTrigger(false)}
 					className="closeIcone"
 				/>
-				<AssignSupplier item={props.order} sitemng={props.sitemng} />
+				<AssignSupplier
+					item={props.order}
+					sitemng={props.sitemng}
+					materialId={props.materialId}
+				/>
 			</div>
 		</div>
 	) : (
