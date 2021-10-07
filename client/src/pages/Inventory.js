@@ -161,7 +161,7 @@ const Inventory = () => {
 						<div className="col-12">
 							<div className="card">
 								<div className="flex">
-									<h2 className="request-title">All Orders</h2>
+									<h2 className="request-title">Inventory</h2>
 								</div>
 								{Loading ? (
 									<Table

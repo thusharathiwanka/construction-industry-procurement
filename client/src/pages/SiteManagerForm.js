@@ -5,61 +5,18 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import { Link } from "react-router-dom";
 import Badge from "../components/badge/Badge";
-import DatePicker from "react-datepicker";
+import Spinner from "../components/loading/Spinner";
+import {MdDelete} from "react-icons/md"
+import {VscReport} from "react-icons/vsc"
 
 const SiteManagerForm = () => {
 	const siteId = localStorage.getItem("site");
 	const [Materials, setMaterials] = useState([]);
-	const fields = ["", "Date", "Item", "Quantity", "Status", "Actions"];
-	const rows = [
-		{
-			id: "1",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Approved",
-		},
-		{
-			id: "2",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "3",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Declined",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-		{
-			id: "4",
-			date: "2021.08.06",
-			houseOwner: "Gayath Chandula",
-			providence: "Pool",
-			status: "Pending",
-		},
-	];
-	const permissionStatus = {
-		Pending: "warning",
-		Approved: "success",
-		Declined: "danger",
-	};
+	const fields = ["", "Required Date", "Item", "Quantity","Order Status","Delivery Status", "Action", "Goods Receipt"];
+	const [OrderDetail, setOrderDetail] = useState([])
+	const [Loading, setLoading] = useState(false);
+	const [Id, setId] = useState(true)
+	
 	const [Order, setOrder] = useState({
 		item: {},
 		quantity: 0,
@@ -71,56 +28,114 @@ const SiteManagerForm = () => {
 
 	useEffect(() => {
 		const FetchData = async () => {
-			const res = await axios.get(`materials`);
-			setMaterials(res.data.materials);
+
+			const resMaterials = await axios.get(`materials`);
+			setMaterials(resMaterials.data.materials);
+
+			const resOrders = await axios.get("/orders");
+			setOrderDetail(resOrders.data.orders);
+
+			if(resOrders.statusText === "OK" ){
+				setLoading(true)
+			}
+
 		};
 		FetchData();
-	}, []);
-	const deleteHandler = (id) => {
+	}, [Id]);
+
+	const deleteHandler = async(id) => {
 		console.log(id);
+		try{
+			const res = await axios.delete(`/orders/delete/${id}`);
+			if(res.statusText === "OK" ){
+				setId(!Id)
+			}
+		}catch (Err) {
+			console.log(Err.response);
+		}
+	};
+
+	const orderHandler = async () => {
+		try {
+			console.log(Order);
+			const res = await axios.post("/orders", Order);
+			if(res.statusText === "OK" ){
+			setId(!Id)
+		}
+		} catch (Err) {
+			console.log(Err.response);
+		}
 	};
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
 	const renderOrderBody = (item, index) => (
 		<tr key={index}>
-			<td>{item.id}</td>
-			<td>{item.date}</td>
-			<td>{item.houseOwner}</td>
-			<td>{item.providence}</td>
+			<td>{index + 1}</td>
+			<td>{item.requiredDate}</td>
+			<td>{item.itemName}</td>
+			<td>{item.quantity}</td>
 			<td>
-				<Badge type={permissionStatus[item.status]} content={item.status} />
+				<div className="row-user" style={{ paddingTop: "0" }}>
+					{ item.isApprovedByOfficer  === "rejected" ? (
+						<Badge type="danger" content={item.isApprovedByOfficer} />
+					) : item.isApprovedByManager === "rejected" ? (
+						<Badge type="danger" content={item.isApprovedByManager} />
+					) :  item.isApprovedByManager === "pending" ? (
+						<Badge type="warning" content={item.isApprovedByManager} />
+					) : item.isApprovedByManager === "approved" ? (
+						<Badge type="success" content={item.isApprovedByManager} />
+					)  : (
+						""
+					)}
+				</div>	
+			</td>
+			<td>
+				<div className="row-user" style={{ paddingTop: "0" }}>
+					{item.isApprovedByManager === "approved" ? (item.DeliveryStatus === "pending" ? (
+						<Badge type="warning" content={item.DeliveryStatus} />
+					) : item.DeliveryStatus === "preparing" ? (
+						<Badge type="primary" content={item.DeliveryStatus} />
+					) : item.DeliveryStatus === "delivering" ? (
+						<Badge type="success" content={item.DeliveryStatus} />
+					) : item.DeliveryStatus === "delivered" ? (
+						<Badge type="success" content={item.DeliveryStatus} />
+					) : (
+						""
+					)):""}
+				</div>	
 			</td>
 			<td className="">
-				{item.status === "Pending" && (
+				{item.isApprovedByManager === "pending" ? (
 					<>
-						<button className="action-btn check">
-							<i className="bx bx-check"></i>
-						</button>
 						<button className="action-btn x">
-							<i
-								className="bx bx-x"
-								onClick={() => {
+						<MdDelete
+							onClick={() => {
 									if (window.confirm("Are you sure to delete this request?")) {
-										deleteHandler(item.id);
+										deleteHandler(item._id);
+										setId(item._id)
 									}
 								}}
-							></i>
+						/>
 						</button>
 					</>
-				)}
+				) : item.isApprovedByManager === "rejected" || item.isApprovedByOfficer === "rejected" ? (
+						<button className="action-btn W">
+						<VscReport
+							// onClick={() => {
+							// 		if (window.confirm("Are you sure to delete this request?")) {
+							// 			deleteHandler(item._id);
+							// 			setId(item._id)
+							// 		}
+							// 	}}
+						/>
+						</button>
+				):""}
 			</td>
 		</tr>
 	);
 
-	const orderHandler = async () => {
-		try {
-			console.log(Order);
-			const res = await axios.post("/orders", Order);
-		} catch (Err) {
-			console.log(Err.response);
-		}
-	};
+	
 	return (
 		<div>
 			<Sidebar />
@@ -263,18 +278,18 @@ const SiteManagerForm = () => {
 						</div>
 					</div>
 					<div className="row">
-						<div className="col-8">
+						<div className="col-12">
 							<div className="card">
 								<div className="flex">
 									<h2 className="request-title">All Orders</h2>
 								</div>
-								<Table
-									limit="5"
+								{Loading ? <Table
+									// limit="5"
 									headData={fields}
 									renderHead={(item, index) => renderOrderHead(item, index)}
-									bodyData={rows}
+									bodyData={OrderDetail}
 									renderBody={(item, index) => renderOrderBody(item, index)}
-								/>
+								/>:<Spinner/>}
 							</div>
 						</div>
 					</div>

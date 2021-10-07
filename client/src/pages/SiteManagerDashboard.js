@@ -112,7 +112,7 @@ const SiteManagerDashboard = () => {
 									</Link>
 								</div>
 								{Loading ? <Table
-									// limit="5"
+									limit="5"
 									headData={fields}
 									renderHead={(item, index) => renderOrderHead(item, index)}
 									bodyData={OrderDetail}
