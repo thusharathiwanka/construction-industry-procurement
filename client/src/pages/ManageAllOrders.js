@@ -75,8 +75,6 @@ const ManageAllOrders = () => {
             </div>
           </Link>
         </div>
-      </div>
-    </div>
   );
 };
 

@@ -72,7 +72,11 @@ const Routes = () => {
       />
       <Route exact path="/auth/sitemanager/inventory" component={Inventory} />
       <Route exact path="/auth/deliveryreport" component={DeliveryReport} />
-      <Route exact path="/auth/manager/allorders" component={ManageAllOrders} />
+      <Route
+        exact
+        path="/auth/manager/allorders"
+        component={ManagetAllOrders}
+      />
       <Route
         exact
         path="/auth/manager/ApprovedOrders"

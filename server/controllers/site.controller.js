@@ -30,7 +30,7 @@ const saveSite = async (req, res) => {
 			});
 
 			// * sending as saved
-			return res.status(201).send({});
+			return res.status(201).send({ id: newSite._id });
 		} catch (err) {
 			console.error(err.message);
 			return res.status(500).send();
