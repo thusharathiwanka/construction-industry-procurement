@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
@@ -31,15 +32,15 @@ const ManageServices = () => {
 			<td>{item.pricePerUnit}</td>
 			<td>
 				<>
-					<button className="action-btn x">
-						<i
-							className="bx bx-x"
-							onClick={() => {
-								if (window.confirm("Are you sure to delete this service?")) {
-									deleteHandler(item._id);
-								}
-							}}
-						></i>
+					<button
+						className="action-btn x"
+						onClick={() => {
+							if (window.confirm("Are you sure to delete this service?")) {
+								deleteHandler(item._id);
+							}
+						}}
+					>
+						<RiDeleteBinLine />
 					</button>
 				</>
 			</td>
