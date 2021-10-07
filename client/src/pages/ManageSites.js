@@ -108,7 +108,7 @@ const ManageUsers = () => {
 								)}
 								<div className="row">
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="text"
 												placeholder="Site Name"
@@ -124,7 +124,7 @@ const ManageUsers = () => {
 										</div>
 									</div>
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="text"
 												placeholder="Site Location"
@@ -140,7 +140,7 @@ const ManageUsers = () => {
 										</div>
 									</div>
 									<div className="col-6">
-										<div className="rowuser">
+										<div className="row-user">
 											<select
 												name="site"
 												id="site"
@@ -166,9 +166,9 @@ const ManageUsers = () => {
 										</div>
 									</div>
 								</div>
-								<div className="rowuser">
+								<div className="row-user">
 									<button type="submit" onClick={saveSite}>
-										Save
+										{btnState ? "Saving" : "Save"}
 									</button>
 								</div>
 							</form>

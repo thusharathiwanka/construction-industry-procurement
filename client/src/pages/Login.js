@@ -1,20 +1,22 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 import { AuthContext } from "../contexts/AuthContext";
 
-import LoginImage from "../assets/images/login-img.png";
-import logoImage from "../assets/images/logo.png";
 import Error from "../components/toast/Error";
 
+import LoginImage from "../assets/images/login-img.png";
+import LogoImage from "../assets/images/logo.png";
+
 const Login = () => {
-	const [user, setUser] = useState({ username: "", password: "" });
 	const { getLoggedIn } = useContext(AuthContext);
-	const [error, setError] = useState("");
-	const [btnState, setBtnState] = useState(false);
 	const history = useHistory();
+
+	const [btnState, setBtnState] = useState(false);
+	const [error, setError] = useState("");
+	const [user, setUser] = useState({ username: "", password: "" });
 
 	const loginUser = async (e) => {
 		e.preventDefault();
@@ -30,6 +32,8 @@ const Login = () => {
 			const res = await axios.post("users/login", user);
 			setUser({ username: "", password: "" });
 			setBtnState(false);
+			localStorage.setItem("name", res.data.user);
+
 			if (res.data.type === "sitemanager") {
 				localStorage.setItem("site", res.data.site);
 			}
@@ -47,7 +51,7 @@ const Login = () => {
 		<>
 			<div className="login-container">
 				<img
-					src={logoImage}
+					src={LogoImage}
 					alt="logo-img"
 					className="logo"
 					data-aos="fade"
@@ -77,7 +81,7 @@ const Login = () => {
 								<div className="row">
 									<div className="col-12">
 										<div
-											className="rowuser"
+											className="row-user"
 											data-aos="fade-left"
 											data-aos-delay="100"
 										>
@@ -98,7 +102,7 @@ const Login = () => {
 										data-aos="fade-left"
 										data-aos-delay="200"
 									>
-										<div className="rowuser">
+										<div className="row-user">
 											<input
 												type="password"
 												placeholder="Password"
@@ -113,7 +117,7 @@ const Login = () => {
 									</div>
 								</div>
 								<div
-									className="rowuser"
+									className="row-user"
 									data-aos="fade-left"
 									data-aos-delay="300"
 								>

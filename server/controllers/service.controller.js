@@ -87,9 +87,25 @@ const getServicesOfSupplierbyMaterial = async (req, res) => {
 	}
 };
 
+/*
+ * use to delete service by service id
+ * @param {Object} res
+ * @param {Object} req
+ * @returns res
+ */
+const deleteService = async (req, res) => {
+	try {
+		await Service.findByIdAndDelete(req.params.id);
+		res.status(200).send();
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
 module.exports = {
 	saveService,
 	getServices,
 	getServicesOfSupplier,
 	getServicesOfSupplierbyMaterial,
+	deleteService,
 };
