@@ -63,29 +63,35 @@ router.get(
 );
 
 router.put(
-	"/officer/:id",
-	verifyProcurementOfficer,
-	OrderController.changeOrderStatusByOfficer
-);
-router.put(
-	"/proc/:id",
-	verifyProcurementManagerAuth,
-	OrderController.changeOrderStatusByManager
-);
-router.put(
-	"/supplier/prepare/:id",
-	verifySupplierAuth,
-	OrderController.changeDeliveryStatusBySupplierAsPreparing
-);
-router.put(
-	"/supplier/deliver/:id",
-	verifySupplierAuth,
-	OrderController.changeDeliveryStatusBySupplierAsDelivering
-);
-router.put(
-	"/supplier/delivered/:id",
-	verifySupplierAuth,
-	OrderController.changeDeliveryStatusBySupplierAsDelivered
+  "/officer/:id",
+  verifyProcurementOfficer,
+  OrderController.changeOrderStatusByOfficer
 );
 
+router.put(
+  "/supplier/prepare/:id",
+  verifySupplierAuth,
+  OrderController.changeDeliveryStatusBySupplierAsPreparing
+);
+router.put(
+  "/supplier/deliver/:id",
+  verifySupplierAuth,
+  OrderController.changeDeliveryStatusBySupplierAsDelivering
+);
+router.put(
+  "/supplier/delivered/:id",
+  verifySupplierAuth,
+  OrderController.changeDeliveryStatusBySupplierAsDelivered
+);
+router.get("/getApproveOrders", OrderController.getApproveOrders);
+router.put(
+  "/changeStatusToRejected/:id",
+  verifyProcurementManagerAuth,
+  OrderController.changeStatusToRejected
+);
+router.put(
+  "/changeStatusToApproved/:id",
+  verifyProcurementManagerAuth,
+  OrderController.changeStatusToApproved
+);
 module.exports = router;

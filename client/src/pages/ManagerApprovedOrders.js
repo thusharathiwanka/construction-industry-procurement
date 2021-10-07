@@ -4,6 +4,7 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import axios from "axios";
+import Popup from "./Popup";
 
 const ManagerApprovedOrders = () => {
   const fields = [
@@ -13,6 +14,7 @@ const ManagerApprovedOrders = () => {
     "Total",
     "Created Date",
     "Status",
+    "Actions",
   ];
 
   const [orders, setOrders] = useState(null);
@@ -33,6 +35,40 @@ const ManagerApprovedOrders = () => {
           content={item.isApprovedByOfficer}
         />
       </td>
+      <td>
+        <button
+          className="action-btn check"
+          onClick={() => {
+            changeStatusToApproved(item._id);
+          }}
+        >
+          <i className="bx bx-check"></i>
+        </button>
+        <button
+          className="action-btn x"
+          onClick={() => {
+            if (window.confirm("Are you sure to delete this request?")) {
+              changeStatusToRejected(item._id);
+            }
+          }}
+        >
+          <i className="bx bx-x"></i>
+        </button>
+        {/* <button
+          className="action-btn item-assign "
+          onClick={() => {
+            setTrigger(true);
+          }}
+        >
+          <i className="bx bxs-user-plus"></i>
+          <Popup
+            trigger={trigger}
+            setTrigger={setTrigger}
+            order={item.itemName}
+            sitemng={item.siteManagerId}
+          />
+        </button> */}
+      </td>
     </tr>
   );
 
@@ -41,6 +77,23 @@ const ManagerApprovedOrders = () => {
     setAllOrders(res.data.orders);
     console.log(res);
   };
+  const changeStatusToRejected = async (id) => {
+    try {
+      const res = await axios.put(`orders/changeStatusToRejected/${id}`);
+      console.log(res);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+  const changeStatusToApproved = async (id) => {
+    try {
+      const res = await axios.put(`orders/changeStatusToApproved/${id}`);
+      console.log(res);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+
   useEffect(() => {
     getApproveOrders();
   }, []);

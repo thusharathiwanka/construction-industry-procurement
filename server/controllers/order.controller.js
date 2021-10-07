@@ -1,3 +1,4 @@
+const { request } = require("express");
 const Order = require("../models/order.model");
 const Site = require("../models/site.model");
 
@@ -37,13 +38,13 @@ const saveOrder = async (req, res) => {
  */
 
 const updateOrderQuantity = async (req, res) => {
-	try {
-		await Order.findByIdAndUpdate(req.params.id, {
-			quantity: req.body.quantity,
-		});
-	} catch (error) {
-		res.status(400).json({ error: error.message });
-	}
+  try {
+    await Order.findByIdAndUpdate(req.params.id, {
+      quantity: req.body.quantity,
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 /**
@@ -53,13 +54,13 @@ const updateOrderQuantity = async (req, res) => {
  * @returns {Object} res
  */
 const changeOrderStatusByOfficer = async (req, res) => {
-	try {
-		await Order.findByIdAndUpdate(req.params.id, {
-			isApprovedByOfficer: req.body.status,
-		});
-	} catch (error) {
-		res.status(400).json({ message: error.json });
-	}
+  try {
+    await Order.findByIdAndUpdate(req.params.id, {
+      isApprovedByOfficer: req.body.status,
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.json });
+  }
 };
 
 /**
@@ -69,13 +70,13 @@ const changeOrderStatusByOfficer = async (req, res) => {
  * @returns {Object} res
  */
 const changeOrderStatusByManager = async (req, res) => {
-	try {
-		await Order.findByIdAndUpdate(req.params.id, {
-			isApprovedByManager: req.body.status,
-		});
-	} catch (error) {
-		res.status(400).json({ message: error.message });
-	}
+  try {
+    await Order.findByIdAndUpdate(req.params.id, {
+      isApprovedByManager: req.body.status,
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
 /**
@@ -85,14 +86,14 @@ const changeOrderStatusByManager = async (req, res) => {
  * @returns {Object} res
  */
 const changeDeliveryStatusBySupplierAsPreparing = async (req, res) => {
-	try {
-		await Order.findByIdAndUpdate(req.params.id, {
-			DeliveryStatus: "preparing",
-		});
-		res.status(200).send();
-	} catch (error) {
-		res.status(400).json({ message: error.message });
-	}
+  try {
+    await Order.findByIdAndUpdate(req.params.id, {
+      DeliveryStatus: "preparing",
+    });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
 /**
@@ -102,14 +103,14 @@ const changeDeliveryStatusBySupplierAsPreparing = async (req, res) => {
  * @returns {Object} res
  */
 const changeDeliveryStatusBySupplierAsDelivering = async (req, res) => {
-	try {
-		await Order.findByIdAndUpdate(req.params.id, {
-			DeliveryStatus: "delivering",
-		});
-		res.status(200).send();
-	} catch (error) {
-		res.status(400).json({ message: error.message });
-	}
+  try {
+    await Order.findByIdAndUpdate(req.params.id, {
+      DeliveryStatus: "delivering",
+    });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
 /**
@@ -119,14 +120,14 @@ const changeDeliveryStatusBySupplierAsDelivering = async (req, res) => {
  * @returns {Object} res
  */
 const changeDeliveryStatusBySupplierAsDelivered = async (req, res) => {
-	try {
-		await Order.findByIdAndUpdate(req.params.id, {
-			DeliveryStatus: "delivered",
-		});
-		res.status(200).send();
-	} catch (error) {
-		res.status(400).json({ message: error.message });
-	}
+  try {
+    await Order.findByIdAndUpdate(req.params.id, {
+      DeliveryStatus: "delivered",
+    });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
 /**
@@ -136,13 +137,13 @@ const changeDeliveryStatusBySupplierAsDelivered = async (req, res) => {
  * @returns {Object} res
  */
 const addSupplier = async (res, req) => {
-	try {
-		await Order.findByIdAndUpdate(req.params.id, {
-			supplierId: req.body.supplierId,
-		});
-	} catch (error) {
-		res.status(400).json({ message: error.message });
-	}
+  try {
+    await Order.findByIdAndUpdate(req.params.id, {
+      supplierId: req.body.supplierId,
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
 /**
@@ -152,12 +153,12 @@ const addSupplier = async (res, req) => {
  * @returns res
  */
 const deletePendingOrders = async (req, res) => {
-	try {
-		const deletedOrder = await Order.findByIdAndDelete(req.params.id);
-		res.status(200).json(deletedOrder);
-	} catch (error) {
-		res.status(400).json({ message: error.message });
-	}
+  try {
+    const deletedOrder = await Order.findByIdAndDelete(req.params.id);
+    res.status(200).json(deletedOrder);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
 /**
@@ -167,12 +168,12 @@ const deletePendingOrders = async (req, res) => {
  * @returns res
  */
 const getItemDetailsOfficer = async (req, res) => {
-	try {
-		const orderListOff = await Order.find({ isApprovedByOfficer: "pending" });
-		res.status(200).json({ orders: orderListOff });
-	} catch (error) {
-		res.status(400).json({ message: error.message });
-	}
+  try {
+    const orderListOff = await Order.find({ isApprovedByOfficer: "pending" });
+    res.status(200).json({ orders: orderListOff });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
 /**
@@ -182,12 +183,12 @@ const getItemDetailsOfficer = async (req, res) => {
  * @returns {Object} res
  */
 const getItemDetailsProcurement = async (req, res) => {
-	try {
-		const orderListProc = await Order.find({ isApprovedByManager: "pending" });
-		res.status(200).json(orderListProc);
-	} catch (error) {
-		res.status(400).json({ message: error.message });
-	}
+  try {
+    const orderListProc = await Order.find({ isApprovedByManager: "pending" });
+    res.status(200).json(orderListProc);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
 /**
@@ -202,7 +203,6 @@ const allOrders = async (req, res) => {
     res.status(200).json({ orders: allOrders });
   } catch (error) {
     res.status(400).json({ message: error.message });
-   
   }
 };
 /**
@@ -212,15 +212,51 @@ const allOrders = async (req, res) => {
  */
 const getApproveOrders = async (req, res) => {
   try {
-    const approvedList = await Order.find({ isApprovedByOfficer: "approved" });
+    const approved = await Order.find({ isApprovedByOfficer: "approved" });
+    res.status(200).json({ orders: approved });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+/**
+ * retrive all orders and change where isApprovedByManager = "reject"
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const changeStatusToRejected = async (req, res) => {
+  try {
+    const rejectedList = await Order.findOneAndUpdate(
+      { isApprovedByOfficer: "approved", id: req.params.id },
+      { isApprovedByManager: "rejected" },
+      { new: true }
+    );
+    res.status(200).json({ orders: rejectedList });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+    // console.log(error);
+  }
+};
+/**
+
+ * retrive all orders and change where isApprovedByManager = "approved"
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const changeStatusToApproved = async (req, res) => {
+  try {
+    const approvedList = await Order.findOneAndUpdate(
+      { isApprovedByOfficer: "approved", id: req.params.id },
+      { isApprovedByManager: "approved" },
+      { new: true }
+    );
     res.status(200).json({ orders: approvedList });
   } catch (error) {
     res.status(400).json({ message: error.message });
-
   }
 
-};
-/**
  * retrieves all orders in the orders table
  * @param {Object} req
  * @param {Object} res
@@ -262,7 +298,9 @@ module.exports = {
 	changeOrderStatusByManager,
 	getItemDetailsOfficer,
 	getItemDetailsProcurement,
-  	getApproveOrders,
+  getApproveOrders,
+  changeStatusToRejected,
+  changeStatusToApproved,
 	allOrders,
 	getOrdersOfSupplier,
 	changeDeliveryStatusBySupplierAsPreparing,
