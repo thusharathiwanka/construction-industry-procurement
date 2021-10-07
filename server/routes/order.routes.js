@@ -18,6 +18,8 @@ router.get(
 	verifyProcurementOfficer,
 	OrderController.getItemDetailsOfficer
 );
+
+router.put("/", OrderController.allOrders);
 router.put(
 	"/officer/:id",
 	verifyProcurementOfficer,
