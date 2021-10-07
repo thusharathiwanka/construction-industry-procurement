@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import axios from "axios";
 
-const ManagetAllOrders = () => {
+const ManageAllOrders = () => {
   const fields = [
     "Order ID",
     "Item Name",
@@ -60,7 +61,7 @@ const ManagetAllOrders = () => {
             <h2>All Order Details</h2>
             {orders && (
               <Table
-                limit="5"
+                limit="10"
                 headData={fields}
                 renderHead={(item, index) => renderOrderHead(item, index)}
                 bodyData={orders}
@@ -69,7 +70,7 @@ const ManagetAllOrders = () => {
             )}
           </div>
           <Link to={"/auth/manager/ApprovedOrders"}>
-            <div className="rowuser">
+            <div className="row-user">
               <button>Approved Orders</button>
             </div>
           </Link>
@@ -79,4 +80,4 @@ const ManagetAllOrders = () => {
   );
 };
 
-export default ManagetAllOrders;
+export default ManageAllOrders;
