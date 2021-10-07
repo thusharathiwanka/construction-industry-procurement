@@ -17,6 +17,9 @@ const saveOrder = async (req, res) => {
 				address: location,
 				quantity: req.body.quantity,
 				orderItem: req.body.item.id,
+				requiredDate: req.body.requiredDate,
+				urgentOrder: req.body.urgentOrder,
+				siteManagerId:req.body.user
 			});
 			await saveOrder.save();
 			res.status(200).json(saveOrder._id);
@@ -194,8 +197,38 @@ const getItemDetailsProcurement = async (req, res) => {
  * @returns res
  */
 const allOrders = async (req, res) => {
+  try {
+    const allOrders = await Order.find({siteManagerId:req.body.user});
+    res.status(200).json({ orders: allOrders });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+   
+  }
+};
+/**
+ * retrive all orders where isApprovedByOfficer = "approved"
+ * @param {*} req
+ * @param {*} res
+ */
+const getApproveOrders = async (req, res) => {
+  try {
+    const approvedList = await Order.find({ isApprovedByOfficer: "approved" });
+    res.status(200).json({ orders: approvedList });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+
+  }
+
+};
+/**
+ * retrieves all orders in the orders table
+ * @param {Object} req
+ * @param {Object} res
+ * @returns res
+ */
+const getManagerApprovedOrders = async (req, res) => {
 	try {
-		const allOrders = await Order.find().populate("siteManagerId");
+		const allOrders = await Order.find({siteManagerId: req.body.user, isApprovedByManager:"approved"});
 		res.status(200).json({ orders: allOrders });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
@@ -209,15 +242,16 @@ const allOrders = async (req, res) => {
  * @returns {Object} res
  */
 const getOrdersOfSupplier = async (req, res) => {
-	try {
-		const allOrders = await Order.find({ supplierId: req.body.user }).populate(
-			"siteManagerId"
-		);
-		res.status(200).json({ orders: allOrders });
-	} catch (error) {
-		res.status(400).json({ message: error.message });
-	}
+  try {
+    const allOrders = await Order.find({ supplierId: req.body.user }).populate(
+      "siteManagerId"
+    );
+    res.status(200).json({ orders: allOrders });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
+
 
 module.exports = {
 	saveOrder,
@@ -228,9 +262,11 @@ module.exports = {
 	changeOrderStatusByManager,
 	getItemDetailsOfficer,
 	getItemDetailsProcurement,
+  	getApproveOrders,
 	allOrders,
 	getOrdersOfSupplier,
 	changeDeliveryStatusBySupplierAsPreparing,
 	changeDeliveryStatusBySupplierAsDelivered,
 	changeDeliveryStatusBySupplierAsDelivering,
+	getManagerApprovedOrders
 };

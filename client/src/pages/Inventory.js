@@ -5,34 +5,67 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import { Link } from "react-router-dom";
 import Badge from "../components/badge/Badge";
+import Spinner from "../components/loading/Spinner";
 
 const Inventory = () => {
-	const fields = ["", "Date", "Item", "Quantity", "Status", "Maximum Capacity"];
+	const fields = ["", "Item", "Quantity", "Maximum Capacity", "Status"];
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
 	const [Inventory, setInventory] = useState({
 		item: "Sand",
-		maxCapacity: 0,
+		quantity: 0,
 	});
-	const [InventoryDetails, setInventoryDetails] = useState("");
+	const [InventoryDetails, setInventoryDetails] = useState([]);
+	const [Loading, setLoading] = useState(false);
 
-	useEffect(() => {
-		const FetchData = async () => {
-			const res = await axios.get("/inventory", Inventory);
+	const FetchData = async () => {
+			const res = await axios.get("/inventory");
 			setInventoryDetails(res.data);
 			console.log(res.data);
+			if(res.statusText === "OK" ){
+			setLoading(true)
+		}
+		
 		};
+
+	useEffect(() => {
+		
 		FetchData();
+		
 	}, []);
 
 	const inventoryHandler = async () => {
 		try {
 			console.log(Inventory);
 			const res = await axios.patch("/inventory/update", Inventory);
+			if(res.statusText === "OK"){
+				window.location.reload()
+			}
 		} catch (Err) {
 			console.log(Err.response);
 		}
 	};
+
+	const renderOrderBody = (item, index) => (
+		<tr key={index}>
+			<td>{index + 1}</td>
+			<td>{item.item}</td>
+			<td>{item.quantity}</td>
+			<td>{item.maxCapacity}</td>
+			<td>
+				<div className="row-user" style={{ paddingTop: "0" }}>
+					{item.quantity/item.maxCapacity <= 0.4  ? (
+						<Badge type="danger" content="Minimum Level" />
+					) : item.quantity/item.maxCapacity <= 0.5 ? (
+						<Badge type="warning" content="Average Level" />
+					) : item.quantity/item.maxCapacity >= 0.5 ? (
+						<Badge type="success" content="Maximum Level" />
+					):"" }
+				</div>
+			</td>
+		</tr>
+	);
+
 	return (
 		<div>
 			<Sidebar />
@@ -73,7 +106,7 @@ const Inventory = () => {
 												<option value="sand">Sand</option>
 												<option value="cement">Cement</option>
 												<option value="stone">Stone</option>
-												<option value="iron">Iron</option>
+												<option value="Iron">Iron</option>
 											</select>
 										</div>
 									</div>
@@ -99,7 +132,7 @@ const Inventory = () => {
 												onChange={(e) =>
 													setInventory({
 														...Inventory,
-														maxCapacity: e.target.value,
+														quantity: e.target.value,
 													})
 												}
 												required
@@ -133,15 +166,18 @@ const Inventory = () => {
 						<div className="col-12">
 							<div className="card">
 								<div className="flex">
-									<h2 className="request-title">All Orders</h2>
+									<h2 className="request-title">Inventory</h2>
 								</div>
-								<Table
+								{Loading ? (
+									<Table
 									// limit="5"
 									headData={fields}
 									renderHead={(item, index) => renderOrderHead(item, index)}
-									// bodyData={rows}
-									// renderBody={(item, index) => renderOrderBody(item, index)}
+									bodyData={InventoryDetails}
+									renderBody={(item, index) => renderOrderBody(item, index)}
 								/>
+								):<Spinner/>}
+								
 							</div>
 						</div>
 					</div>
