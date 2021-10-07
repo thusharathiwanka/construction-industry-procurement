@@ -5,9 +5,7 @@ const AssignSupplier = ({ item, sitemng, materialId }) => {
 	const [supliers, setSupliers] = useState([]);
 	const [supplierId, setSupplierId] = useState({
 		supplierId: "",
-		
 	});
-
 
 	const getSuppliers = async () => {
 		let id = materialId;
@@ -25,7 +23,7 @@ const AssignSupplier = ({ item, sitemng, materialId }) => {
 	const addSuplier = (supplierId) => {
 		try {
 			const res = axios.put("/orders/", supplierId);
-			console.log(res)
+			console.log(res);
 		} catch (error) {}
 	};
 
@@ -53,18 +51,22 @@ const AssignSupplier = ({ item, sitemng, materialId }) => {
 					</div>
 					<div className=" ">
 						<div className="rowuser">
-							<select name="site" id="site"
+							<select
+								name="site"
+								id="site"
 								onChange={(e) =>
-									setServiceDetails({
-										...serviceDetails,
-										material: e.target.value,
+									setSupliers({
+										...supliers,
+										supplierId: e.target.value,
 									})
-								}required>
+								}
+								required
+							>
 								<option value="site" defaultValue>
 									SELECT SUPPLIER
 								</option>
 								{supliers.map((suplier) => (
-									<option value={suplier._id} key={suplier._id}>
+									<option value={suplier.supplierId} key={suplier._id}>
 										{suplier.supplierId.name + " " + suplier.pricePerUnit}
 									</option>
 								))}
