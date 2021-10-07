@@ -185,7 +185,7 @@ const OfficerDashboard = () => {
 										<button className="view-btn">View All</button>
 									</Link>
 								</div>
-								{orders && (
+								{orders ? (
 									<Table
 										limit="5"
 										headData={fields}
@@ -193,6 +193,8 @@ const OfficerDashboard = () => {
 										bodyData={orders}
 										renderBody={(item, index) => renderOrderBody(item, index)}
 									/>
+								) : (
+									<div></div>
 								)}
 							</div>
 						</div>

@@ -90,6 +90,7 @@ const OfficerOrders = () => {
 						trigger={trigger}
 						setTrigger={setTrigger}
 						order={item.itemName}
+						materialId={item.orderItem}
 						sitemng={item.siteManagerId}
 					/>
 				</button>
