@@ -5,7 +5,6 @@ import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import axios from "axios";
 
-
 const ManagetAllOrders = () => {
   const fields = [
     "Order ID",
@@ -69,20 +68,11 @@ const ManagetAllOrders = () => {
               />
             )}
           </div>
-        </div>
-      </div>
-      <div className="rowuser" to="/auth/manager/allorders">
-        Approved Orders
-      </div>
-          {orders && (
-            <Table
-              limit="5"
-              headData={fields}
-              renderHead={(item, index) => renderOrderHead(item, index)}
-              bodyData={orders}
-              renderBody={(item, index) => renderOrderBody(item, index)}
-            />
-          )}
+          <Link to={"/auth/manager/ApprovedOrders"}>
+            <div className="rowuser">
+              <button>Approved Orders</button>
+            </div>
+          </Link>
         </div>
   );
 };
