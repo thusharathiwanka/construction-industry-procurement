@@ -69,14 +69,13 @@ const ManagetAllOrders = () => {
               />
             )}
           </div>
+          <Link to={"/auth/manager/ApprovedOrders"}>
+            <div className="rowuser">
+              <button>Approved Orders</button>
+            </div>
+          </Link>
         </div>
       </div>
-      <div className="rowuser" to="/auth/manager/allorders">
-        Approved Orders
-      </div>
-      <Link className="rowuser" to={"/auth/manager/allorders"}>
-        Pay
-      </Link>
     </div>
   );
 };

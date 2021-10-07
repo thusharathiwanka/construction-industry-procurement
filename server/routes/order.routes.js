@@ -18,7 +18,7 @@ router.get(
   verifyProcurementOfficer,
   OrderController.getItemDetailsOfficer
 );
-router.get("/getApproveOrders", OrderController.getApproveOrders);
+
 router.put(
   "/officer/:id",
   verifyProcurementOfficer,
@@ -40,5 +40,15 @@ router.put(
   verifyProcurementManagerAuth,
   OrderController.changeOrderStatusByManager
 );
-
+router.get("/getApproveOrders", OrderController.getApproveOrders);
+router.put(
+  "/changeStatusToRejected/:id",
+  verifyProcurementManagerAuth,
+  OrderController.changeStatusToRejected
+);
+router.put(
+  "/changeStatusToApproved/:id",
+  verifyProcurementManagerAuth,
+  OrderController.changeStatusToApproved
+);
 module.exports = router;

@@ -1,3 +1,4 @@
+const { request } = require("express");
 const Order = require("../models/order.model");
 const Site = require("../models/site.model");
 /**
@@ -84,7 +85,7 @@ const changeOrderStatusByManager = async (req, res) => {
  * @param {Object} res
  * @returns {Object} res
  */
-const addSupplier = async (res, req) => {
+const addSupplier = async (req, res) => {
   try {
     await Order.findByIdAndUpdate(req.params.id, {
       supplierId: req.body.supplierId,
@@ -163,13 +164,52 @@ const allOrders = async (req, res) => {
  */
 const getApproveOrders = async (req, res) => {
   try {
-    const approvedList = await Order.find({ isApprovedByOfficer: "approved" });
+    const approved = await Order.find({ isApprovedByOfficer: "approved" });
+    res.status(200).json({ orders: approved });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+/**
+ * retrive all orders and change where isApprovedByManager = "reject"
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const changeStatusToRejected = async (req, res) => {
+  try {
+    const rejectedList = await Order.findOneAndUpdate(
+      { isApprovedByOfficer: "approved", id: req.params.id },
+      { isApprovedByManager: "rejected" },
+      { new: true }
+    );
+    res.status(200).json({ orders: rejectedList });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+    // console.log(error);
+  }
+};
+/**
+ * retrive all orders and change where isApprovedByManager = "approved"
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const changeStatusToApproved = async (req, res) => {
+  try {
+    const approvedList = await Order.findOneAndUpdate(
+      { isApprovedByOfficer: "approved", id: req.params.id },
+      { isApprovedByManager: "approved" },
+      { new: true }
+    );
     res.status(200).json({ orders: approvedList });
   } catch (error) {
     res.status(400).json({ message: error.message });
     // console.log(error);
   }
 };
+
 /**
  * retrieves all orders of given supplier
  * @param {Object} req
@@ -194,8 +234,10 @@ module.exports = {
   updateOrderQuantity,
   changeOrderStatusByOfficer,
   changeOrderStatusByManager,
-  getItemDetailsOfficer,
   getApproveOrders,
+  changeStatusToRejected,
+  changeStatusToApproved,
+  getItemDetailsOfficer,
   getItemDetailsProcurement,
   allOrders,
   getOrdersOfSupplier,
