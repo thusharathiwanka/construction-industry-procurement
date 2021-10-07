@@ -311,6 +311,9 @@ input::placeholder {
 	color: var(--second-color-red);
 }
 
+.W{
+	color: var(--second-color-orange);
+}
 .check {
 	color: var(--main-color-green);
 	margin-right: 2rem;
