@@ -13,13 +13,12 @@ const Inventory = () => {
 
 	const [Inventory, setInventory] = useState({
 		item: "Sand",
-		maxCapacity: 0,
+		quantity: 0,
 	});
 	const [InventoryDetails, setInventoryDetails] = useState([]);
 	const [Loading, setLoading] = useState(false);
 
-	useEffect(() => {
-		const FetchData = async () => {
+	const FetchData = async () => {
 			const res = await axios.get("/inventory");
 			setInventoryDetails(res.data);
 			console.log(res.data);
@@ -28,6 +27,9 @@ const Inventory = () => {
 		}
 		
 		};
+
+	useEffect(() => {
+		
 		FetchData();
 		
 	}, []);
@@ -36,6 +38,9 @@ const Inventory = () => {
 		try {
 			console.log(Inventory);
 			const res = await axios.patch("/inventory/update", Inventory);
+			if(res.statusText === "OK"){
+				window.location.reload()
+			}
 		} catch (Err) {
 			console.log(Err.response);
 		}
@@ -101,7 +106,7 @@ const Inventory = () => {
 												<option value="sand">Sand</option>
 												<option value="cement">Cement</option>
 												<option value="stone">Stone</option>
-												<option value="iron">Iron</option>
+												<option value="Iron">Iron</option>
 											</select>
 										</div>
 									</div>
@@ -127,7 +132,7 @@ const Inventory = () => {
 												onChange={(e) =>
 													setInventory({
 														...Inventory,
-														maxCapacity: e.target.value,
+														quantity: e.target.value,
 													})
 												}
 												required
