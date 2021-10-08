@@ -21,7 +21,7 @@ function Popup(props) {
 				/> ): props.name === "Rejection" ? (
 					<Rejection description={props.description} />
 				): props.name === "GoodsReceipt" ? (
-					<GoodsReceipt />
+					<GoodsReceipt item={props.item} id={props.id} />
 				):""}
 			</div>
 		</div>

@@ -1,10 +1,33 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 
-const GoodsReceipt = () => {
+const GoodsReceipt = ({id,item}) => {
+
+    const [Report, setReport] = useState({})
+	const [Loading, setLoading] = useState(false);
+
+    const FetchData = async () => {
+			const resReport= await axios.get("/");
+			setLoading(resReport.data.materials);
+
+			if(resReport.statusText === "OK" ){
+				setLoading(true)
+			}
+
+		};
+
+    useEffect(() => {
+        FetchData()
+        
+    }, [])
     return (
-        <div style={{ width: "400px", height: "200px" }} id="main" className="layout__content">
-            <div className="layout__content-main">
-                    <h2 >Reason to reject</h2>
+        <div style={{ width: "400px", height: "400px" }} >
+            <div>
+                    <h1 className="S " style={{position:'relative', top:"-80px", fontSize:40, display: "flex",
+												justifyContent: "center", alignItems: "center",width: "100%",
+												}}>Goods Receipt</h1>
+
+                    <h3>{item}</h3>
             </div>
         </div>
     )
