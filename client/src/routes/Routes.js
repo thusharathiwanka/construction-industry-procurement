@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 
+import DeliveryReportSubmit from "../pages/DeliveryReportSubmit";
 import Login from "../pages/Login";
 import ManagerDashboard from "../pages/ManagerDashboard";
 import ManageOrdersSupplier from "../pages/ManageOrdersSupplier";
@@ -53,6 +54,11 @@ const Routes = () => {
 				component={ManageOrdersSupplier}
 			/>
 			<Route exact path="/auth/supplier/services" component={ManageServices} />
+			<Route
+				exact
+				path="/auth/supplier/deliveryreports/:id"
+				component={DeliveryReportSubmit}
+			/>
 			<Route
 				exact
 				path="/auth/supplier/deliveryreports"

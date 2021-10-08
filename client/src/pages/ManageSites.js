@@ -28,15 +28,14 @@ const ManageUsers = () => {
 			<td>{index + 1}</td>
 			<td>{item.name}</td>
 			<td>{item.location}</td>
-			<td>{item.siteManagerId.name}</td>
-			<td>{item.siteManagerId.email}</td>
+			<td>{item.siteManagerId ? item.siteManagerId.name : "Not Assigned"}</td>
+			<td>{item.siteManagerId ? item.siteManagerId.email : "Not Assigned"}</td>
 		</tr>
 	);
 
 	const saveSite = async (e) => {
 		e.preventDefault();
 		setBtnState(true);
-		console.log(site);
 		for (let key of Object.keys(site)) {
 			if (!site[key]) {
 				setBtnState(false);
@@ -51,13 +50,12 @@ const ManageUsers = () => {
 
 		try {
 			const res = await axios.post("sites", site);
-			console.log(res);
 			setSite({
 				name: "",
 				location: "",
 				siteManagerId: "",
 			});
-			getAllSiteManagers();
+			getAllSites();
 			setError("");
 			window.alert("Site registered successfully");
 			setBtnState(false);
@@ -70,9 +68,9 @@ const ManageUsers = () => {
 
 	const getAllSites = async () => {
 		try {
-			const res = await axios.get(`sites/`);
+			const res = await axios.get(`sites`);
 			setSites(res.data.sites);
-			console.log(res);
+			console.log(res.data.sites);
 			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
@@ -88,8 +86,10 @@ const ManageUsers = () => {
 		}
 	};
 
-	useEffect(() => getAllSiteManagers(), []);
-	useEffect(() => getAllSites(), []);
+	useEffect(() => {
+		getAllSites();
+		getAllSiteManagers();
+	}, []);
 
 	return (
 		<div>

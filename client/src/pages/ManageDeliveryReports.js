@@ -107,7 +107,7 @@ const ManageDeliveryReports = () => {
 			<div id="main" className="layout__content">
 				<TopNav />
 				<div className="layout__content-main">
-					<h1 className="page-header">Delivery Report</h1>
+					<h1 className="page-header">Manage Delivery Reports</h1>
 					<div className="row"></div>
 					<div className="row">
 						<div className="col-12">
