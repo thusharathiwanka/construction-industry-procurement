@@ -55,7 +55,30 @@ const getSites = async (req, res) => {
 	}
 };
 
+/**
+ * remove the site
+ * @param {req} req
+ * @param {res} res
+ * @returns  res
+ */
+const removeSite = async (req, res) => {
+	if (req.params) {
+		const { id } = req.params;
+		try {
+			await Site.findByIdAndDelete(id);
+
+			return res.status(200).send();
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send();
+		}
+	}
+
+	return res.status(400).send();
+};
+
 module.exports = {
 	saveSite,
 	getSites,
+	removeSite,
 };

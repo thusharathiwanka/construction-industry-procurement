@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
@@ -19,7 +20,14 @@ const ManageUsers = () => {
 		location: "",
 		siteManagerId: "",
 	});
-	const fields = ["", "Site Name", "Location", "Site Manager", "Email"];
+	const fields = [
+		"",
+		"Site Name",
+		"Location",
+		"Site Manager",
+		"Email",
+		"Actions",
+	];
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
@@ -30,6 +38,20 @@ const ManageUsers = () => {
 			<td>{item.location}</td>
 			<td>{item.siteManagerId ? item.siteManagerId.name : "Not Assigned"}</td>
 			<td>{item.siteManagerId ? item.siteManagerId.email : "Not Assigned"}</td>
+			<td>
+				<>
+					<button
+						className="action-btn x"
+						onClick={() => {
+							if (window.confirm("Are you sure to remove this site?")) {
+								deleteHandler(item._id, item.username);
+							}
+						}}
+					>
+						<RiDeleteBinLine />
+					</button>
+				</>
+			</td>
 		</tr>
 	);
 
@@ -62,6 +84,21 @@ const ManageUsers = () => {
 			setIsLoading(true);
 		} catch (err) {
 			setBtnState(false);
+			console.log(err.response);
+		}
+	};
+
+	const deleteHandler = async (id) => {
+		try {
+			const res = await axios.delete(`sites/${id}`);
+
+			if (res.statusText === "OK") {
+				getAllSites();
+				setError("");
+				window.alert("Site has been successfully deleted");
+				setIsLoading(true);
+			}
+		} catch (err) {
 			console.log(err.response);
 		}
 	};
