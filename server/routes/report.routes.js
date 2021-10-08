@@ -5,7 +5,7 @@ const { verifySupplierAuth } = require("../auth/supplier.auth");
 const DeliveryReportController = require("../controllers/delivery.report.controller");
 const goodsReportController = require("../controllers/goods.report.controller");
 
-router.get("/deliveryreport", DeliveryReportController.getDeliveryReport);
+router.get("/deliveryreport/:id", DeliveryReportController.getDeliveryReport);
 router.get("/goodsreport", goodsReportController.getGoodsReport);
 router.get(
 	"/deliveryreport/supplier",
