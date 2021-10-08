@@ -28,6 +28,7 @@ const AssignSupplier = ({ item, sitemng, materialId, orderId }) => {
 			const res = await axios.put(`/orders/${id}`, { supplierId: supplierId });
 			// console.log(res);
 			window.alert("Supplier ID  added successfully");
+			window.location.reload();
 		} catch (error) {
 			console.log(error.response);
 		}

@@ -220,7 +220,7 @@ const allOrders = async (req, res) => {
  */
 const OrdersList = async (req, res) => {
 	try {
-		const allOrders = await Order.find();
+		const allOrders = await Order.find({ total: { $gt: 100000 } });
 		res.status(200).json({ orders: allOrders });
 	} catch (error) {
 		res.status(400).json({ message: error.message });

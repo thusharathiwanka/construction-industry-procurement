@@ -2,18 +2,25 @@ import axios from "axios";
 import React, { useState } from "react";
 
 const RejectReason = ({ orderId }) => {
+	console.log("errorId", orderId);
 	const [error, setError] = useState("");
 	const rejection = async (e) => {
+		e.preventDefault();
+
 		let id = orderId;
+		let rejectMassage = error;
 		try {
 			const res = await axios.put(`/orders/error/${id}`, {
-				rejectMassage: error,
+				rejectMassage: rejectMassage,
 			});
-			console.log("rejectionReason", res);
+			window.alert("Error message submitted successfully");
+			window.location.reload();
+			// console.log("rejectionReason", res);
 		} catch (error) {
 			console.log(error);
 		}
 	};
+	console.log("error", error);
 	return (
 		<div>
 			<div className="layout__content-main">

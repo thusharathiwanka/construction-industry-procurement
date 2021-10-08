@@ -43,7 +43,7 @@ const OfficerOrders = () => {
 	};
 
 	const deleteHandler = async (id) => {
-		console.log("hi");
+		// console.log("hi");
 		try {
 			const res = await axios.put(`orders/officer/${id}`, {
 				status: "rejected",
@@ -137,7 +137,7 @@ const OfficerOrders = () => {
 	const getAllOrder = async () => {
 		const res = await axios.get("orders/officer/orders");
 
-		console.log(res.data.orders);
+		// console.log(res.data.orders);
 		setOrders(res.data.orders);
 	};
 
