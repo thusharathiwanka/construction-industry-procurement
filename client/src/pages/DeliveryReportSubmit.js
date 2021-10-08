@@ -1,68 +1,41 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { RiDeleteBinLine } from "react-icons/ri";
+import { useParams } from "react-router-dom";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import Spinner from "../components/loading/Spinner";
-import Table from "../components/table/Table";
 import TopNav from "../components/topnav/TopNav";
 
 import "../assets/css/Usercreate.css";
 
 const DeliveryReportSubmit = () => {
+	const { id } = useParams();
 	const [btnState, setBtnState] = useState(false);
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
-	const [material, setMaterial] = useState({ code: "", name: "" });
-	const [materials, setMaterials] = useState([]);
+	const [deliveryReport, setDeliveryReport] = useState({ code: "", name: "" });
 
-	const fields = ["", "Material Code", "Material Name", "Actions"];
-
-	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
-
-	const renderOrderBody = (item, index) => (
-		<tr key={index}>
-			<td>{index + 1}</td>
-			<td>{item.code}</td>
-			<td>{item.name}</td>
-			<td>
-				<>
-					<button
-						className="action-btn x"
-						onClick={() => {
-							if (window.confirm("Are you sure to delete this material?")) {
-								deleteHandler(item._id, item.username);
-							}
-						}}
-					>
-						<RiDeleteBinLine />
-					</button>
-				</>
-			</td>
-		</tr>
-	);
-
-	const saveMaterial = async (e) => {
+	const savedeliveryReport = async (e) => {
 		e.preventDefault();
 		setBtnState(true);
 
-		for (let key of Object.keys(material)) {
-			if (!material[key]) {
+		for (let key of Object.keys(deliveryReport)) {
+			if (!deliveryReport[key]) {
 				setBtnState(false);
 				return setError("Please fill all the fields");
 			}
 		}
 
 		try {
-			const res = await axios.post("materials", material);
+			const res = await axios.post("deliveryReports", deliveryReport);
 			console.log(res);
-			setMaterial({
+			setDeliveryReport({
 				code: "",
 				name: "",
 			});
-			getAllMaterial();
+			getOrderDetails();
 			setError("");
-			window.alert("Material registered successfully");
+			window.alert("deliveryReport registered successfully");
 			setBtnState(false);
 			setIsLoading(true);
 		} catch (err) {
@@ -71,32 +44,17 @@ const DeliveryReportSubmit = () => {
 		}
 	};
 
-	const deleteHandler = async (id, username) => {
+	const getOrderDetails = async () => {
 		try {
-			const res = await axios.delete(`materials/${id}`);
-
-			if (res.statusText === "OK") {
-				getAllMaterial();
-				setError("");
-				window.alert("Material has been successfully deleted");
-				setIsLoading(true);
-			}
-		} catch (err) {
-			console.log(err.response);
-		}
-	};
-
-	const getAllMaterial = async () => {
-		try {
-			const res = await axios.get(`materials`);
-			setMaterials(res.data.materials);
+			const res = await axios.get(`orders/${id}`);
+			setDeliveryReport(res.data.order);
 			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
 		}
 	};
 
-	useEffect(() => getAllMaterial(), []);
+	useEffect(() => getOrderDetails(), []);
 
 	return (
 		<div>
@@ -104,7 +62,7 @@ const DeliveryReportSubmit = () => {
 			<div id="main" className="layout__content">
 				<TopNav />
 				<div className="layout__content-main">
-					<h1 className="page-header">Manage Materials</h1>
+					<h1 className="page-header">Submit Delivery Report</h1>
 					<div className="row">
 						<div className="col-12">
 							<form className="card" style={{ position: "relative" }}>
@@ -114,32 +72,84 @@ const DeliveryReportSubmit = () => {
 									</div>
 								)}
 								<div className="row">
-									<div className="col-6">
+									<div className="col-4">
+										<label htmlFor="">Order Item</label>
 										<div className="row-user">
 											<input
+												disabled
 												type="text"
-												placeholder="Material Code"
-												value={material.code}
-												onChange={(e) =>
-													setMaterial({
-														...material,
-														code: e.target.value,
-													})
+												placeholder="Delivered Item"
+												value={deliveryReport.itemName}
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-4">
+										<label htmlFor="">Order ID</label>
+										<div className="row-user">
+											<input
+												disabled
+												type="text"
+												placeholder="Order ID"
+												value={deliveryReport._id}
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-4">
+										<label htmlFor="">Quantity</label>
+										<div className="row-user">
+											<input
+												disabled
+												type="text"
+												placeholder="Quantity"
+												value={deliveryReport.quantity}
+												required
+											/>
+										</div>
+									</div>
+								</div>
+								<div className="row">
+									<div className="col-4">
+										<label htmlFor="">Total</label>
+										<div className="row-user">
+											<input
+												disabled
+												type="text"
+												placeholder="Delivered Item"
+												value={deliveryReport.total}
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-4">
+										<label htmlFor="">Order Type</label>
+										<div className="row-user">
+											<input
+												disabled
+												type="text"
+												placeholder="Order ID"
+												value={
+													deliveryReport.urgentOrder === false
+														? "Regular Order"
+														: "Urgent Order"
 												}
 												required
 											/>
 										</div>
 									</div>
-									<div className="col-6">
+								</div>
+								<div className="row">
+									<div className="col-12">
 										<div className="row-user">
 											<input
 												type="text"
-												placeholder="Material Name"
-												value={material.name}
+												placeholder="Description"
+												value={deliveryReport.code}
 												onChange={(e) =>
-													setMaterial({
-														...material,
-														name: e.target.value,
+													setDeliveryReport({
+														...deliveryReport,
+														code: e.target.value,
 													})
 												}
 												required
@@ -148,26 +158,12 @@ const DeliveryReportSubmit = () => {
 									</div>
 								</div>
 								<div className="row-user">
-									<button type="submit" onClick={saveMaterial}>
+									<button type="submit" onClick={savedeliveryReport}>
 										{btnState ? "Saving" : "Save"}
 									</button>
 								</div>
 							</form>
 						</div>
-					</div>
-					<div className="card col-12">
-						<h2>Submit Delivery Report</h2>
-						{isLoading ? (
-							<Spinner />
-						) : (
-							<Table
-								limit="5"
-								headData={fields}
-								renderHead={(item, index) => renderOrderHead(item, index)}
-								bodyData={materials}
-								renderBody={(item, index) => renderOrderBody(item, index)}
-							/>
-						)}
 					</div>
 				</div>
 			</div>

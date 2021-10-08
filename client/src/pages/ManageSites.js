@@ -28,8 +28,8 @@ const ManageUsers = () => {
 			<td>{index + 1}</td>
 			<td>{item.name}</td>
 			<td>{item.location}</td>
-			<td>{item.siteManagerId.name}</td>
-			<td>{item.siteManagerId.email}</td>
+			<td>{item.siteManagerId ? item.siteManagerId.name : "Not Assigned"}</td>
+			<td>{item.siteManagerId ? item.siteManagerId.email : "Not Assigned"}</td>
 		</tr>
 	);
 
