@@ -8,19 +8,39 @@ const DeliveryReport = require("../models/delivery.report.model");
  */
 const saveDeliveryReport = async (req, res) => {
 	if (req.body) {
-		const { description, item, quantity, orderId } = req.body;
+		const {
+			description,
+			itemName,
+			quantity,
+			_id,
+			total,
+			urgentOrder,
+			address,
+		} = req.body;
+		console.log(
+			description,
+			itemName,
+			quantity,
+			_id,
+			total,
+			urgentOrder,
+			address
+		);
 		// * user inputs validation
-		if (!description || !item || !quantity) {
+		if (!description || !itemName || !quantity || !_id || !address) {
 			return res.status(400).json({ message: "Please fill all the fields" });
 		}
 
 		try {
 			// * save report
 			const newReport = new DeliveryReport({
-				description,
-				item,
+				orderId: _id,
+				item: itemName,
 				quantity,
-				orderId,
+				description,
+				total,
+				urgentOrder,
+				address,
 			});
 
 			await newReport.save();

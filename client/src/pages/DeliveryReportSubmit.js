@@ -11,29 +11,19 @@ const DeliveryReportSubmit = () => {
 	const { id } = useParams();
 	const [btnState, setBtnState] = useState(false);
 	const [error, setError] = useState("");
-	const [deliveryReport, setDeliveryReport] = useState({ code: "", name: "" });
+	const [deliveryReport, setDeliveryReport] = useState({});
 
 	const saveDeliveryReport = async (e) => {
 		e.preventDefault();
 		setBtnState(true);
-
-		for (let key of Object.keys(deliveryReport)) {
-			if (!deliveryReport[key]) {
-				setBtnState(false);
-				return setError("Please fill all the fields");
-			}
-		}
-
+		console.log(deliveryReport);
 		try {
-			const res = await axios.post("deliveryReports", deliveryReport);
+			const res = await axios.post("/reports/deliveryreport", deliveryReport);
 			console.log(res);
-			setDeliveryReport({
-				code: "",
-				name: "",
-			});
+			setDeliveryReport({});
 			getOrderDetails();
 			setError("");
-			window.alert("deliveryReport registered successfully");
+			window.alert("Delivery report registered successfully");
 			setBtnState(false);
 		} catch (err) {
 			setBtnState(false);
@@ -141,11 +131,11 @@ const DeliveryReportSubmit = () => {
 											<input
 												type="text"
 												placeholder="Description"
-												value={deliveryReport.code}
+												value={deliveryReport.description}
 												onChange={(e) =>
 													setDeliveryReport({
 														...deliveryReport,
-														code: e.target.value,
+														description: e.target.value,
 													})
 												}
 												required
