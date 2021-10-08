@@ -26,4 +26,10 @@ router.patch(
 	SupplierController.updateSupplierMaterials
 );
 
+router.delete(
+	"/:id",
+	verifyProcurementManagerAuth,
+	SupplierController.removeSupplier
+);
+
 module.exports = router;

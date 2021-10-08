@@ -1,5 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import Spinner from "../components/loading/Spinner";
@@ -9,10 +10,7 @@ import Badge from "../components/badge/Badge";
 import "../components/badge/badge.css";
 import "react-calendar/dist/Calendar.css";
 
-import { AuthContext } from "../contexts/AuthContext";
-
 const ManageSuppliers = () => {
-	const { loggedIn } = useContext(AuthContext);
 	const [suppliers, setSuppliers] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const fields = ["", "Name", "Email", "Username", "Status", "Actions"];
@@ -48,6 +46,20 @@ const ManageSuppliers = () => {
 		}
 	};
 
+	const removeHandler = async (id, username) => {
+		try {
+			const res = await axios.delete(`suppliers/${id}`);
+
+			if (res.statusText === "OK") {
+				getAllSuppliers();
+				window.alert("Supplier has been successfully removed");
+				setIsLoading(true);
+			}
+		} catch (err) {
+			console.log(err.response);
+		}
+	};
+
 	const getAllSuppliers = async () => {
 		setIsLoading(true);
 		try {
@@ -73,7 +85,7 @@ const ManageSuppliers = () => {
 				<Badge type={permissionStatus[item.status]} content={item.status} />
 			</td>
 			<td className="">
-				{item.status === "pending" && (
+				{item.status === "pending" ? (
 					<>
 						<button className="action-btn check">
 							<i
@@ -96,6 +108,17 @@ const ManageSuppliers = () => {
 							></i>
 						</button>
 					</>
+				) : (
+					<button
+						className="action-btn x"
+						onClick={() => {
+							if (window.confirm("Are you sure to delete this supplier?")) {
+								removeHandler(item._id);
+							}
+						}}
+					>
+						<RiDeleteBinLine />
+					</button>
 				)}
 			</td>
 		</tr>
