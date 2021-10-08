@@ -16,7 +16,12 @@ const DeliveryReportSubmit = () => {
 	const saveDeliveryReport = async (e) => {
 		e.preventDefault();
 		setBtnState(true);
-		console.log(deliveryReport);
+
+		if (!deliveryReport.description) {
+			setBtnState(false);
+			return setError("Please fill all the fields");
+		}
+
 		try {
 			const res = await axios.post("/reports/deliveryreport", deliveryReport);
 			console.log(res);
@@ -34,6 +39,7 @@ const DeliveryReportSubmit = () => {
 	const getOrderDetails = async () => {
 		try {
 			const res = await axios.get(`orders/${id}`);
+			console.log(res.data);
 			setDeliveryReport(res.data.order);
 		} catch (err) {
 			console.log(err.response);

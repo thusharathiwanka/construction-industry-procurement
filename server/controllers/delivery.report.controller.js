@@ -13,21 +13,21 @@ const saveDeliveryReport = async (req, res) => {
 			itemName,
 			quantity,
 			_id,
+			supplierId,
 			total,
 			urgentOrder,
 			address,
 		} = req.body;
-		console.log(
-			description,
-			itemName,
-			quantity,
-			_id,
-			total,
-			urgentOrder,
-			address
-		);
+
 		// * user inputs validation
-		if (!description || !itemName || !quantity || !_id || !address) {
+		if (
+			!description ||
+			!itemName ||
+			!quantity ||
+			!_id ||
+			!address ||
+			!supplierId
+		) {
 			return res.status(400).json({ message: "Please fill all the fields" });
 		}
 
@@ -35,6 +35,7 @@ const saveDeliveryReport = async (req, res) => {
 			// * save report
 			const newReport = new DeliveryReport({
 				orderId: _id,
+				supplierId,
 				item: itemName,
 				quantity,
 				description,
@@ -46,7 +47,7 @@ const saveDeliveryReport = async (req, res) => {
 			await newReport.save();
 
 			// * sending as saved
-			return res.status(201).json({ message: "Report successfully created" });
+			return res.status(201).json({ newReport });
 		} catch (err) {
 			console.error(err.message);
 			return res.status(500).send();
@@ -69,6 +70,7 @@ const getDeliveryReport = async (req, res) => {
 		res.status(400).json({ message: error.message });
 	}
 };
+
 module.exports = {
 	saveDeliveryReport,
 	getDeliveryReport,
