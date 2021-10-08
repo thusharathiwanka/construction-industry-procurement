@@ -55,7 +55,7 @@ const ManageUsers = () => {
 				location: "",
 				siteManagerId: "",
 			});
-			getAllSiteManagers();
+			getAllSites();
 			setError("");
 			window.alert("Site registered successfully");
 			setBtnState(false);
@@ -67,11 +67,10 @@ const ManageUsers = () => {
 	};
 
 	const getAllSites = async () => {
-		setIsLoading(true);
 		try {
 			const res = await axios.get(`sites`);
 			setSites(res.data.sites);
-			console.log(res);
+			console.log(res.data.sites);
 			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
@@ -87,8 +86,10 @@ const ManageUsers = () => {
 		}
 	};
 
-	useEffect(() => getAllSiteManagers(), []);
-	useEffect(() => getAllSites(), []);
+	useEffect(() => {
+		getAllSites();
+		getAllSiteManagers();
+	}, []);
 
 	return (
 		<div>
@@ -177,18 +178,14 @@ const ManageUsers = () => {
 						<h2>Site Details</h2>
 						{isLoading ? (
 							<Spinner />
-						) : !sites.length <= 0 ? (
-							""
 						) : (
-							<>
-								<Table
-									limit="5"
-									headData={fields}
-									renderHead={(item, index) => renderOrderHead(item, index)}
-									bodyData={sites}
-									renderBody={(item, index) => renderOrderBody(item, index)}
-								/>
-							</>
+							<Table
+								limit="5"
+								headData={fields}
+								renderHead={(item, index) => renderOrderHead(item, index)}
+								bodyData={sites}
+								renderBody={(item, index) => renderOrderBody(item, index)}
+							/>
 						)}
 					</div>
 				</div>
