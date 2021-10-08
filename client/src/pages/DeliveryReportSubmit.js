@@ -24,11 +24,17 @@ const DeliveryReportSubmit = () => {
 
 		try {
 			const res = await axios.post("/reports/deliveryreport", deliveryReport);
-			console.log(res);
-			setDeliveryReport({});
-			getOrderDetails();
-			setError("");
-			window.alert("Delivery report registered successfully");
+
+			if (res.status === 201) {
+				setDeliveryReport({});
+				getOrderDetails();
+				setError("");
+				const res = await axios.put(`orders/supplier/submitted/${id}`);
+				if (res.status === 200) {
+					window.alert("Delivery report registered successfully");
+					window.location.href = "/auth/supplier/deliveryreports";
+				}
+			}
 			setBtnState(false);
 		} catch (err) {
 			setBtnState(false);
