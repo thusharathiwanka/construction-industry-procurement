@@ -9,4 +9,10 @@ router.post("/", verifyProcurementManagerAuth, MaterialController.saveMaterial);
 
 router.get("/", verifyProcurementManagerAuth, MaterialController.getMaterials);
 
+router.delete(
+	"/:id",
+	verifyProcurementManagerAuth,
+	MaterialController.deleteMaterial
+);
+
 module.exports = router;

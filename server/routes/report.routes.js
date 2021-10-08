@@ -3,10 +3,10 @@ const router = require("express").Router();
 const DeliveryReportController = require("../controllers/delivery.report.controller");
 const goodsReportController = require("../controllers/goods.report.controller");
 
-router.get("/getDeliveryReport", DeliveryReportController.getDeliveryReport);
-router.get("/getGoodsReport", goodsReportController.getGoodsReport);
+router.get("/deliveryreport", DeliveryReportController.getDeliveryReport);
+router.get("/goodsreport", goodsReportController.getGoodsReport);
 
-router.post("/saveDeliveryReport", DeliveryReportController.saveDeliveryReport);
-router.post("/goodreport", goodsReportController.saveGoodsReport);
+router.post("/deliveryreport", DeliveryReportController.saveDeliveryReport);
+router.post("/goodsreport", goodsReportController.saveGoodsReport);
 
 module.exports = router;
