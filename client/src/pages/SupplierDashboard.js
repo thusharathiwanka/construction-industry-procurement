@@ -95,7 +95,14 @@ const SupplierDashboard = () => {
 													(orderDetail) =>
 														orderDetail.DeliveryStatus === "pending"
 												).length
-											}{" "}
+											}
+											{localStorage.setItem(
+												"notifications",
+												orderDetails.filter(
+													(orderDetail) =>
+														orderDetail.DeliveryStatus === "pending"
+												).length
+											)}{" "}
 											new orders
 										</h3>
 										<h3>Also older order statuses to review</h3>
