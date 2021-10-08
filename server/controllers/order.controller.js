@@ -256,6 +256,7 @@ const changeStatusToApproved = async (req, res) => {
       { isApprovedByManager: "approved" },
       { new: true }
     );
+    console.log(approvedList);
     res.status(200).json({ orders: approvedList });
   } catch (error) {
     res.status(400).json({ message: error.message });

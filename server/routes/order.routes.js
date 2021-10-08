@@ -86,12 +86,12 @@ router.put(
 );
 router.get("/getAllOrdersByManager", OrderController.getAllOrdersByManager);
 router.get("/getApproveOrders", OrderController.getApproveOrders);
-router.put(
+router.patch(
   "/changeStatusToRejected/:id",
   verifyProcurementManagerAuth,
   OrderController.changeStatusToRejected
 );
-router.put(
+router.patch(
   "/changeStatusToApproved/:id",
   verifyProcurementManagerAuth,
   OrderController.changeStatusToApproved
