@@ -19,6 +19,7 @@ function Popup(props) {
 						sitemng={props.sitemng}
 						materialId={props.materialId}
 						orderId={props.orderId}
+						total={props.total}
 					/>
 				) : props.name === "Rejection" ? (
 					<Rejection description={props.description} />
