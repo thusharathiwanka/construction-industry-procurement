@@ -23,7 +23,6 @@ function Popup(props) {
 					/>
 				) : props.name === "Rejection" ? (
 					<Rejection description={props.description} />
-<<<<<<< HEAD
 				) : props.name === "GoodsReceipt" ? (
 					<GoodsReceipt />
 				) : props.name === "rejectReason" ? (
@@ -31,11 +30,6 @@ function Popup(props) {
 				) : (
 					""
 				)}
-=======
-				): props.name === "GoodsReceipt" ? (
-					<GoodsReceipt item={props.item} id={props.id} />
-				):""}
->>>>>>> 9d7f280276a391190968b5cea0029e34309a2c16
 			</div>
 		</div>
 	) : (
