@@ -19,6 +19,7 @@ const SiteManagerForm = () => {
 	const [Name, setName] = useState("");
 	const [Id, setId] = useState("");
 	const [ItemName, setItemName] = useState("")
+	const [Description, setDescription] = useState("")
 	
 	
 	const [Order, setOrder] = useState({
@@ -106,6 +107,8 @@ const SiteManagerForm = () => {
 						<Badge type="success" content={item.DeliveryStatus} />
 					) : item.DeliveryStatus === "delivered" ? (
 						<Badge type="success" content={item.DeliveryStatus} />
+					) :  item.DeliveryStatus === "submitted" ? (
+						<Badge type="normal" content={item.DeliveryStatus} />
 					) : (
 						""
 					)):""}
@@ -130,7 +133,9 @@ const SiteManagerForm = () => {
 						<VscReport
 							onClick={() => {
 									setName("Rejection")
+									setDescription(item.rejectMassage)
 									setTrigger(true)
+									
 								}}
 						/>
 						
@@ -138,7 +143,7 @@ const SiteManagerForm = () => {
 						<Popup
 							trigger = {Trigger}
 							name = {Name}
-							description = "description"
+							description = {Description}
 							setTrigger = {setTrigger}
 							id={Id}
 							item={ItemName}
@@ -148,24 +153,19 @@ const SiteManagerForm = () => {
 				
 			</td>
 			<td>
-				{item.DeliveryStatus === "delivered" && item.isApprovedByManager === "approved" ? (
+				{item.DeliveryStatus === "submitted" ? (
 					
-					<button onClick={() => {
+					
+					<div onClick={() => {
 									setName("GoodsReceipt")
 									setId(item._id)
 									setItemName(item.itemName)
 									setTrigger(true)
-									
-								}}>view
-
-					</button>
-					// <Badge type="normal" content="view"
-					// onClick={() => {
-					// 				setName("Rejection")
-					// 				setTrigger(true)
-					// 				console.log("button click");
-					// 			}}
-					// />
+								}}>
+					<Badge type="normal" content="view"
+					
+					/>
+					</div>
 
 				) :""
 

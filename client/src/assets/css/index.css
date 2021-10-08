@@ -84,6 +84,7 @@ input:focus {
 	border: 2px solid var(--main-color-blue);
 }
 
+
 .page-header {
 	margin-bottom: 40px;
 	text-transform: capitalize;

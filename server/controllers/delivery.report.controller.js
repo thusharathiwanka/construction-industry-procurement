@@ -43,7 +43,8 @@ const saveDeliveryReport = async (req, res) => {
  */
 const getDeliveryReport = async (req, res) => {
 	try {
-		const reports = DeliveryReport.find({ orderId: req.params.id });
+		console.log(req.params.id);
+		const reports = await DeliveryReport.findOne({ orderId: req.params.id });
 		res.status(200).json(reports);
 	} catch (error) {
 		res.status(400).json({ message: error.message });
