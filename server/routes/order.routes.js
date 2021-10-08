@@ -79,14 +79,20 @@ router.put(
 router.put("/:id", OrderController.addSupplier);
 router.put("/error/:id", OrderController.setError);
 
+router.put(
+	"/supplier/submitted/:id",
+	verifySupplierAuth,
+	OrderController.changeDeliveryStatusBySupplierAsSubmitted
+);
 router.get("/getAllOrdersByManager", OrderController.getAllOrdersByManager);
 router.get("/getApproveOrders", OrderController.getApproveOrders);
-router.put(
+
+router.patch(
 	"/changeStatusToRejected/:id",
 	verifyProcurementManagerAuth,
 	OrderController.changeStatusToRejected
 );
-router.put(
+router.patch(
 	"/changeStatusToApproved/:id",
 	verifyProcurementManagerAuth,
 	OrderController.changeStatusToApproved

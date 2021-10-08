@@ -11,29 +11,30 @@ const DeliveryReportSubmit = () => {
 	const { id } = useParams();
 	const [btnState, setBtnState] = useState(false);
 	const [error, setError] = useState("");
-	const [deliveryReport, setDeliveryReport] = useState({ code: "", name: "" });
+	const [deliveryReport, setDeliveryReport] = useState({});
 
 	const saveDeliveryReport = async (e) => {
 		e.preventDefault();
 		setBtnState(true);
 
-		for (let key of Object.keys(deliveryReport)) {
-			if (!deliveryReport[key]) {
-				setBtnState(false);
-				return setError("Please fill all the fields");
-			}
+		if (!deliveryReport.description) {
+			setBtnState(false);
+			return setError("Please fill all the fields");
 		}
 
 		try {
-			const res = await axios.post("deliveryReports", deliveryReport);
-			console.log(res);
-			setDeliveryReport({
-				code: "",
-				name: "",
-			});
-			getOrderDetails();
-			setError("");
-			window.alert("deliveryReport registered successfully");
+			const res = await axios.post("/reports/deliveryreport", deliveryReport);
+
+			if (res.status === 201) {
+				setDeliveryReport({});
+				getOrderDetails();
+				setError("");
+				const res = await axios.put(`orders/supplier/submitted/${id}`);
+				if (res.status === 200) {
+					window.alert("Delivery report registered successfully");
+					window.location.href = "/auth/supplier/deliveryreports";
+				}
+			}
 			setBtnState(false);
 		} catch (err) {
 			setBtnState(false);
@@ -44,6 +45,7 @@ const DeliveryReportSubmit = () => {
 	const getOrderDetails = async () => {
 		try {
 			const res = await axios.get(`orders/${id}`);
+			console.log(res.data);
 			setDeliveryReport(res.data.order);
 		} catch (err) {
 			console.log(err.response);
@@ -141,11 +143,11 @@ const DeliveryReportSubmit = () => {
 											<input
 												type="text"
 												placeholder="Description"
-												value={deliveryReport.code}
+												value={deliveryReport.description}
 												onChange={(e) =>
 													setDeliveryReport({
 														...deliveryReport,
-														code: e.target.value,
+														description: e.target.value,
 													})
 												}
 												required

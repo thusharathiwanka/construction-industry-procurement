@@ -8,7 +8,7 @@ import Badge from "../components/badge/Badge";
 import "../components/badge/badge.css";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import profilePicture from "../assets/images/admin-user-img.jpg";
+import profilePicture from "../assets/images/user2.jpg";
 import Spinner from "../components/loading/Spinner";
 import axios from "axios";
 

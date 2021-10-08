@@ -130,6 +130,28 @@ const changeDeliveryStatusBySupplierAsDelivered = async (req, res) => {
 };
 
 /**
+ * use to change delivery status as submitted by supplier
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const changeDeliveryStatusBySupplierAsSubmitted = async (req, res) => {
+	try {
+		const result = await Order.findByIdAndUpdate(
+			req.params.id,
+			{
+				DeliveryStatus: "submitted",
+			},
+			{ new: true }
+		);
+		console.log(result);
+		res.status(200).send();
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
+/**
  * use to add suppliers
  * @param {Object} req
  * @param {Object} res
@@ -384,6 +406,7 @@ module.exports = {
 	changeDeliveryStatusBySupplierAsPreparing,
 	changeDeliveryStatusBySupplierAsDelivered,
 	changeDeliveryStatusBySupplierAsDelivering,
+	changeDeliveryStatusBySupplierAsSubmitted,
 	getManagerApprovedOrders,
 	getOrderById,
 	setError,
