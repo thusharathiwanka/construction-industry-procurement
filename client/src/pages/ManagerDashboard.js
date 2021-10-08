@@ -13,6 +13,8 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import profilePicture from "../assets/images/admin-user-img.jpg";
 
+import status from "../helpers/greeting";
+
 import { AuthContext } from "../contexts/AuthContext";
 
 const AdminDashboard = () => {
@@ -117,7 +119,7 @@ const AdminDashboard = () => {
 							<div className="card greeting-card">
 								<div className="row">
 									<div className="col-8 flex-column">
-										<h1 className="page-header">Good Morning! </h1>
+										<h1 className="page-header">{`Good ${status}!`}</h1>
 										<h3>Today you have 9 new notifications</h3>
 										<h3>Also new booking appointments for approval</h3>
 										<Link className="read-more" to={`/auth/manager/suppliers`}>

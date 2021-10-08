@@ -13,7 +13,7 @@ const ManageServices = () => {
 	const [error, setError] = useState("");
 	const [btnState, setBtnState] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
-	const [employees, setEmployees] = useState(true);
+	const [employees, setEmployees] = useState([]);
 	const [materials, setMaterials] = useState([]);
 	const [serviceDetails, setServiceDetails] = useState({
 		material: "",
