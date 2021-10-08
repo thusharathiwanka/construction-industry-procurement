@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
@@ -84,13 +85,10 @@ const ManageOrdersSupplier = () => {
 							<Badge type="success" content="Mark as delivered" />
 						</div>
 					) : item.DeliveryStatus === "delivered" ? (
-						<div
-							style={{ cursor: "pointer" }}
-							onClick={() =>
-								(window.location.href = "/auth/supplier/deliveryreports")
-							}
-						>
-							<Badge type="normal" content="Send Delivery Report" />
+						<div style={{ cursor: "pointer" }}>
+							<Link to={`/auth/supplier/deliveryreports/${item._id}`}>
+								<Badge type="normal" content="Send Delivery Report" />
+							</Link>
 						</div>
 					) : (
 						""
