@@ -34,6 +34,7 @@ const GoodsReceipt = ({id,item}) => {
         }
     }
     const FetchData = async () => {
+
         try{
 			const resReport= await axios.get(`/reports/deliveryreport/${id}`);
 			setReport(resReport.data);

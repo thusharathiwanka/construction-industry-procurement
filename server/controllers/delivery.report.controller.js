@@ -65,6 +65,7 @@ const saveDeliveryReport = async (req, res) => {
  */
 const getDeliveryReport = async (req, res) => {
 	try {
+		console.log( req.params.id)
 		const reports = await DeliveryReport.findOne({ orderId: req.params.id }).populate("supplierId");
 		res.status(200).json(reports);
 	} catch (error) {
