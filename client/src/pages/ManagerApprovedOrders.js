@@ -59,30 +59,33 @@ const ManagerApprovedOrders = () => {
       </td>
     </tr>
   );
-
+  const permissionStatus = {
+    pending: "warning",
+    approved: "success",
+    rejected: "danger",
+  };
   const getApproveOrders = async () => {
     try {
       const res = await axios.get("orders/getApproveOrders");
       setAllOrders(res.data.orders);
-      console.log(res);
     } catch (err) {
       console.log(err.response);
     }
   };
   const changeStatusToRejected = async (id) => {
     try {
-      const res = await axios.put(`orders/changeStatusToRejected/${id}`);
+      const res = await axios.patch(`orders/changeStatusToRejected/${id}`);
       window.location.reload();
-      console.log(res);
+      console.log(res.data);
     } catch (err) {
       console.log(err.response);
     }
   };
   const changeStatusToApproved = async (id) => {
     try {
-      const res = await axios.put(`orders/changeStatusToApproved/${id}`);
+      const res = await axios.patch(`orders/changeStatusToApproved/${id}`);
       window.location.reload();
-      console.log(res);
+      console.log(res.data);
     } catch (err) {
       console.log(err.response);
     }
@@ -91,11 +94,7 @@ const ManagerApprovedOrders = () => {
   useEffect(() => {
     getApproveOrders();
   }, []);
-  const permissionStatus = {
-    pending: "warning",
-    approved: "success",
-    rejected: "danger",
-  };
+
   return (
     <div>
       <Sidebar />
@@ -107,7 +106,7 @@ const ManagerApprovedOrders = () => {
             <h2>Approved Orders from Officer</h2>
             {allorders && (
               <Table
-                limit="5"
+                limit="10"
                 headData={fields}
                 renderHead={(item, index) => renderOrderHead(item, index)}
                 bodyData={allorders}
