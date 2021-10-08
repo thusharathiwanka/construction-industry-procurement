@@ -54,6 +54,8 @@ const SupplierDashboard = () => {
 						<Badge type="success" content={item.DeliveryStatus} />
 					) : item.DeliveryStatus === "delivered" ? (
 						<Badge type="success" content={item.DeliveryStatus} />
+					) : item.DeliveryStatus === "submitted" ? (
+						<Badge type="normal" content={item.DeliveryStatus} />
 					) : (
 						""
 					)}

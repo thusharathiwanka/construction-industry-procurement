@@ -1,27 +1,26 @@
 import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 
+import Assign from "../pages/Assign";
 import DeliveryReportSubmit from "../pages/DeliveryReportSubmit";
+import Inventory from "../pages/Inventory";
 import Login from "../pages/Login";
-import ManagerDashboard from "../pages/ManagerDashboard";
+import ManageAllOrders from "../pages/ManageAllOrders";
+import ManageDeliveryReports from "../pages/ManageDeliveryReports";
+import ManageMaterials from "../pages/ManageMaterials";
 import ManageOrdersSupplier from "../pages/ManageOrdersSupplier";
+import ManagerApprovedOrders from "../pages/ManagerApprovedOrders";
+import ManagerDashboard from "../pages/ManagerDashboard";
+import ManageServices from "../pages/ManageServices";
+import ManageSites from "../pages/ManageSites";
+import ManageSuppliers from "../pages/ManageSuppliers";
 import ManageUsers from "../pages/ManageUsers";
 import OfficerDashboard from "../pages/OfficerDashboard";
-import SupplierDashboard from "../pages/SupplierDashboard";
-import SiteManagerDashboard from "../pages/SiteManagerDashboard";
-import ManageSites from "../pages/ManageSites";
-import SiteManagerForm from "../pages/SiteManagerForm";
-import ManageMaterials from "../pages/ManageMaterials";
-import Inventory from "../pages/Inventory";
-import Register from "../pages/Register";
-import ManageSuppliers from "../pages/ManageSuppliers";
-import ManageServices from "../pages/ManageServices";
 import OfficerOrders from "../pages/OfficerOrders";
-import DeliveryReport from "../pages/DeliveryReport";
-import ManageAllOrders from "../pages/ManageAllOrders";
-import ManagerApprovedOrders from "../pages/ManagerApprovedOrders";
-import ManageDeliveryReports from "../pages/ManageDeliveryReports";
-import Assign from "../pages/Assign";
+import Register from "../pages/Register";
+import SiteManagerDashboard from "../pages/SiteManagerDashboard";
+import SiteManagerForm from "../pages/SiteManagerForm";
+import SupplierDashboard from "../pages/SupplierDashboard";
 
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -83,7 +82,6 @@ const Routes = () => {
 				component={SiteManagerForm}
 			/>
 			<Route exact path="/auth/sitemanager/inventory" component={Inventory} />
-			<Route exact path="/auth/deliveryreport" component={DeliveryReport} />
 			<Route exact path="/auth/manager/allorders" component={ManageAllOrders} />
 			<Route
 				exact

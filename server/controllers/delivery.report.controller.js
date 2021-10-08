@@ -81,7 +81,7 @@ const getDeliveryReport = async (req, res) => {
 const getDeliveryReportsBySupplierId = async (req, res) => {
 	try {
 		const reports = await DeliveryReport.find({ supplierId: req.body.user });
-		res.status(200).json(reports);
+		res.status(200).json({ reports });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
 	}
