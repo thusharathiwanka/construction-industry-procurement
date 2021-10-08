@@ -90,6 +90,10 @@ const ManageOrdersSupplier = () => {
 								<Badge type="normal" content="Send Delivery Report" />
 							</Link>
 						</div>
+					) : item.DeliveryStatus === "submitted" ? (
+						<div>
+							<Badge type="normal" content="Completed" />
+						</div>
 					) : (
 						""
 					)}

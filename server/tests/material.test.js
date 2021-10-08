@@ -11,7 +11,7 @@ describe("POST @ /materials endpoint", () => {
 			expect(res.status).toEqual(201);
 			expect(res.data).toEqual("Object");
 		} catch (err) {
-			console.log(err.response);
+			console.log(err);
 		}
 	});
 });
