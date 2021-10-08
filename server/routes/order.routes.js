@@ -14,15 +14,14 @@ const {
 router.post("/", verifySiteManagerAuth, OrderController.saveOrder);
 
 router.get("/", verifySiteManagerAuth, OrderController.allOrders);
-
 router.get(
 	"/officer",
 	verifyProcurementOfficer,
 	OrderController.getItemDetailsOfficer
 );
-
-router.put("/", OrderController.allOrders);
+router.get("/officer/orders", OrderController.OrdersList);
 router.get("/getApproveOrders", OrderController.getApproveOrders);
+
 router.put(
 	"/officer/:id",
 	verifyProcurementOfficer,
@@ -52,11 +51,6 @@ router.get(
 	OrderController.getOrdersOfSupplier
 );
 
-router.put(
-	"/proc/:id",
-	verifyProcurementManagerAuth,
-	OrderController.changeOrderStatusByManager
-);
 router.get(
 	"/supplier",
 	verifySupplierAuth,
@@ -78,15 +72,12 @@ router.put(
 	verifySupplierAuth,
 	OrderController.changeDeliveryStatusBySupplierAsPreparing
 );
-router.put(
-	"/supplier/deliver/:id",
-	verifySupplierAuth,
-	OrderController.changeDeliveryStatusBySupplierAsDelivering
-);
+
 router.put(
 	"/supplier/delivered/:id",
 	verifySupplierAuth,
 	OrderController.changeDeliveryStatusBySupplierAsDelivered
 );
+router.put("/:id", OrderController.addSupplier);
 
 module.exports = router;

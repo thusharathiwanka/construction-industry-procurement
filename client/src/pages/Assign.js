@@ -21,10 +21,14 @@ const AssignSupplier = ({ item, sitemng, materialId }) => {
 	console.log(supliers);
 
 	const addSuplier = (supplierId) => {
+		console.log(supplierId);
+		let id = materialId;
 		try {
-			const res = axios.put("/orders/", supplierId);
+			const res = axios.put(`/orders/${id}`, supplierId);
 			console.log(res);
-		} catch (error) {}
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	useEffect(() => {
@@ -41,8 +45,8 @@ const AssignSupplier = ({ item, sitemng, materialId }) => {
 								style={{
 									fontSize: "24px",
 									marginLeft: "32px",
-									marginRight: "10px",
-									marginTop: "20px",
+									marginRight: "15px",
+									marginTop: "1px",
 								}}
 							>
 								{item}
@@ -54,12 +58,7 @@ const AssignSupplier = ({ item, sitemng, materialId }) => {
 							<select
 								name="site"
 								id="site"
-								onChange={(e) =>
-									setSupliers({
-										...supliers,
-										supplierId: e.target.value,
-									})
-								}
+								onChange={(e) => setSupplierId(e.target.value)}
 								required
 							>
 								<option value="site" defaultValue>
@@ -74,7 +73,14 @@ const AssignSupplier = ({ item, sitemng, materialId }) => {
 						</div>
 					</div>
 				</div>
-				<button>Add supplier</button>
+				<button
+					type="submit "
+					onClick={() => {
+						addSuplier(supplierId);
+					}}
+				>
+					Add supplier
+				</button>
 			</form>
 		</div>
 	);
