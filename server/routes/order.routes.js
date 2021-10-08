@@ -72,6 +72,11 @@ router.put(
 );
 
 router.put(
+	"/supplier/deliver/:id",
+	verifySupplierAuth,
+	OrderController.changeDeliveryStatusBySupplierAsDelivering
+);
+router.put(
 	"/supplier/delivered/:id",
 	verifySupplierAuth,
 	OrderController.changeDeliveryStatusBySupplierAsDelivered

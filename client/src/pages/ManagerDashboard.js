@@ -1,25 +1,24 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Calendar from "react-calendar";
+
+import "react-calendar/dist/Calendar.css";
+import "../components/badge/badge.css";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import Spinner from "../components/loading/Spinner";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
-import AdminGreeting from "../assets/images/admin-greeting.png";
 import Badge from "../components/badge/Badge";
-import "../components/badge/badge.css";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+
+import AdminGreeting from "../assets/images/admin-greeting.png";
 import profilePicture from "../assets/images/admin-user-img.jpg";
 
 import status from "../helpers/greeting";
 
-import { AuthContext } from "../contexts/AuthContext";
-
 const AdminDashboard = () => {
 	const [value, onChange] = useState(new Date());
-	const { loggedIn } = useContext(AuthContext);
 	const [suppliers, setSuppliers] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const fields = ["", "Name", "Email", "Username", "Status", "Actions"];
@@ -120,8 +119,22 @@ const AdminDashboard = () => {
 								<div className="row">
 									<div className="col-8 flex-column">
 										<h1 className="page-header">{`Good ${status}!`}</h1>
-										<h3>Today you have 9 new notifications</h3>
-										<h3>Also new booking appointments for approval</h3>
+										<h3>
+											Today you have{" "}
+											{
+												suppliers.filter(
+													(supplier) => supplier.status === "pending"
+												).length
+											}
+											{localStorage.setItem(
+												"notifications",
+												suppliers.filter(
+													(supplier) => supplier.status === "pending"
+												).length
+											)}{" "}
+											supplier requests
+										</h3>
+										<h3>Also older supplier requests to review.</h3>
 										<Link className="read-more" to={`/auth/manager/suppliers`}>
 											Read more <i className="bx bx-right-arrow-alt"></i>
 										</Link>

@@ -72,11 +72,17 @@ const ManageUsers = () => {
 
 		console.log(employeeDetails);
 
-		for (let key of Object.keys(employeeDetails)) {
-			if (!employeeDetails[key]) {
-				setBtnState(false);
-				return setError("Please fill all the fields");
-			}
+		if (
+			!employeeDetails.name ||
+			!employeeDetails.email ||
+			!employeeDetails.username ||
+			!employeeDetails.position ||
+			!employeeDetails.phone ||
+			!employeeDetails.weeklyWorkHrs ||
+			!employeeDetails.salary
+		) {
+			setBtnState(false);
+			return setError("Please fill all the fields");
 		}
 
 		if (!employeeDetails.email.match(pattern)) {
@@ -117,9 +123,11 @@ const ManageUsers = () => {
 			window.alert("Employee registered successfully");
 			setBtnState(false);
 			setIsLoading(true);
+			getAllEmployees();
 		} catch (err) {
 			setBtnState(false);
 			console.log(err.response);
+			setError(err.response.data.message);
 		}
 	};
 
@@ -170,10 +178,13 @@ const ManageUsers = () => {
 					<div className="row">
 						<div className="col-12">
 							<form className="card" style={{ position: "relative" }}>
-								{error && (
+								{console.log(error)}
+								{error ? (
 									<div className="error-bg" style={{ left: "3%" }}>
 										<p>{error}</p>
 									</div>
+								) : (
+									""
 								)}
 								<div className="row">
 									<div className="col-6">
