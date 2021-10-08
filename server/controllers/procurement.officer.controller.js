@@ -98,4 +98,20 @@ const saveProcurementOfficer = async (req, res) => {
 	return res.status(400).send();
 };
 
-module.exports = { saveProcurementOfficer };
+/**
+ * use to remove the procurement officer
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const deleteOfficer = async (req, res) => {
+	try {
+		await ProcurementOfficer.findByIdAndDelete(req.params.id);
+		res.status(200).send();
+	} catch (err) {
+		console.log(err.message);
+		res.status(400).send();
+	}
+};
+
+module.exports = { saveProcurementOfficer, deleteOfficer };

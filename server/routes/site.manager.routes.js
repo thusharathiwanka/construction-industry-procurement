@@ -17,4 +17,10 @@ router.get(
 	SiteManagerController.getUnassignedSiteManagers
 );
 
+router.delete(
+	"/:id",
+	verifyProcurementManagerAuth,
+	SiteManagerController.deleteSiteManager
+);
+
 module.exports = router;

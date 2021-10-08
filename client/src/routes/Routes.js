@@ -19,9 +19,10 @@ import OfficerOrders from "../pages/OfficerOrders";
 import DeliveryReport from "../pages/DeliveryReport";
 import ManageAllOrders from "../pages/ManageAllOrders";
 import ManagerApprovedOrders from "../pages/ManagerApprovedOrders";
+import ManageDeliveryReports from "../pages/ManageDeliveryReports";
+import Assign from "../pages/Assign";
 
 import { AuthContext } from "../contexts/AuthContext";
-import Assign from "../pages/Assign";
 
 const Routes = () => {
 	const { loggedIn } = useContext(AuthContext);
@@ -52,6 +53,11 @@ const Routes = () => {
 				component={ManageOrdersSupplier}
 			/>
 			<Route exact path="/auth/supplier/services" component={ManageServices} />
+			<Route
+				exact
+				path="/auth/supplier/deliveryreports"
+				component={ManageDeliveryReports}
+			/>
 			<Route
 				exact
 				path="/auth/officer/dashboard"
