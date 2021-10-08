@@ -49,7 +49,24 @@ const getMaterials = async (req, res) => {
 	}
 };
 
+/**
+ * use to remove the material
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const deleteMaterial = async (req, res) => {
+	try {
+		await Material.findByIdAndDelete(req.params.id);
+		res.status(200).send();
+	} catch (err) {
+		console.log(err.message);
+		res.status(400).send();
+	}
+};
+
 module.exports = {
 	saveMaterial,
 	getMaterials,
+	deleteMaterial,
 };

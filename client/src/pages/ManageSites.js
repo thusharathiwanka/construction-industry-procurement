@@ -36,7 +36,6 @@ const ManageUsers = () => {
 	const saveSite = async (e) => {
 		e.preventDefault();
 		setBtnState(true);
-		console.log(site);
 		for (let key of Object.keys(site)) {
 			if (!site[key]) {
 				setBtnState(false);
@@ -51,7 +50,6 @@ const ManageUsers = () => {
 
 		try {
 			const res = await axios.post("sites", site);
-			console.log(res);
 			setSite({
 				name: "",
 				location: "",
@@ -69,8 +67,9 @@ const ManageUsers = () => {
 	};
 
 	const getAllSites = async () => {
+		setIsLoading(true);
 		try {
-			const res = await axios.get(`sites/`);
+			const res = await axios.get(`sites`);
 			setSites(res.data.sites);
 			console.log(res);
 			setIsLoading(false);
@@ -178,14 +177,18 @@ const ManageUsers = () => {
 						<h2>Site Details</h2>
 						{isLoading ? (
 							<Spinner />
+						) : !sites.length <= 0 ? (
+							""
 						) : (
-							<Table
-								limit="5"
-								headData={fields}
-								renderHead={(item, index) => renderOrderHead(item, index)}
-								bodyData={sites}
-								renderBody={(item, index) => renderOrderBody(item, index)}
-							/>
+							<>
+								<Table
+									limit="5"
+									headData={fields}
+									renderHead={(item, index) => renderOrderHead(item, index)}
+									bodyData={sites}
+									renderBody={(item, index) => renderOrderBody(item, index)}
+								/>
+							</>
 						)}
 					</div>
 				</div>
