@@ -70,6 +70,8 @@ const ManageUsers = () => {
 		const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 		setBtnState(true);
 
+		console.log(employeeDetails);
+
 		for (let key of Object.keys(employeeDetails)) {
 			if (!employeeDetails[key]) {
 				setBtnState(false);
@@ -87,20 +89,18 @@ const ManageUsers = () => {
 			return setError("Please use valid phone number");
 		}
 
-		if (
-			employeeDetails.site === "site" ||
-			employeeDetails.position === "position"
-		) {
-			setBtnState(false);
-			return setError("Please fill all the fields");
+		if (employeeDetails.position === "sitemanager") {
+			if (employeeDetails.site === "site") {
+				setBtnState(false);
+				return setError("Please fill all the fields");
+			}
 		}
 
-		if (employeeDetails.site === "sitemanager") {
+		if (employeeDetails.position === "sitemanager") {
 			endpoint = "sitemanagers";
-		} else if (employeeDetails.site === "officers") {
+		} else if (employeeDetails.position === "officer") {
 			endpoint = "officers";
 		}
-		console.log(employeeDetails);
 
 		try {
 			const res = await axios.post(endpoint, employeeDetails);
@@ -114,7 +114,7 @@ const ManageUsers = () => {
 				salary: "",
 			});
 			setError("");
-			window.alert("House owner registered successfully");
+			window.alert("Employee registered successfully");
 			setBtnState(false);
 			setIsLoading(true);
 		} catch (err) {
