@@ -4,8 +4,7 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import axios from "axios";
-import Popup from "./Popup";
-import { AiFillWindows } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
 
 const ManagerApprovedOrders = () => {
   const fields = [
@@ -46,15 +45,15 @@ const ManagerApprovedOrders = () => {
         >
           <i className="bx bx-check"></i>
         </button>
-        <button
-          className="action-btn x"
-          onClick={() => {
-            if (window.confirm("Are you sure to delete this request?")) {
-              changeStatusToRejected(item._id);
-            }
-          }}
-        >
-          <i className="bx bx-x"></i>
+        <button className="action-btn x">
+          <MdDelete
+            onClick={() => {
+              if (window.confirm("Are you sure to reject this request?")) {
+                changeStatusToRejected(item._id);
+                console.log(item.id);
+              }
+            }}
+          />
         </button>
       </td>
     </tr>
@@ -76,7 +75,7 @@ const ManagerApprovedOrders = () => {
     try {
       const res = await axios.patch(`orders/changeStatusToRejected/${id}`);
       window.location.reload();
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.log(err.response);
     }
@@ -85,7 +84,7 @@ const ManagerApprovedOrders = () => {
     try {
       const res = await axios.patch(`orders/changeStatusToApproved/${id}`);
       window.location.reload();
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.log(err.response);
     }

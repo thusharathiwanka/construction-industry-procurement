@@ -1,36 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-
-import "./topnav.css";
 
 import Dropdown from "../dropdown/Dropdown";
 
-const notifications = [
-	{
-		icon: "bx bx-error",
-		content: "Lorem ipsum dolor sit amet  elit.",
-	},
-	{
-		icon: "bx bx-package",
-		content: "Lorem ipsum dolor sit amet  elit.",
-	},
-	{
-		icon: "bx bx-cart",
-		content: "Lorem ipsum dolor sit amet  elit.",
-	},
-	{
-		icon: "bx bx-error",
-		content: "Lorem ipsum dolor sit amet  elit.",
-	},
-	{
-		icon: "bx bx-cart",
-		content: "Lorem ipsum dolor sit amet  elit.",
-	},
-];
-
-const curr_user = {
-	display_name: localStorage.getItem("name"),
-};
+import "./topnav.css";
 
 const renderNotificationItem = (item, index) => (
 	<div className="notification-item" key={index}>
@@ -58,6 +31,19 @@ const renderUserMenu = (item, index) => (
 );
 
 const TopNav = () => {
+	const notifications = [
+		{
+			icon: "bx bx-bar-chart-square",
+			content: `You have ${localStorage.getItem(
+				"notifications"
+			)} new pending orders`,
+		},
+	];
+
+	const curr_user = {
+		display_name: localStorage.getItem("name"),
+	};
+
 	return (
 		<div className="topnav">
 			<div className="topnav__search">
@@ -74,10 +60,10 @@ const TopNav = () => {
 				<div className="topnav__right-item">
 					<Dropdown
 						icon="bx bx-bell"
-						badge="12"
+						badge={localStorage.getItem("notifications")}
 						contentData={notifications}
 						renderItems={(item, index) => renderNotificationItem(item, index)}
-						renderFooter={() => <Link to="/">View All</Link>}
+						renderFooter={() => <Link to="#">View All</Link>}
 					/>
 				</div>
 			</div>

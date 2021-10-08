@@ -1,16 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const AssignSupplier = ({ item, sitemng, materialId }) => {
+const AssignSupplier = ({ item, sitemng, materialId, orderId }) => {
 	const [supliers, setSupliers] = useState([]);
-	const [supplierId, setSupplierId] = useState({
-		supplierId: "",
-	});
+	const [supplierId, setSupplierId] = useState("");
 
 	const getSuppliers = async () => {
 		let id = materialId;
-		console.log(materialId);
-		console.log(id);
+		// console.log(materialId);
+		// console.log(id);
 		try {
 			const res = await axios.get(`/suppliers/services/${id}`);
 			setSupliers(res.data.supplierlist);
@@ -18,64 +16,76 @@ const AssignSupplier = ({ item, sitemng, materialId }) => {
 			console.log(error);
 		}
 	};
-	console.log(supliers);
-
-	const addSuplier = (supplierId) => {
+	// console.log(supliers);
+	// console.log(supplierId);
+	// console.log(orderId);
+	const addSuplier = async (e) => {
+		// e.preventDefault();
+		// console.log("sup", supplierId);
+		// console.log("mat", materialId);
+		let id = orderId;
 		try {
-			const res = axios.put("/orders/", supplierId);
-			console.log(res);
-		} catch (error) {}
+			const res = await axios.put(`/orders/${id}`, { supplierId: supplierId });
+			// console.log(res);
+			window.alert("Supplier ID  added successfully");
+			window.location.reload();
+		} catch (error) {
+			console.log(error.response);
+		}
 	};
 
+	// console.log(supplierId);
 	useEffect(() => {
 		getSuppliers();
 	}, []);
 
 	return (
-		<div style={{ width: "400px", height: "200px" }}>
-			<form>
-				<div className="row card ">
-					<div className=" ">
+		<div>
+			<div className="layout__content-main">
+				<h1 className="page-header">Add Supplier</h1>
+				<div className="row">
+					<div className="col-12">
 						<div className="row-user">
-							<p
-								style={{
-									fontSize: "24px",
-									marginLeft: "32px",
-									marginRight: "10px",
-									marginTop: "20px",
-								}}
-							>
+							<p className="page-header" style={{ size: "20px" }}>
 								{item}
 							</p>
 						</div>
-					</div>
-					<div className=" ">
-						<div className="rowuser">
-							<select
-								name="site"
-								id="site"
-								onChange={(e) =>
-									setSupliers({
-										...supliers,
-										supplierId: e.target.value,
-									})
-								}
-								required
-							>
-								<option value="site" defaultValue>
-									SELECT SUPPLIER
-								</option>
-								{supliers.map((suplier) => (
-									<option value={suplier.supplierId} key={suplier._id}>
-										{suplier.supplierId.name + " " + suplier.pricePerUnit}
-									</option>
-								))}
-							</select>
-						</div>
+
+						<form
+							className="card"
+							style={{ position: "relative" }}
+							onSubmit={addSuplier}
+						>
+							<div className="col-2"></div>
+							<div className="col-6">
+								<div className="row-user">
+									<select
+										name="site"
+										id="site"
+										onChange={(e) => {
+											setSupplierId(e.target.value);
+											console.log(e.target.value);
+											console.log(supplierId);
+										}}
+										required
+									>
+										<option value="site">SELECT SUPPLIER</option>
+										{supliers.map((suplier) => (
+											<option value={suplier.supplierId._id} key={suplier._id}>
+												{suplier.supplierId.name + " " + suplier.pricePerUnit}
+											</option>
+										))}
+									</select>
+								</div>
+							</div>
+
+							<div className="row-user">
+								<button type="submit">Add supplier</button>
+							</div>
+						</form>
 					</div>
 				</div>
-				<button>Add supplier</button>
-			</form>
+			</div>
 		</div>
 	);
 };
