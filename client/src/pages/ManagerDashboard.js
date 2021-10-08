@@ -13,6 +13,8 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import profilePicture from "../assets/images/admin-user-img.jpg";
 
+import status from "../helpers/greeting";
+
 import { AuthContext } from "../contexts/AuthContext";
 
 const AdminDashboard = () => {
@@ -117,10 +119,10 @@ const AdminDashboard = () => {
 							<div className="card greeting-card">
 								<div className="row">
 									<div className="col-8 flex-column">
-										<h1 className="page-header">Good Morning! </h1>
+										<h1 className="page-header">{`Good ${status}!`}</h1>
 										<h3>Today you have 9 new notifications</h3>
 										<h3>Also new booking appointments for approval</h3>
-										<Link className="read-more">
+										<Link className="read-more" to={`/auth/manager/suppliers`}>
 											Read more <i className="bx bx-right-arrow-alt"></i>
 										</Link>
 									</div>
@@ -155,7 +157,7 @@ const AdminDashboard = () => {
 							<div className="card">
 								<div className="flex">
 									<h2 className="request-title">Registered Suppliers</h2>
-									<Link to={`/auth/manager/users`}>
+									<Link to={`/auth/manager/suppliers`}>
 										<button className="view-btn">View All</button>
 									</Link>
 								</div>

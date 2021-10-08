@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import Spinner from "../components/loading/Spinner";
@@ -15,7 +16,7 @@ const ManageUsers = () => {
 	const [material, setMaterial] = useState({ code: "", name: "" });
 	const [materials, setMaterials] = useState([]);
 
-	const fields = ["", "Material Code", "Material Name"];
+	const fields = ["", "Material Code", "Material Name", "Actions"];
 
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
@@ -24,6 +25,20 @@ const ManageUsers = () => {
 			<td>{index + 1}</td>
 			<td>{item.code}</td>
 			<td>{item.name}</td>
+			<td>
+				<>
+					<button
+						className="action-btn x"
+						onClick={() => {
+							if (window.confirm("Are you sure to delete this material?")) {
+								deleteHandler(item._id, item.username);
+							}
+						}}
+					>
+						<RiDeleteBinLine />
+					</button>
+				</>
+			</td>
 		</tr>
 	);
 
@@ -52,6 +67,21 @@ const ManageUsers = () => {
 			setIsLoading(true);
 		} catch (err) {
 			setBtnState(false);
+			console.log(err.response);
+		}
+	};
+
+	const deleteHandler = async (id, username) => {
+		try {
+			const res = await axios.delete(`materials/${id}`);
+
+			if (res.statusText === "OK") {
+				getAllMaterial();
+				setError("");
+				window.alert("Material has been successfully deleted");
+				setIsLoading(true);
+			}
+		} catch (err) {
 			console.log(err.response);
 		}
 	};

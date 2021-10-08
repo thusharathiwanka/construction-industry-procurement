@@ -77,8 +77,12 @@ const OfficerOrders = () => {
 						className="action-btn check"
 						onClick={() => {
 							acceptOrder(item._id);
+							window.alert("order accepted  successfully");
+							window.location.reload();
 						}}
 					/>
+				) : item.isApprovedByOfficer == "approved" ? (
+					<FaCheckDouble className="action-btn check " />
 				) : (
 					""
 				)}
@@ -86,32 +90,46 @@ const OfficerOrders = () => {
 					<MdDelete
 						className="action-btn x"
 						onClick={() => {
-							if (window.confirm("Are you sure to delete this request?")) {
-								deleteHandler(item._id);
-							}
+							// if (window.confirm("Are you sure to delete this request?")) {
+							deleteHandler(item._id);
+							setTrigger(true);
+							// }
 						}}
 					/>
+				) : item.isApprovedByOfficer == "rejected" ? (
+					<FaExclamationTriangle className="action-btn x" />
 				) : (
-					<FaExclamationTriangle />
+					""
 				)}
-				{item.isApprovedByOfficer == "approved" ? (
-					<button
-						className="action-btn item-assign "
-						onClick={() => {
-							setTrigger(true);
-						}}
-					>
-						<i className="bx bxs-user-plus"></i>
+
+				<Popup
+					trigger={trigger}
+					setTrigger={setTrigger}
+					orderId={item._id}
+					name="rejectReason"
+				/>
+				{item.isApprovedByOfficer == "approved" && !item.supplierId ? (
+					<>
+						<button
+							className="action-btn item-assign "
+							onClick={() => {
+								setTrigger(true);
+							}}
+						>
+							<i className="bx bxs-user-plus"></i>
+						</button>
 						<Popup
 							trigger={trigger}
 							setTrigger={setTrigger}
 							order={item.itemName}
+							orderId={item._id}
 							materialId={item.orderItem}
 							sitemng={item.siteManagerId}
+							name="Assign"
 						/>
-					</button>
+					</>
 				) : (
-					<FaCheckDouble />
+					""
 				)}
 			</td>
 		</tr>

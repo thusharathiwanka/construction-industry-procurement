@@ -4,6 +4,8 @@ import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import axios from "axios";
+import Popup from "./Popup";
+import { AiFillWindows } from "react-icons/ai";
 
 const ManagerApprovedOrders = () => {
   const fields = [
@@ -13,9 +15,9 @@ const ManagerApprovedOrders = () => {
     "Total",
     "Created Date",
     "Status",
+    "Actions",
   ];
 
-  const [orders, setOrders] = useState(null);
   const [allorders, setAllOrders] = useState(null);
 
   const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
@@ -29,18 +31,63 @@ const ManagerApprovedOrders = () => {
       <td>{new Date(item.createdAt).toLocaleDateString()}</td>
       <td>
         <Badge
-          type={permissionStatus[item.isApprovedByOfficer]}
-          content={item.isApprovedByOfficer}
+          type={permissionStatus[item.isApprovedByManager]}
+          content={item.isApprovedByManager}
         />
+      </td>
+      <td>
+        <button
+          className="action-btn check"
+          onClick={() => {
+            if (window.confirm("Are you sure to Approve this request?")) {
+              changeStatusToApproved(item._id);
+            }
+          }}
+        >
+          <i className="bx bx-check"></i>
+        </button>
+        <button
+          className="action-btn x"
+          onClick={() => {
+            if (window.confirm("Are you sure to delete this request?")) {
+              changeStatusToRejected(item._id);
+            }
+          }}
+        >
+          <i className="bx bx-x"></i>
+        </button>
       </td>
     </tr>
   );
 
   const getApproveOrders = async () => {
-    const res = await axios.get("orders/getApproveOrders");
-    setAllOrders(res.data.orders);
-    console.log(res);
+    try {
+      const res = await axios.get("orders/getApproveOrders");
+      setAllOrders(res.data.orders);
+      console.log(res);
+    } catch (err) {
+      console.log(err.response);
+    }
   };
+  const changeStatusToRejected = async (id) => {
+    try {
+      const res = await axios.put(`orders/changeStatusToRejected/${id}`);
+      window.location.reload();
+      console.log(res);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+  const changeStatusToApproved = async (id) => {
+    try {
+      const res = await axios.put(`orders/changeStatusToApproved/${id}`);
+      window.location.reload();
+      console.log(res);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+
   useEffect(() => {
     getApproveOrders();
   }, []);
@@ -57,7 +104,7 @@ const ManagerApprovedOrders = () => {
         <TopNav />
         <div className="layout__content-main">
           <div className="card">
-            <h2>All Order Details</h2>
+            <h2>Approved Orders from Officer</h2>
             {allorders && (
               <Table
                 limit="5"

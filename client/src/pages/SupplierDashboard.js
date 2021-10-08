@@ -16,6 +16,8 @@ import TopNav from "../components/topnav/TopNav";
 import AdminGreeting from "../assets/images/admin-greeting.png";
 import ProfilePicture from "../assets/images/admin-user-img.jpg";
 
+import status from "../helpers/greeting";
+
 const SupplierDashboard = () => {
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
@@ -62,7 +64,7 @@ const SupplierDashboard = () => {
 
 	const getAllOrders = async () => {
 		try {
-			const res = await axios.get("orders/supplier");
+			const res = await axios.get("orders/supplier/my");
 			setOrderDetails(res.data.orders);
 			setIsLoading(false);
 		} catch (err) {
@@ -83,7 +85,7 @@ const SupplierDashboard = () => {
 							<div className="card greeting-card">
 								<div className="row">
 									<div className="col-8 flex-column">
-										<h1 className="page-header">Good Morning! </h1>
+										<h1 className="page-header">{`Good ${status}!`}</h1>
 										<h3>
 											Today you have{" "}
 											{

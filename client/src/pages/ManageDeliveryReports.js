@@ -11,7 +11,7 @@ import "react-calendar/dist/Calendar.css";
 
 import { AuthContext } from "../contexts/AuthContext";
 
-const ManageSuppliers = () => {
+const ManageDeliveryReports = () => {
 	const { loggedIn } = useContext(AuthContext);
 	const [suppliers, setSuppliers] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -107,7 +107,7 @@ const ManageSuppliers = () => {
 			<div id="main" className="layout__content">
 				<TopNav />
 				<div className="layout__content-main">
-					<h1 className="page-header">Manage Suppliers</h1>
+					<h1 className="page-header">Manage Delivery Reports</h1>
 					<div className="row"></div>
 					<div className="row">
 						<div className="col-12">
@@ -132,4 +132,4 @@ const ManageSuppliers = () => {
 	);
 };
 
-export default ManageSuppliers;
+export default ManageDeliveryReports;

@@ -229,12 +229,55 @@ const OrdersList = async (req, res) => {
 
 /**
  * retrive all orders where isApprovedByOfficer = "approved"
- * @param {*} req
- * @param {*} res
+ * Onella Natalie
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
  */
 const getApproveOrders = async (req, res) => {
 	try {
-		const approvedList = await Order.find({ isApprovedByOfficer: "approved" });
+		const approved = await Order.find({ isApprovedByOfficer: "approved" });
+		res.status(200).json({ orders: approved });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
+/**
+ * retrive all orders and change where isApprovedByManager = "reject"
+ * Onella Natalie
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const changeStatusToRejected = async (req, res) => {
+	try {
+		const rejectedList = await Order.findOneAndUpdate(
+			{ isApprovedByOfficer: "approved", id: req.params.id },
+			{ isApprovedByManager: "rejected" },
+			{ new: true }
+		);
+		res.status(200).json({ orders: rejectedList });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+		// console.log(error);
+	}
+};
+/**
+
+ * retrive all orders and change where isApprovedByManager = "approved"
+ * Onella Natalie
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const changeStatusToApproved = async (req, res) => {
+	try {
+		const approvedList = await Order.findOneAndUpdate(
+			{ isApprovedByOfficer: "approved", id: req.params.id },
+			{ isApprovedByManager: "approved" },
+			{ new: true }
+		);
 		res.status(200).json({ orders: approvedList });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
@@ -242,9 +285,10 @@ const getApproveOrders = async (req, res) => {
 };
 /**
  * retrieves all orders in the orders table
+ * Onella Natalie
  * @param {Object} req
  * @param {Object} res
- * @returns res
+ * @returns {Object} res
  */
 const getManagerApprovedOrders = async (req, res) => {
 	try {
@@ -255,6 +299,22 @@ const getManagerApprovedOrders = async (req, res) => {
 		res.status(200).json({ orders: allOrders });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
+	}
+};
+/**
+ * retrive all orders
+ * Onella Natalie
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const getAllOrdersByManager = async (req, res) => {
+	try {
+		const allOrders = await Order.find().populate("siteManagerId");
+		res.status(200).json({ orders: allOrders });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+		// console.log(error);
 	}
 };
 
@@ -275,6 +335,36 @@ const getOrdersOfSupplier = async (req, res) => {
 	}
 };
 
+/**
+ * retrieves specific order of given id
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const getOrderById = async (req, res) => {
+	try {
+		const order = await Order.findById(req.params.id).populate("siteManagerId");
+		res.status(200).json({ order: order });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
+const setError = async (req, res) => {
+	try {
+		const error = await Order.findByIdAndUpdate(
+			req.params.id,
+			{
+				rejectMassage: req.body.rejectMassage,
+			},
+			{ new: true }
+		);
+		res.status(202).json(error);
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
 module.exports = {
 	saveOrder,
 	addSupplier,
@@ -284,7 +374,10 @@ module.exports = {
 	changeOrderStatusByManager,
 	getItemDetailsOfficer,
 	getItemDetailsProcurement,
+	getAllOrdersByManager,
 	getApproveOrders,
+	changeStatusToRejected,
+	changeStatusToApproved,
 	allOrders,
 	OrdersList,
 	getOrdersOfSupplier,
@@ -292,4 +385,6 @@ module.exports = {
 	changeDeliveryStatusBySupplierAsDelivered,
 	changeDeliveryStatusBySupplierAsDelivering,
 	getManagerApprovedOrders,
+	getOrderById,
+	setError,
 };

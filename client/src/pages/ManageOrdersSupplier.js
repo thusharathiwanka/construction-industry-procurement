@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
@@ -41,23 +42,53 @@ const ManageOrdersSupplier = () => {
 					{item.DeliveryStatus === "pending" ? (
 						<div
 							style={{ cursor: "pointer" }}
-							onClick={() => changeDeliveryStatusAsPreparing(item._id)}
+							onClick={() => {
+								if (
+									window.confirm(
+										"Are you sure to change order status as preparing?"
+									)
+								) {
+									changeDeliveryStatusAsPreparing(item._id);
+								}
+							}}
 						>
 							<Badge type="warning" content="Mark as preparing" />
 						</div>
 					) : item.DeliveryStatus === "preparing" ? (
 						<div
 							style={{ cursor: "pointer" }}
-							onClick={() => changeDeliveryStatusAsDelivering(item._id)}
+							onClick={() => {
+								if (
+									window.confirm(
+										"Are you sure to change order status as delivering?"
+									)
+								) {
+									changeDeliveryStatusAsDelivering(item._id);
+								}
+							}}
 						>
 							<Badge type="primary" content="Mark as delivering" />
 						</div>
 					) : item.DeliveryStatus === "delivering" ? (
 						<div
 							style={{ cursor: "pointer" }}
-							onClick={() => changeDeliveryStatusAsDelivered(item._id)}
+							onClick={() => {
+								if (
+									window.confirm(
+										"Are you sure to change order status as delivered?"
+									)
+								) {
+									changeDeliveryStatusAsDelivered(item._id);
+								}
+							}}
 						>
 							<Badge type="success" content="Mark as delivered" />
+						</div>
+					) : item.DeliveryStatus === "delivered" ? (
+						<div style={{ cursor: "pointer" }}>
+							<Link to={`/auth/supplier/deliveryreports/${item._id}`}>
+								<Badge type="normal" content="Send Delivery Report" />
+							</Link>
 						</div>
 					) : (
 						""

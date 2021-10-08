@@ -1,5 +1,4 @@
 const router = require("express").Router();
-
 const OrderController = require("../controllers/order.controller");
 
 const { verifySiteManagerAuth } = require("../auth/site.manager.auth");
@@ -20,6 +19,9 @@ router.get(
 	OrderController.getItemDetailsOfficer
 );
 router.get("/officer/orders", OrderController.OrdersList);
+
+router.put("/", OrderController.allOrders);
+
 router.get("/getApproveOrders", OrderController.getApproveOrders);
 
 router.put(
@@ -62,11 +64,7 @@ router.put(
 	verifyProcurementOfficer,
 	OrderController.changeOrderStatusByOfficer
 );
-router.put(
-	"/proc/:id",
-	verifyProcurementManagerAuth,
-	OrderController.changeOrderStatusByManager
-);
+
 router.put(
 	"/supplier/prepare/:id",
 	verifySupplierAuth,
@@ -79,5 +77,19 @@ router.put(
 	OrderController.changeDeliveryStatusBySupplierAsDelivered
 );
 router.put("/:id", OrderController.addSupplier);
+router.put("/error/:id", OrderController.setError);
 
+router.get("/getAllOrdersByManager", OrderController.getAllOrdersByManager);
+router.get("/getApproveOrders", OrderController.getApproveOrders);
+router.put(
+	"/changeStatusToRejected/:id",
+	verifyProcurementManagerAuth,
+	OrderController.changeStatusToRejected
+);
+router.put(
+	"/changeStatusToApproved/:id",
+	verifyProcurementManagerAuth,
+	OrderController.changeStatusToApproved
+);
+router.get("/:id", verifySupplierAuth, OrderController.getOrderById);
 module.exports = router;
