@@ -11,4 +11,10 @@ router.post(
 	ProcurementOfficerController.saveProcurementOfficer
 );
 
+router.delete(
+	"/:id",
+	verifyProcurementManagerAuth,
+	ProcurementOfficerController.deleteOfficer
+);
+
 module.exports = router;

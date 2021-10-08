@@ -12,7 +12,6 @@ import "react-calendar/dist/Calendar.css";
 import { AuthContext } from "../contexts/AuthContext";
 
 const ManageSuppliers = () => {
-	const [value, onChange] = useState(new Date());
 	const { loggedIn } = useContext(AuthContext);
 	const [suppliers, setSuppliers] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);

@@ -17,12 +17,12 @@ import ManageSuppliers from "../pages/ManageSuppliers";
 import ManageServices from "../pages/ManageServices";
 import OfficerOrders from "../pages/OfficerOrders";
 import DeliveryReport from "../pages/DeliveryReport";
-import ManagetAllOrders from "../pages/ManageAllOrders";
+import ManageAllOrders from "../pages/ManageAllOrders";
 import ManagerApprovedOrders from "../pages/ManagerApprovedOrders";
-
+import ManageDeliveryReports from "../pages/ManageDeliveryReports";
+import Assign from "../pages/Assign";
 
 import { AuthContext } from "../contexts/AuthContext";
-import Assign from "../pages/Assign";
 
 const Routes = () => {
 	const { loggedIn } = useContext(AuthContext);
@@ -55,6 +55,11 @@ const Routes = () => {
 			<Route exact path="/auth/supplier/services" component={ManageServices} />
 			<Route
 				exact
+				path="/auth/supplier/deliveryreports"
+				component={ManageDeliveryReports}
+			/>
+			<Route
+				exact
 				path="/auth/officer/dashboard"
 				component={OfficerDashboard}
 			/>
@@ -64,28 +69,23 @@ const Routes = () => {
 				component={SiteManagerDashboard}
 			/>
 
-
-      <Route exact path="/auth/officers/orderlist" component={OfficerOrders} />
-      <Route exact path="/auth/officers/form" component={Assign} />
-      <Route
-        exact
-        path="/auth/sitemanager/requisitions"
-        component={SiteManagerForm}
-      />
-      <Route exact path="/auth/sitemanager/inventory" component={Inventory} />
-      <Route exact path="/auth/deliveryreport" component={DeliveryReport} />
-      <Route
-        exact
-        path="/auth/manager/allorders"
-        component={ManagetAllOrders}
-      />
-      <Route
-        exact
-        path="/auth/manager/ApprovedOrders"
-        component={ManagerApprovedOrders}
-      />
-    </Switch>
-  );
+			<Route exact path="/auth/officers/orderlist" component={OfficerOrders} />
+			<Route exact path="/auth/officers/form" component={Assign} />
+			<Route
+				exact
+				path="/auth/sitemanager/requisitions"
+				component={SiteManagerForm}
+			/>
+			<Route exact path="/auth/sitemanager/inventory" component={Inventory} />
+			<Route exact path="/auth/deliveryreport" component={DeliveryReport} />
+			<Route exact path="/auth/manager/allorders" component={ManageAllOrders} />
+			<Route
+				exact
+				path="/auth/manager/ApprovedOrders"
+				component={ManagerApprovedOrders}
+			/>
+		</Switch>
+	);
 };
 
 export default Routes;
