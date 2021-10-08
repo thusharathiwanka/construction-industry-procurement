@@ -3,7 +3,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 import Sidebar from "../components/sidebar/Sidebar";
-import Spinner from "../components/loading/Spinner";
 import TopNav from "../components/topnav/TopNav";
 
 import "../assets/css/Usercreate.css";
@@ -12,10 +11,9 @@ const DeliveryReportSubmit = () => {
 	const { id } = useParams();
 	const [btnState, setBtnState] = useState(false);
 	const [error, setError] = useState("");
-	const [isLoading, setIsLoading] = useState(true);
 	const [deliveryReport, setDeliveryReport] = useState({ code: "", name: "" });
 
-	const savedeliveryReport = async (e) => {
+	const saveDeliveryReport = async (e) => {
 		e.preventDefault();
 		setBtnState(true);
 
@@ -37,7 +35,6 @@ const DeliveryReportSubmit = () => {
 			setError("");
 			window.alert("deliveryReport registered successfully");
 			setBtnState(false);
-			setIsLoading(true);
 		} catch (err) {
 			setBtnState(false);
 			console.log(err.response);
@@ -48,7 +45,6 @@ const DeliveryReportSubmit = () => {
 		try {
 			const res = await axios.get(`orders/${id}`);
 			setDeliveryReport(res.data.order);
-			setIsLoading(false);
 		} catch (err) {
 			console.log(err.response);
 		}
@@ -158,7 +154,7 @@ const DeliveryReportSubmit = () => {
 									</div>
 								</div>
 								<div className="row-user">
-									<button type="submit" onClick={savedeliveryReport}>
+									<button type="submit" onClick={saveDeliveryReport}>
 										{btnState ? "Saving" : "Save"}
 									</button>
 								</div>
