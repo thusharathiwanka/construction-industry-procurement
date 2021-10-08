@@ -91,15 +91,17 @@ router.put(
 );
 router.get("/getAllOrdersByManager", OrderController.getAllOrdersByManager);
 router.get("/getApproveOrders", OrderController.getApproveOrders);
-router.put(
-	"/changeStatusToRejected/:id",
-	verifyProcurementManagerAuth,
-	OrderController.changeStatusToRejected
+
+router.patch(
+  "/changeStatusToRejected/:id",
+  verifyProcurementManagerAuth,
+  OrderController.changeStatusToRejected
 );
-router.put(
-	"/changeStatusToApproved/:id",
-	verifyProcurementManagerAuth,
-	OrderController.changeStatusToApproved
+router.patch(
+  "/changeStatusToApproved/:id",
+  verifyProcurementManagerAuth,
+  OrderController.changeStatusToApproved
+
 );
 router.get("/:id", verifySupplierAuth, OrderController.getOrderById);
 module.exports = router;
