@@ -92,6 +92,7 @@ const OfficerOrders = () => {
 						order={item.itemName}
 						materialId={item.orderItem}
 						sitemng={item.siteManagerId}
+						name="Assign"
 					/>
 				</button>
 			</td>

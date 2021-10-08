@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
 import TopNav from "../components/topnav/TopNav";
 import Table from "../components/table/Table";
-import { Link } from "react-router-dom";
 import Badge from "../components/badge/Badge";
 import Spinner from "../components/loading/Spinner";
 import {MdDelete} from "react-icons/md"
 import {VscReport} from "react-icons/vsc"
+import Popup from "./Popup";
 
 const SiteManagerForm = () => {
 	const siteId = localStorage.getItem("site");
@@ -15,7 +15,8 @@ const SiteManagerForm = () => {
 	const fields = ["", "Required Date", "Item", "Quantity","Order Status","Delivery Status", "Action", "Goods Receipt"];
 	const [OrderDetail, setOrderDetail] = useState([])
 	const [Loading, setLoading] = useState(false);
-	const [Id, setId] = useState("")
+	const [Trigger, setTrigger] = useState(false)
+	
 	
 	const [Order, setOrder] = useState({
 		item: {},
@@ -108,28 +109,37 @@ const SiteManagerForm = () => {
 				</div>	
 			</td>
 			<td className="">
-				{item.isApprovedByManager === "pending" ? (
+				{item.isApprovedByManager === "pending" && !(item.isApprovedByOfficer  === "rejected")  ? (
 					<>
 						<button className="action-btn x">
 						<MdDelete
 							onClick={() => {
 									if (window.confirm("Are you sure to delete this request?")) {
 										deleteHandler(item._id);
-										setId(item._id)
 									}
 								}}
 						/>
 						</button>
 					</>
 				) : item.isApprovedByManager === "rejected" || item.isApprovedByOfficer === "rejected" ? (
+						<>
 						<button className="action-btn W">
 						<VscReport
 							onClick={() => {
-									
+									setTrigger(true)
 								}}
 						/>
+						
 						</button>
+						<Popup
+							trigger = {Trigger}
+							name = "Rejection"
+							description = "description"
+							setTrigger = {setTrigger}
+						/>
+						</>
 				):""}
+				
 			</td>
 		</tr>
 	);
