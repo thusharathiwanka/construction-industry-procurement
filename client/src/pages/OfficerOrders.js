@@ -5,6 +5,12 @@ import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import axios from "axios";
 import Popup from "./Popup";
+import { MdDelete } from "react-icons/md";
+import {
+	FaCheckCircle,
+	FaExclamationTriangle,
+	FaCheckDouble,
+} from "react-icons/fa";
 
 const OfficerOrders = () => {
 	const fields = [
@@ -28,22 +34,26 @@ const OfficerOrders = () => {
 			const res = await axios.put(`orders/officer/${id}`, {
 				status: "approved",
 			});
+
 			console.log(res);
 		} catch (err) {
 			console.log(err.response);
 		}
+		getAllOrder();
 	};
 
 	const deleteHandler = async (id) => {
-		console.log("hi");
+		// console.log("hi");
 		try {
 			const res = await axios.put(`orders/officer/${id}`, {
 				status: "rejected",
 			});
+
 			console.log(res);
 		} catch (err) {
 			console.log(err.response);
 		}
+		getAllOrder();
 	};
 	const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
@@ -60,48 +70,74 @@ const OfficerOrders = () => {
 					content={item.isApprovedByOfficer}
 				/>
 			</td>
+
 			<td>
-				<button
-					className="action-btn check"
-					onClick={() => {
-						acceptOrder(item._id);
-					}}
-				>
-					<i className="bx bx-check"></i>
-				</button>
-				<button
-					className="action-btn x"
-					onClick={() => {
-						if (window.confirm("Are you sure to delete this request?")) {
-							deleteHandler(item._id);
-						}
-					}}
-				>
-					<i className="bx bx-x"></i>
-				</button>
-				<button
-					className="action-btn item-assign "
-					onClick={() => {
-						setTrigger(true);
-					}}
-				>
-					<i className="bx bxs-user-plus"></i>
-					<Popup
-						trigger={trigger}
-						setTrigger={setTrigger}
-						order={item.itemName}
-						materialId={item.orderItem}
-						sitemng={item.siteManagerId}
-						name="Assign"
+				{item.isApprovedByOfficer == "pending" ? (
+					<FaCheckCircle
+						className="action-btn check"
+						onClick={() => {
+							acceptOrder(item._id);
+							window.alert("order accepted  successfully");
+							window.location.reload();
+						}}
 					/>
-				</button>
+				) : item.isApprovedByOfficer == "approved" ? (
+					<FaCheckDouble className="action-btn check " />
+				) : (
+					""
+				)}
+				{item.isApprovedByOfficer == "pending" ? (
+					<MdDelete
+						className="action-btn x"
+						onClick={() => {
+							// if (window.confirm("Are you sure to delete this request?")) {
+							deleteHandler(item._id);
+							setTrigger(true);
+							// }
+						}}
+					/>
+				) : item.isApprovedByOfficer == "rejected" ? (
+					<FaExclamationTriangle className="action-btn x" />
+				) : (
+					""
+				)}
+
+				<Popup
+					trigger={trigger}
+					setTrigger={setTrigger}
+					orderId={item._id}
+					name="rejectReason"
+				/>
+				{item.isApprovedByOfficer == "approved" && !item.supplierId ? (
+					<>
+						<button
+							className="action-btn item-assign "
+							onClick={() => {
+								setTrigger(true);
+							}}
+						>
+							<i className="bx bxs-user-plus"></i>
+						</button>
+						<Popup
+							trigger={trigger}
+							setTrigger={setTrigger}
+							order={item.itemName}
+							orderId={item._id}
+							materialId={item.orderItem}
+							sitemng={item.siteManagerId}
+							name="Assign"
+						/>
+					</>
+				) : (
+					""
+				)}
 			</td>
 		</tr>
 	);
 	const getAllOrder = async () => {
-		const res = await axios.get("orders/");
+		const res = await axios.get("orders/officer/orders");
 
-		console.log(res.data.orders);
+		// console.log(res.data.orders);
 		setOrders(res.data.orders);
 	};
 
@@ -123,7 +159,7 @@ const OfficerOrders = () => {
 				<div className="layout__content-main">
 					{orders && (
 						<Table
-							limit="5"
+							limit="10"
 							headData={fields}
 							renderHead={(item, index) => renderOrderHead(item, index)}
 							bodyData={orders}
