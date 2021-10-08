@@ -14,6 +14,7 @@ import Badge from "../components/badge/Badge";
 
 import profilePicture from "../assets/images/admin-user-img.jpg";
 import axios from "axios";
+import status from "../helpers/greeting";
 
 const OfficerDashboard = () => {
 	const [value, onChange] = useState(new Date());
@@ -25,7 +26,6 @@ const OfficerDashboard = () => {
 		"Total",
 		"Created Date",
 		"Status",
-		"Actions",
 	];
 	const rows = [
 		{
@@ -143,8 +143,15 @@ const OfficerDashboard = () => {
 							<div className="card greeting-card">
 								<div className="row">
 									<div className="col-8 flex-column">
-										<h1 className="page-header">Good Morning! </h1>
-										<h3>Today you have 9 new notifications</h3>
+										<h1 className="page-header">{`Good ${status}!`} </h1>
+										<h3>
+											Today you have{" "}
+											{orders &&
+												orders.filter(
+													(order) => order.isApprovedByOfficer === "pending"
+												).length}{" "}
+											new notifications
+										</h3>
 										<h3>Also new booking appointments for approval</h3>
 										<Link className="read-more">
 											Read more <i className="bx bx-right-arrow-alt"></i>

@@ -157,11 +157,18 @@ const changeDeliveryStatusBySupplierAsSubmitted = async (req, res) => {
  * @param {Object} res
  * @returns {Object} res
  */
-const addSupplier = async (res, req) => {
+const addSupplier = async (req, res) => {
 	try {
-		await Order.findByIdAndUpdate(req.params.id, {
-			supplierId: req.body.supplierId,
-		});
+		console.log(req.params.id);
+		console.log(req.body.supplierId);
+		const Or = await Order.findByIdAndUpdate(
+			req.params.id,
+			{
+				supplierId: req.body.supplierId,
+			},
+			{ new: true }
+		);
+		res.status(200).json(Or);
 	} catch (error) {
 		res.status(400).json({ message: error.message });
 	}
@@ -226,6 +233,22 @@ const allOrders = async (req, res) => {
 		res.status(400).json({ message: error.message });
 	}
 };
+
+/**
+ * retrieves all orders in the orders table
+ * @param {Object} req
+ * @param {Object} res
+ * @returns res
+ */
+const OrdersList = async (req, res) => {
+	try {
+		const allOrders = await Order.find({ total: { $gt: 100000 } });
+		res.status(200).json({ orders: allOrders });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
 /**
  * retrive all orders where isApprovedByOfficer = "approved"
  * Onella Natalie
@@ -349,6 +372,21 @@ const getOrderById = async (req, res) => {
 	}
 };
 
+const setError = async (req, res) => {
+	try {
+		const error = await Order.findByIdAndUpdate(
+			req.params.id,
+			{
+				rejectMassage: req.body.rejectMassage,
+			},
+			{ new: true }
+		);
+		res.status(202).json(error);
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
 module.exports = {
 	saveOrder,
 	addSupplier,
@@ -363,6 +401,7 @@ module.exports = {
 	changeStatusToRejected,
 	changeStatusToApproved,
 	allOrders,
+	OrdersList,
 	getOrdersOfSupplier,
 	changeDeliveryStatusBySupplierAsPreparing,
 	changeDeliveryStatusBySupplierAsDelivered,
@@ -370,4 +409,5 @@ module.exports = {
 	changeDeliveryStatusBySupplierAsSubmitted,
 	getManagerApprovedOrders,
 	getOrderById,
+	setError,
 };
