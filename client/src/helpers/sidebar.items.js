@@ -99,7 +99,7 @@ const sidebar_supplier = [
 		icon: "bx bx-store",
 	},
 	{
-		display_name: "Manage Delivery Reports",
+		display_name: "Delivery Reports",
 		route: "/auth/supplier/deliveryreports",
 		icon: "bx bx-notepad",
 	},
