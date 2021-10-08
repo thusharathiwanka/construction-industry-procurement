@@ -11,8 +11,7 @@ const DeliveryReportSchema = mongoose.Schema(
 		urgentOrder: { type: String, required: true },
 		address: { type: String, required: true },
 	},
-	{ timestamp: true },
-	{ versionKey: false }
+	{ timestamp: true }
 );
 
 const DeliveryReport = mongoose.model("deliveryReports", DeliveryReportSchema);

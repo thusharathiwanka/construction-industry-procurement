@@ -59,12 +59,28 @@ const saveDeliveryReport = async (req, res) => {
 
 /**
  * retrieve delivery reports filtered by orderId
- * @param {*} req
- * @param {*} res
+ * @param {Object} req
+ * @param {Object} res
+ * @returns res
  */
 const getDeliveryReport = async (req, res) => {
 	try {
-		const reports = DeliveryReport.find({ orderId: req.params.id });
+		const reports = await DeliveryReport.find({ orderId: req.params.id });
+		res.status(200).json(reports);
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
+/**
+ * retrieve delivery reports filtered by supplier id
+ * @param {Object} req
+ * @param {Object} res
+ * @returns res
+ */
+const getDeliveryReportsBySupplierId = async (req, res) => {
+	try {
+		const reports = await DeliveryReport.find({ supplierId: req.body.user });
 		res.status(200).json(reports);
 	} catch (error) {
 		res.status(400).json({ message: error.message });
@@ -74,4 +90,5 @@ const getDeliveryReport = async (req, res) => {
 module.exports = {
 	saveDeliveryReport,
 	getDeliveryReport,
+	getDeliveryReportsBySupplierId,
 };
