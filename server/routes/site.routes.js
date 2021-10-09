@@ -9,4 +9,6 @@ router.post("/", verifyProcurementManagerAuth, SiteController.saveSite);
 
 router.get("/", verifyProcurementManagerAuth, SiteController.getSites);
 
+router.delete("/:id", verifyProcurementManagerAuth, SiteController.removeSite);
+
 module.exports = router;

@@ -162,6 +162,35 @@ const approveSupplier = async (req, res) => {
 };
 
 /**
+ * remove the supplier
+ * @param {req} req
+ * @param {res} res
+ * @returns  res
+ */
+const removeSupplier = async (req, res) => {
+	if (req.params) {
+		const { id } = req.params;
+		try {
+			const { email } = await Supplier.findById(id);
+			await Supplier.findByIdAndDelete(id);
+
+			await sendMail(
+				email,
+				"Terminate Information",
+				`<div><p>Your account has been deactivated due to some reason. Contact manager for more details</p><p>Thank you.</p></div>`
+			);
+
+			return res.status(200).send();
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send();
+		}
+	}
+
+	return res.status(400).send();
+};
+
+/**
  * save materials of supplier
  * @param {req} req
  * @param {res} res
@@ -198,4 +227,5 @@ module.exports = {
 	approveSupplier,
 	rejectSupplier,
 	updateSupplierMaterials,
+	removeSupplier,
 };

@@ -55,7 +55,35 @@ const getSites = async (req, res) => {
 	}
 };
 
+/**
+ * remove the site
+ * @param {req} req
+ * @param {res} res
+ * @returns  res
+ */
+const removeSite = async (req, res) => {
+	if (req.params) {
+		const { id } = req.params;
+		try {
+			const site = await Site.findById(id);
+			await Site.findByIdAndDelete(id);
+			await SiteManager.findByIdAndUpdate(
+				{ _id: site.siteManagerId },
+				{ isAssigned: false },
+				{ new: true }
+			);
+			return res.status(200).send();
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send();
+		}
+	}
+
+	return res.status(400).send();
+};
+
 module.exports = {
 	saveSite,
 	getSites,
+	removeSite,
 };

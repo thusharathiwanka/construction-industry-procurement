@@ -72,11 +72,17 @@ const ManageUsers = () => {
 
 		console.log(employeeDetails);
 
-		for (let key of Object.keys(employeeDetails)) {
-			if (!employeeDetails[key]) {
-				setBtnState(false);
-				return setError("Please fill all the fields");
-			}
+		if (
+			!employeeDetails.name ||
+			!employeeDetails.email ||
+			!employeeDetails.username ||
+			!employeeDetails.position ||
+			!employeeDetails.phone ||
+			!employeeDetails.weeklyWorkHrs ||
+			!employeeDetails.salary
+		) {
+			setBtnState(false);
+			return setError("Please fill all the fields");
 		}
 
 		if (!employeeDetails.email.match(pattern)) {
@@ -87,13 +93,6 @@ const ManageUsers = () => {
 		if (employeeDetails.phone.length !== 10) {
 			setBtnState(false);
 			return setError("Please use valid phone number");
-		}
-
-		if (employeeDetails.position === "sitemanager") {
-			if (employeeDetails.site === "site") {
-				setBtnState(false);
-				return setError("Please fill all the fields");
-			}
 		}
 
 		if (employeeDetails.position === "sitemanager") {
@@ -117,9 +116,11 @@ const ManageUsers = () => {
 			window.alert("Employee registered successfully");
 			setBtnState(false);
 			setIsLoading(true);
+			getAllEmployees();
 		} catch (err) {
 			setBtnState(false);
 			console.log(err.response);
+			setError(err.response.data.message);
 		}
 	};
 
@@ -170,10 +171,13 @@ const ManageUsers = () => {
 					<div className="row">
 						<div className="col-12">
 							<form className="card" style={{ position: "relative" }}>
-								{error && (
+								{console.log(error)}
+								{error ? (
 									<div className="error-bg" style={{ left: "3%" }}>
 										<p>{error}</p>
 									</div>
+								) : (
+									""
 								)}
 								<div className="row">
 									<div className="col-6">
@@ -295,34 +299,6 @@ const ManageUsers = () => {
 											</select>
 										</div>
 									</div>
-									{employeeDetails.position === "sitemanager" ? (
-										<div className="col-6">
-											<div className="row-user">
-												<select
-													name="site"
-													id="site"
-													value={employeeDetails.site}
-													onChange={(e) =>
-														setEmployeeDetails({
-															...employeeDetails,
-															site: e.target.value,
-														})
-													}
-													required
-												>
-													<option value="site" defaultValue>
-														SELECT SITE
-													</option>
-													{sites.length > 0 &&
-														sites.map((site) => (
-															<option value={site._id}>{site.name}</option>
-														))}
-												</select>
-											</div>
-										</div>
-									) : (
-										""
-									)}
 								</div>
 								<div className="row-user">
 									<button type="submit" onClick={saveEmployeeDetails}>

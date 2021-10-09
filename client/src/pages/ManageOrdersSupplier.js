@@ -121,6 +121,7 @@ const ManageOrdersSupplier = () => {
 	const changeDeliveryStatusAsDelivering = async (id) => {
 		try {
 			const res = await axios.put(`orders/supplier/deliver/${id}`);
+			console.log(res);
 			if (res.statusText === "OK") {
 				getAllOrders();
 				setIsLoading(false);
@@ -171,7 +172,7 @@ const ManageOrdersSupplier = () => {
 							<Spinner />
 						) : orderDetails.length > 0 ? (
 							<Table
-								limit="5"
+								limit="10"
 								headData={fields}
 								renderHead={(item, index) => renderOrderHead(item, index)}
 								bodyData={orderDetails}
