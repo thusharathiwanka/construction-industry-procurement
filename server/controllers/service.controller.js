@@ -103,10 +103,20 @@ const deleteService = async (req, res) => {
 	}
 };
 
+const getServiceById = async (req, res) => {
+	try {
+		const servicedetails = await Service.findOne({ materialId: req.params.id });
+		res.status(200).json({ servicedetails: servicedetails });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
 module.exports = {
 	saveService,
 	getServices,
 	getServicesOfSupplier,
 	getServicesOfSupplierByMaterial,
 	deleteService,
+	getServiceById,
 };

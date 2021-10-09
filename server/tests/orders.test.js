@@ -1,7 +1,8 @@
+const axios = require("axios");
 describe("GET @ /orders endpoint", () => {
   it("should return array with site objects with response code 200", async () => {
     try {
-      const res = axios.post("http://localhost:5000/api/v1/orders");
+      const res = axios.get("http://localhost:5000/api/v1/orders");
 
       expect(res.status).toEqual(200);
       expect(res.data).toEqual("Object");
@@ -11,9 +12,9 @@ describe("GET @ /orders endpoint", () => {
   });
 });
 describe("GET @ /getAllOrdersByManager endpoint", () => {
-  it("should return array with site objects with response code 200", async () => {
+  it("should return array with all orders objects with response code 200", async () => {
     try {
-      const res = axios.post(
+      const res = axios.get(
         "http://localhost:5000/api/v1/orders/getAllOrdersByManager"
       );
 
@@ -26,9 +27,9 @@ describe("GET @ /getAllOrdersByManager endpoint", () => {
 });
 
 describe("GET @ /manager get Approved Orders endpoint", () => {
-  it("should return array with site objects with response code 200", async () => {
+  it("should return array with approved order by offier objects with response code 200", async () => {
     try {
-      const res = axios.post(
+      const res = axios.get(
         "http://localhost:5000/api/v1/orders/getApproveOrders"
       );
 

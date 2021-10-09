@@ -5,7 +5,7 @@ import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import axios from "axios";
 import { MdDelete } from "react-icons/md";
-
+import Popup from "./Popup";
 const ManagerApprovedOrders = () => {
   const fields = [
     "Order ID",
@@ -18,6 +18,27 @@ const ManagerApprovedOrders = () => {
   ];
 
   const [allorders, setAllOrders] = useState(null);
+  const [trigger, setTrigger] = useState(false);
+
+  const changeStatusToRejected = async (id) => {
+    try {
+      const res = await axios.put(`orders/changeStatusManager/${id}`, {
+        status: "rejected",
+      });
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+  const changeStatusToApproved = async (id) => {
+    try {
+      const res = await axios.put(`orders/changeStatusManager/${id}`, {
+        status: "approved",
+      });
+      window.location.reload();
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
 
   const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
 
@@ -48,13 +69,18 @@ const ManagerApprovedOrders = () => {
         <button className="action-btn x">
           <MdDelete
             onClick={() => {
-              if (window.confirm("Are you sure to reject this request?")) {
-                changeStatusToRejected(item._id);
-                console.log(item.id);
-              }
+              changeStatusToRejected(item._id);
+              setTrigger(true);
+              // console.log(item.id);
             }}
           />
         </button>
+        <Popup
+          trigger={trigger}
+          setTrigger={setTrigger}
+          orderId={item._id}
+          name="rejectReason"
+        />
       </td>
     </tr>
   );
@@ -67,24 +93,6 @@ const ManagerApprovedOrders = () => {
     try {
       const res = await axios.get("orders/getApproveOrders");
       setAllOrders(res.data.orders);
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
-  const changeStatusToRejected = async (id) => {
-    try {
-      const res = await axios.patch(`orders/changeStatusToRejected/${id}`);
-      window.location.reload();
-      // console.log(res.data);
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
-  const changeStatusToApproved = async (id) => {
-    try {
-      const res = await axios.patch(`orders/changeStatusToApproved/${id}`);
-      window.location.reload();
-      // console.log(res.data);
     } catch (err) {
       console.log(err.response);
     }

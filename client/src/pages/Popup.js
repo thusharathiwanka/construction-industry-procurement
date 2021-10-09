@@ -6,7 +6,6 @@ import GoodsReceipt from "./GoodsReceipt";
 import RejectReason from "./RejectReason";
 
 function Popup(props) {
-	console.log(props);
 	return props.trigger ? (
 		<div className="Popupout">
 			<div className="Popupin">
@@ -20,11 +19,14 @@ function Popup(props) {
 						sitemng={props.sitemng}
 						materialId={props.materialId}
 						orderId={props.orderId}
+						total={props.total}
 					/>
 				) : props.name === "Rejection" ? (
 					<Rejection description={props.description} />
 				) : props.name === "GoodsReceipt" ? (
-					<GoodsReceipt item={props.item} id={props.id} />
+					<GoodsReceipt id={props.id} />
+				) : props.name === "rejectReason" ? (
+					<RejectReason description={props.description} />
 				) : (
 					""
 				)}

@@ -125,6 +125,7 @@ const OfficerOrders = () => {
 							orderId={item._id}
 							materialId={item.orderItem}
 							sitemng={item.siteManagerId}
+							total={item.total}
 							name="Assign"
 						/>
 					</>
