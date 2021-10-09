@@ -67,12 +67,11 @@ const removeSite = async (req, res) => {
 		try {
 			const site = await Site.findById(id);
 			await Site.findByIdAndDelete(id);
-			const what = await SiteManager.findByIdAndUpdate(
+			await SiteManager.findByIdAndUpdate(
 				{ _id: site.siteManagerId },
 				{ isAssigned: false },
 				{ new: true }
 			);
-			console.log(what);
 			return res.status(200).send();
 		} catch (err) {
 			console.error(err.message);
