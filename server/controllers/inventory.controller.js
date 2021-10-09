@@ -29,13 +29,13 @@ const updateInventory = async(req, res)=>{
 const saveInventoryItem = async(req, res)=>{
     try {
 		if (req.body) {
-			const inventory = await Inventory({
+			const inventory = new Inventory({
 				item: req.body.item,
 				maxCapacity: req.body.maxCapacity,
 				quantity:req.body.quantity
 			})
 			await inventory.save()
-			res.status(200).json(inventory);
+			return res.status(200).json(inventory);
 		}
 	} catch (error) {
 		res.status(400);

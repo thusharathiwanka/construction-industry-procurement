@@ -6,7 +6,10 @@ const saveGoodsReport = async(req, res) => {
             orderId :req.body.orderId,
             item :req.body.item,
             quantity :req.body.quantity,
-            receivedDate :req.body.receivedDate,
+            agreed :req.body.agreed,
+            review :req.body.review,
+            supplierId:req.body.supplierId,
+            description:req.body.description,
         })
         await report.save();
         res.status(200).json(report._id)
@@ -39,5 +42,6 @@ const getGoodsReport = async(req, res)  => {
 
 module.exports = {
     saveGoodsReport,
-    getGoodsReport
+    getGoodsReport,
+    updateGoodsReport
 }

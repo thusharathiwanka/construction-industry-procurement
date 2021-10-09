@@ -1,14 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const AssignSupplier = ({ item, sitemng, materialId, orderId }) => {
+const AssignSupplier = ({ item, sitemng, materialId, orderId, total }) => {
 	const [supliers, setSupliers] = useState([]);
 	const [supplierId, setSupplierId] = useState("");
+	const [service, setService] = useState("");
+	const [count, setcount] = useState("");
 
+	console.log(total);
 	const getSuppliers = async () => {
 		let id = materialId;
-		// console.log(materialId);
-		// console.log(id);
+
 		try {
 			const res = await axios.get(`/suppliers/services/${id}`);
 			setSupliers(res.data.supplierlist);
@@ -16,16 +18,42 @@ const AssignSupplier = ({ item, sitemng, materialId, orderId }) => {
 			console.log(error);
 		}
 	};
-	// console.log(supliers);
-	// console.log(supplierId);
-	// console.log(orderId);
+
+	const getservices = async () => {
+		let id = materialId;
+		try {
+			const res = await axios.get(`/suppliers/services/details/${id}`);
+			setService(res.data.servicedetails);
+			console.log(res);
+			console.log(res.data);
+			console.log(service);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	const setTotal = async (e) => {
+		e.preventDefault();
+		console.log("order", orderId);
+		console.log("total", total);
+		getservices();
+
+		let id = orderId;
+		total = service.units * service.pricePerUnit;
+		console.log("total", total);
+
+		try {
+			const res = await axios.put(`/officer/total/${id}`, { total: total });
+			console.log(res);
+		} catch (error) {
+			console.log(error.response);
+		}
+	};
+
 	const addSuplier = async (e) => {
-		// e.preventDefault();
-		// console.log("sup", supplierId);
-		// console.log("mat", materialId);
 		let id = orderId;
 		try {
 			const res = await axios.put(`/orders/${id}`, { supplierId: supplierId });
+			setTotal();
 			// console.log(res);
 			window.alert("Supplier ID  added successfully");
 			window.location.reload();
@@ -65,6 +93,7 @@ const AssignSupplier = ({ item, sitemng, materialId, orderId }) => {
 										onChange={(e) => {
 											setSupplierId(e.target.value);
 											console.log(e.target.value);
+
 											console.log(supplierId);
 										}}
 										required

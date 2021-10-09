@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
 	const [loggedIn, setLoggedIn] = useState({});
+	const [notifications, setNotifications] = useState([]);
 
 	const getLoggedIn = async () => {
 		try {
@@ -25,6 +26,8 @@ const AuthContextProvider = ({ children }) => {
 				loggedIn,
 				setLoggedIn,
 				getLoggedIn,
+				notifications,
+				setNotifications,
 			}}
 		>
 			{children}

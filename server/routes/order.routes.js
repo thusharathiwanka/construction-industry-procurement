@@ -64,7 +64,7 @@ router.put(
   verifyProcurementOfficer,
   OrderController.changeOrderStatusByOfficer
 );
-
+router.put("/officer/total/:id", OrderController.setOrderTotal);
 router.put(
   "/supplier/prepare/:id",
   verifySupplierAuth,
@@ -102,5 +102,6 @@ router.patch(
   verifyProcurementManagerAuth,
   OrderController.changeStatusToApproved
 );
+
 router.get("/:id", verifySupplierAuth, OrderController.getOrderById);
 module.exports = router;
