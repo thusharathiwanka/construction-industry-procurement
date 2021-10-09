@@ -197,7 +197,10 @@ const deletePendingOrders = async (req, res) => {
  */
 const getItemDetailsOfficer = async (req, res) => {
 	try {
-		const orderListOff = await Order.find({ isApprovedByOfficer: "pending" });
+		const orderListOff = await Order.find({
+			isApprovedByOfficer: "pending",
+			total: { $lt: 100000 },
+		});
 		res.status(200).json({ orders: orderListOff });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
@@ -242,7 +245,7 @@ const allOrders = async (req, res) => {
  */
 const OrdersList = async (req, res) => {
 	try {
-		const allOrders = await Order.find({ total: { $gt: 100000 } });
+		const allOrders = await Order.find({ total: { $lt: 100000 } });
 		res.status(200).json({ orders: allOrders });
 	} catch (error) {
 		res.status(400).json({ message: error.message });
@@ -387,6 +390,17 @@ const setError = async (req, res) => {
 	}
 };
 
+const setOrderTotal = async (req, res) => {
+	try {
+		const orderTotal = await Order.findByIdAndUpdate(req.params.id, {
+			total: req.body.total,
+		});
+		res.status(202).json(orderTotal);
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
 module.exports = {
 	saveOrder,
 	addSupplier,
@@ -410,4 +424,5 @@ module.exports = {
 	getManagerApprovedOrders,
 	getOrderById,
 	setError,
+	setOrderTotal,
 };
