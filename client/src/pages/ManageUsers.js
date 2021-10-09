@@ -96,13 +96,6 @@ const ManageUsers = () => {
 		}
 
 		if (employeeDetails.position === "sitemanager") {
-			if (employeeDetails.site === "site") {
-				setBtnState(false);
-				return setError("Please fill all the fields");
-			}
-		}
-
-		if (employeeDetails.position === "sitemanager") {
 			endpoint = "sitemanagers";
 		} else if (employeeDetails.position === "officer") {
 			endpoint = "officers";
@@ -306,34 +299,6 @@ const ManageUsers = () => {
 											</select>
 										</div>
 									</div>
-									{employeeDetails.position === "sitemanager" ? (
-										<div className="col-6">
-											<div className="row-user">
-												<select
-													name="site"
-													id="site"
-													value={employeeDetails.site}
-													onChange={(e) =>
-														setEmployeeDetails({
-															...employeeDetails,
-															site: e.target.value,
-														})
-													}
-													required
-												>
-													<option value="site" defaultValue>
-														SELECT SITE
-													</option>
-													{sites.length > 0 &&
-														sites.map((site) => (
-															<option value={site._id}>{site.name}</option>
-														))}
-												</select>
-											</div>
-										</div>
-									) : (
-										""
-									)}
 								</div>
 								<div className="row-user">
 									<button type="submit" onClick={saveEmployeeDetails}>

@@ -78,6 +78,7 @@ const ManageUsers = () => {
 				siteManagerId: "",
 			});
 			getAllSites();
+			getAllSiteManagers();
 			setError("");
 			window.alert("Site registered successfully");
 			setBtnState(false);
@@ -94,6 +95,7 @@ const ManageUsers = () => {
 
 			if (res.statusText === "OK") {
 				getAllSites();
+				getAllSiteManagers();
 				setError("");
 				window.alert("Site has been successfully deleted");
 				setIsLoading(true);
